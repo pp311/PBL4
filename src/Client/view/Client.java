@@ -97,17 +97,29 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	    return String.format("%.1f %ciB", value / 1024.0, ci.current());
 	}
 	
-	private void loadTable() {
+	private ArrayList<FileDto> listFiles (String path) {
+		ArrayList<FileDto> files = null;
 		try {
-			dtm.setRowCount(0);
 			dos.writeUTF("PASV");
 			String response = dis.readUTF();
 			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
-			Socket soc = new Socket(server, port);
-			dos.writeUTF("LIST " + workingDir);
-			ObjectInputStream oos = new ObjectInputStream(soc.getInputStream());
+			Socket datasoc = new Socket(server, port);
+			dos.writeUTF("LIST " + (path != null && path != "" ? path : workingDir));
+			ObjectInputStream oos = new ObjectInputStream(datasoc.getInputStream());
 			files = (ArrayList<FileDto>)oos.readObject();
-			
+			oos.close();
+			datasoc.close();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return files;
+	}
+	
+	private void loadTable() {
+		try {
+			dtm.setRowCount(0);
+			files = listFiles("");
 			DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	        for (FileDto file : files) {
 	        	String[] strarr = new String[4];
@@ -121,8 +133,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	           // strarr[3] = file.getUser();
 	            dtm.addRow(strarr);
 	        }
-			soc.close();
-		} catch (IOException | ClassNotFoundException e) {
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -148,6 +160,13 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private FileDto getFileInfo(String filename) {
+		for(FileDto file : files) {
+			if(file.getName().equals(filename)) return file;
+		}
+		return null;
 	}
 
 	@Override
@@ -203,7 +222,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			}
 			try {
 				String filename = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
-				String downloadPath = workingDir + "/" + filename;
+				String downloadPath = workingDir + filename;
 				//chọn vị trí Download về nên chỉ cho phép chọn folder/directory
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
@@ -220,10 +239,16 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				      saveDir += File.separator + filename;
 				      boolean success = true;
 				      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
-		//				      if(!isDirectory(filename))
-		//				    		  success = downloadSingleFile(downloadPath, saveDir);
-		//				      else downloadDirectory(downloadPath, saveDir);
-				      success = downloadSingleFile(downloadPath, saveDir);
+						      if(!getFileInfo(filename).getType().equals("Dir"))
+						    		  success = downloadSingleFile(downloadPath, saveDir);
+						      else {
+						    	  File newDir = new File(saveDir);
+						    	  boolean created = newDir.mkdirs();
+					                if (created) {
+					                    System.out.println("CREATED the directory: " + saveDir);
+					                }
+						    	  success = downloadDirectory(downloadPath, saveDir);
+						      }
 				      //hàm downloadDirectory t chưa viết để return boolean
 				      if (success) {
 				    	  JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " has been downloaded successfully.");
@@ -259,10 +284,53 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			e.printStackTrace();
 			return false;
 		}
-		
-		
 		return true;
 	}
+	
+	//để tải 1 folder, thực hiện tải theo đệ quy
+		//đầu tiên liệt kê hết folder và file có trong folder cần tải
+		//nếu gặp file thì tải file đó về
+		//nếu gặp folder thì tạo folder đó ở local, r gọi đệ quy hàm để tải folder con đó về
+		public boolean downloadDirectory( String remoteDirPath, String saveDirPath) throws IOException {
+		    String dirToList = remoteDirPath;
+		    try {
+		    	ArrayList<FileDto> subFiles = listFiles(dirToList);
+				 
+			    if (subFiles != null && subFiles.size() > 0) {
+			        for (FileDto aFile : subFiles) {
+			            String remoteFilePath = remoteDirPath + "/" + aFile.getName();
+			            //lưu ý currentLocalPath có thể là dg dẫn tới folder hoặc file
+			            String currentLocalPath = saveDirPath + File.separator + aFile.getName();
+			            if (aFile.getType() == "Dir") {
+			                // create the directory in saveDir
+			                File newDir = new File(currentLocalPath);
+			                boolean created = newDir.mkdirs();
+			                if (created) {
+			                    System.out.println("CREATED the directory: " + currentLocalPath);
+			                } else {
+			                	throw new Exception("COULD NOT create the directory: " + currentLocalPath);			                 
+			                }
+			                // download the sub directory
+			                downloadDirectory(remoteFilePath, currentLocalPath);
+			            } else {
+			                // download the file
+			                boolean success = downloadSingleFile(remoteFilePath, currentLocalPath);
+			                if (success) {
+			                    System.out.println("DOWNLOADED the file: " + currentLocalPath);
+			                } else {
+			                	throw new Exception("COULD NOT download the file: "+ currentLocalPath);
+			                }
+			            }
+			        }
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.err.println(e);
+				return false;
+			}
+		    return true;
+		}
+	
 	
 	private boolean uploadSingleFile(File localFile, String uploadDir) {
 		try {
