@@ -3,6 +3,7 @@ package Server.pl;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,6 +21,7 @@ class ListenHandler extends Thread {
 	public DataOutputStream dos;
 	public Socket soc;
 	public Server server;
+	private ServerSocket dataServer;
 	private String userName = "";
 	private String password = "";
 	private String workingDir = "/";
@@ -64,15 +66,14 @@ public void run(){
 				break;
 			case "PASV":
 				Random generator = new Random();
-				ServerSocket server;
+				//ServerSocket server;
 				int port = 0;
 				//chon port ngau nhien
 				while(true) {
 					 port = generator.nextInt((PASV_PORT_END - PASV_PORT_START) + 1) + PASV_PORT_START;
 					try {
-						server = new ServerSocket(port);
-						soc.getRemoteSocketAddress();
-						dataConnection = new DataConnectionHandler(server, this);
+						dataServer = new ServerSocket(port);
+						dataConnection = new DataConnectionHandler(dataServer, this);
 						dataConnection.start();
 						break;
 					} catch (IOException e) {
@@ -80,16 +81,27 @@ public void run(){
 						//catch ở đây để vòng lặp while dc tiếp tuc lặp
 					}	
 				}
-				this.dos.writeUTF("PORT " + port);
+				this.dos.writeUTF("227 Entering Passive Mode (" + port + ")");
 				break;
 			case "LIST":
 				putMessage("LIST " + msg);
+				if(dataServer.isClosed())
+					dos.writeUTF("226 Closing data connection. Requested file action successful");
 				break;
 			case "STOR":
 				putMessage("STOR " + msg);
+				if(dataServer.isClosed())
+					dos.writeUTF("226 Closing data connection. Requested file action successful");
 				break;
 			case "RETR":
 				putMessage("RETR " + msg);
+				if(dataServer.isClosed())
+					dos.writeUTF("226 Closing data connection. Requested file action successful");
+				break;
+			case "DELE":
+				File deleteDir = new File(baseDir + msg);
+				deleteDirectory(deleteDir);				
+				break;
 			case "CWD":
 				if(!msg.equals(".."))
 					workingDir = msg;
@@ -98,6 +110,16 @@ public void run(){
 				break;
 			case "PWD":
 				this.dos.writeUTF("PWD " + workingDir);
+				break;
+			case "MKD":
+				File newDir = new File(baseDir + "/" + msg);
+                boolean success = newDir.mkdir();
+//                if (success) {
+//                	JOptionPane.showMessageDialog(null, "Successfully created directory: " + name);
+//                } else {
+//                	JOptionPane.showMessageDialog(null, "Failed to create directory. See server's reply.");		                 
+//                }
+				//this.dos.writeUTF("MKD "+ workingDir);
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );
@@ -116,6 +138,16 @@ public void run(){
 			e.printStackTrace();
 		}
 	}
+}
+
+private boolean deleteDirectory(File directoryToBeDeleted) {
+    File[] allContents = directoryToBeDeleted.listFiles();
+    if (allContents != null) {
+        for (File file : allContents) {
+            deleteDirectory(file);
+        }
+    }
+    return directoryToBeDeleted.delete();
 }
 
 private synchronized void putMessage(String cmd)

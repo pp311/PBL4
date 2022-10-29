@@ -1,46 +1,24 @@
 package Client.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 import java.net.Socket;
-import java.text.CharacterIterator;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.StringCharacterIterator;
+import java.text.*;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
 
 import Server.dto.FileDto;
 
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class Client extends JFrame implements ActionListener, Runnable {
@@ -82,6 +60,18 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		});
 	}
 	
+	private String showServerResponse() {
+		String ch = "";
+		try {
+			ch = dis.readUTF();
+			System.out.println(ch);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ch;
+	}
+	
 	private static String humanReadableByteCountBin(long bytes) {
 	    long absB = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
 	    if (absB < 1024) {
@@ -101,8 +91,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		ArrayList<FileDto> files = null;
 		try {
 			dos.writeUTF("PASV");
-			String response = dis.readUTF();
-			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
+			String response = showServerResponse();
+			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
 			Socket datasoc = new Socket(server, port);
 			dos.writeUTF("LIST " + (path != null && path != "" ? path : workingDir));
 			ObjectInputStream oos = new ObjectInputStream(datasoc.getInputStream());
@@ -120,6 +110,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		try {
 			dtm.setRowCount(0);
 			files = listFiles("");
+			//showServerResponse();
 			DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	        for (FileDto file : files) {
 	        	String[] strarr = new String[4];
@@ -168,16 +159,32 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		}
 		return null;
 	}
+	
+	private boolean makeDirectory(String dirName) {
+		try {
+			dos.writeUTF("MKD " + dirName);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		chooser = new JFileChooser(); 
 		if(e.getSource() == btnNewFolder) {
+			String name = JOptionPane.showInputDialog(null,"Enter Name");
+			if (name !=null) {
 			try {
-				dos.writeUTF("MKD " + workingDir);
-			} catch (IOException e1) {
+				makeDirectory(workingDir + name);
+				printCurrentDir();
+				loadTable();			
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			}
 			}
 		}
 		if(e.getSource() == btnBack) {
@@ -204,7 +211,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					if(localFile.isFile()) {
 						done = uploadSingleFile(localFile, uploadDir);
 					}
-					//else uploadDirectory(localFile, uploadDir);
+					else uploadDirectory(localFile, uploadDir);
 					if (done) {
 						loadTable();
 						JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " is uploaded successfully.");
@@ -258,13 +265,99 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				// TODO: handle exception
 			}
 		}
+		if(e.getSource() == btnDelete) {
+			if(table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(null, "No file selected.");
+			}
+			String filename = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
+			int response = JOptionPane.showConfirmDialog(null, "Do you really want to delete " +filename + "?", "Confirm",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (response == JOptionPane.YES_OPTION) {
+				String deletePath = workingDir + filename;
+				//nếu chọn file thì gọi deleteFile, chọn folder thì gọi removeDirectory
+				if(!getFileInfo(filename).getType().equals("Dir")) {
+					try {
+					    boolean deleted = deleteFile(deletePath);
+					    if (deleted) {
+							loadTable();
+					        JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " was deleted successfully.");
+					    } else {
+					    	JOptionPane.showMessageDialog(null, "Could not delete the file.");
+					    }
+					} catch (Exception ex) {
+					    System.out.println("Oh no, there was an error: " + ex.getMessage());
+					}
+				} else {				 
+					try {
+					    	boolean deleted = deleteFile(deletePath);
+						    if (deleted) {
+								loadTable();
+						        JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " was deleted successfully.");
+						    } else {
+						    	JOptionPane.showMessageDialog(null, "Could not delete the file.");
+						    }			        			    			      				    
+					} catch (Exception ex) {
+					    System.out.println("Oh no, there was an error: " + ex.getMessage());
+					}
+				}
+			    } else if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
+			      
+			    } 
+		}
 	}
+	
+	private boolean deleteFile(String deletePath) {
+		try {
+			dos.writeUTF("DELE " + deletePath);	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+//	public boolean deleteDirectory(String deletePath) throws IOException {
+//        String dirToList = deletePath;
+//        ArrayList<FileDto> subFiles = listFiles(dirToList);
+//        if (subFiles != null && subFiles.size() > 0) {
+//            for (FileDto aFile : subFiles) {
+//                String currentFileName = aFile.getName();
+//                
+//                //filePath có thể là file hoặc thư mục
+//                String filePath = dirToList + "/" + currentFileName;
+// 
+//                if (aFile.getType().equals("Dir")) {
+//                    //xóa đệ quy thư mục con
+//                    deleteDirectory(filePath);
+//                } else {
+//                    //xóa file
+//                    boolean deleted = deleteFile(filePath);
+//                    if (deleted) {
+//                        System.out.println("DELETED the file: " + filePath);
+//                    } else {
+//                        System.out.println("CANNOT delete the file: " + filePath);
+//                    }
+//                }
+//            }
+//        }
+//            // finally, remove the directory itself
+//            boolean removed = deleteDirectory(dirToList);
+//            if (removed) {
+//                System.out.println("REMOVED the directory: " + dirToList);
+//            } else {
+//                System.out.println("CANNOT remove the directory: " + dirToList);
+//            }
+//            return removed;
+//        
+//    }
+	
 	
 	private boolean downloadSingleFile(String downloadPath, String saveDir) {
 		try {
 			dos.writeUTF("PASV");
-			String response = dis.readUTF();
-			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
+			String response = showServerResponse();
+			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
 			Socket datasoc = new Socket(server, port);
 			dos.writeUTF("RETR " + downloadPath);
 			DataInputStream datadis = new DataInputStream(datasoc.getInputStream());
@@ -276,6 +369,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
+			//showServerResponse();
 			datadis.close();
 			datados.close();
 			datasoc.close();
@@ -335,8 +429,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private boolean uploadSingleFile(File localFile, String uploadDir) {
 		try {
 			dos.writeUTF("PASV");
-			String response = dis.readUTF();
-			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
+			String response = showServerResponse();
+			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
 			Socket datasoc = new Socket(server, port);
 			dos.writeUTF("STOR " + uploadDir);
 			DataInputStream datadis = new DataInputStream(new FileInputStream(localFile));
@@ -348,6 +442,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
+			//showServerResponse();
 			datadis.close();
 			datados.close();
 			datasoc.close();
@@ -359,6 +454,39 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		
 		return true;
 	}
+	
+//	tương tự khi download, upload folder theo đệ quy
+//		có thể coi File như 1 String chỉ đg dẫn bth
+		public void uploadDirectory( File localDir, String remoteDirPath) throws IOException {	
+			//tạo folder trên server
+			boolean created = makeDirectory(remoteDirPath);
+	        if (created) {
+	            System.out.println("CREATED the directory: " + remoteDirPath);
+	        } else {
+	            System.out.println("COULD NOT create the directory: " + remoteDirPath);
+	        }
+	        //duyệt toàn bộ file trong folder cần upload
+		    File[] subFiles = localDir.listFiles();
+		    if (subFiles != null && subFiles.length > 0) {
+		        for (File item : subFiles) {
+		            String remoteFilePath = remoteDirPath + "/" + item.getName();
+		            String currentLocalPath = localDir + File.separator + item.getName();
+		            if (item.isFile()) {
+		                // upload the file
+		            	File localFile = new File(currentLocalPath);	               	            
+		                boolean uploaded = uploadSingleFile(localFile, remoteFilePath);
+		                if (uploaded) {
+		                    System.out.println("UPLOADED a file to: " + remoteFilePath);
+		                } else {
+		                    System.out.println("COULD NOT upload the file: " + currentLocalPath);
+		                }
+		            } else {
+		                // upload the sub directory
+		                uploadDirectory( new File(currentLocalPath), remoteFilePath);
+		            }
+		        }
+		    }
+		}
 	
 	private void printCurrentDir() {
 		try {
@@ -472,8 +600,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		btnBack.addActionListener(this);
 		btnDownload.addActionListener(this);
 		btnUploadFile.addActionListener(this);
-//		btnDelete.addActionListener(this);
-//		btnNewFolder.addActionListener(this);
+		btnDelete.addActionListener(this);
+		btnNewFolder.addActionListener(this);
 		
 		//sau khi load sẽ set đường dẫn hiện tại
 		printCurrentDir();
