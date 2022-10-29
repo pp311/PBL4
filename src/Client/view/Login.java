@@ -103,7 +103,7 @@ public class Login extends JFrame implements ActionListener{
 		tf_port = new JTextField();
 		tf_port.setColumns(10);
 		tf_port.setBounds(156, 150, 265, 30);
-		tf_port.setText("21");
+		tf_port.setText("2100");
 		contentPane.add(tf_port);
 		
 		
@@ -145,17 +145,18 @@ public class Login extends JFrame implements ActionListener{
 		rb_Ftp.addActionListener(this);
 		rb_Tftp.addActionListener(this);
 	}
+	String server;
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btn_OK)
     	{
-			String server = tf_sever.getText();
+			server = tf_sever.getText();
 			String port = tf_port.getText();
 			int portNum = Integer.valueOf(port);
 			String user = tf_username.getText();
 			String pw = new String(pf_password.getPassword());
 			validate(server,port,user,pw);
 			try {
-				soc= new Socket("localhost", 2100);
+				soc= new Socket(server, portNum);
 				this.dis= new DataInputStream(soc.getInputStream());
 				this.dos= new DataOutputStream(soc.getOutputStream());
 				new ThreadedHandler(this).start();
@@ -181,7 +182,7 @@ public class Login extends JFrame implements ActionListener{
     	}	
 		if (rb_Ftp.isSelected()) 
 		{
-			tf_port.setText("21");
+			tf_port.setText("2100");
 		}
 		if (rb_Tftp.isSelected()) 
 		{
@@ -212,7 +213,7 @@ public class Login extends JFrame implements ActionListener{
 					String msg=ch.substring(ch.indexOf(" ")+1);
 					if(code.equals("230")) {
 						System.out.println(ch);
-						new Client(soc, dis, dos).setVisible(true);;
+						new Client(soc, dis, dos, server).setVisible(true);;
 						frame.dispose();
 						Thread.currentThread().interrupt();
 						break;

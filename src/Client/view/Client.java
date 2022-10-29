@@ -49,6 +49,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private Socket soc;
 	private DataOutputStream dos;
 	private DataInputStream dis;
+	private String server;
 	
 	private JTable table;
 	DefaultTableModel dtm;
@@ -102,7 +103,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			dos.writeUTF("PASV");
 			String response = dis.readUTF();
 			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
-			Socket soc = new Socket("localhost", port);
+			Socket soc = new Socket(server, port);
 			dos.writeUTF("LIST " + workingDir);
 			ObjectInputStream oos = new ObjectInputStream(soc.getInputStream());
 			files = (ArrayList<FileDto>)oos.readObject();
@@ -239,18 +240,20 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			dos.writeUTF("PASV");
 			String response = dis.readUTF();
 			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
-			Socket soc = new Socket("localhost", port);
+			Socket datasoc = new Socket(server, port);
 			dos.writeUTF("RETR " + downloadPath);
-			DataInputStream dis = new DataInputStream(soc.getInputStream());
-			DataOutputStream dos = new DataOutputStream(new FileOutputStream(saveDir));
+			DataInputStream datadis = new DataInputStream(datasoc.getInputStream());
+			DataOutputStream datados = new DataOutputStream(new FileOutputStream(saveDir));
 			byte buffer[] = new byte[MAX_BUFFER];
 			int read = 0;
-			while((read = dis.read(buffer)) != -1) {
-				dos.write(buffer, 0, read);
-				dos.flush();
+			while((read = datadis.read(buffer)) != -1) {
+				datados.write(buffer, 0, read);
+				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
-			
+			datadis.close();
+			datados.close();
+			datasoc.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,33 +269,25 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			dos.writeUTF("PASV");
 			String response = dis.readUTF();
 			int port = Integer.valueOf(response.substring(response.indexOf(" ")+1));
-			Socket soc = new Socket("localhost", port);
+			Socket datasoc = new Socket(server, port);
 			dos.writeUTF("STOR " + uploadDir);
-			DataInputStream dis = new DataInputStream(new FileInputStream(localFile));
-			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+			DataInputStream datadis = new DataInputStream(new FileInputStream(localFile));
+			DataOutputStream datados = new DataOutputStream(datasoc.getOutputStream());
 			byte buffer[] = new byte[MAX_BUFFER];
 			int read = 0;
-			while((read = dis.read(buffer)) != -1) {
-				dos.write(buffer, 0, read);
-				dos.flush();
+			while((read = datadis.read(buffer)) != -1) {
+				datados.write(buffer, 0, read);
+				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
-			
+			datadis.close();
+			datados.close();
+			datasoc.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		} finally {
-			try {
-				dis.close();
-				dos.close();
-				soc.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+		} 
 		
 		return true;
 	}
@@ -323,10 +318,11 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	/**
 	 * Create the frame.
 	 */
-	public Client(Socket soc, DataInputStream dis, DataOutputStream dos) {
+	public Client(Socket soc, DataInputStream dis, DataOutputStream dos, String server) {
 		this.soc = soc;
 		this.dis = dis;
 		this.dos = dos;
+		this.server = server;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 400, 700, 450);
 
