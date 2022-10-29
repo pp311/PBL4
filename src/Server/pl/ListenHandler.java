@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
+import java.util.Vector;
 
 import Server.bll.UserBLL;
 
@@ -22,6 +23,10 @@ class ListenHandler extends Thread {
 	private String userName = "";
 	private String password = "";
 	private String workingDir = "/";
+	public String baseDir = "/home/shared";
+	static final int MAX = 7;
+    private Vector messages = new Vector();
+	
 public ListenHandler(Socket i) {
 	this.soc=i;
 	try{
@@ -38,8 +43,9 @@ public void run(){
 	while(true) {
 		try {
 			ch= dis.readUTF();
-			System.out.println(ch);
-			if(ch.startsWith("PWD")) cmd = ch;
+			System.out.println(userName + ": " + ch);
+			//những lệnh như PWD ko chứa dấu " " nên gọi substring sẽ lỗi
+			if(ch.startsWith("PWD") || ch.startsWith("PASV")) cmd = ch;
 			else {
 				cmd=ch.substring(0, ch.indexOf(" "));
 				msg=ch.substring(ch.indexOf(" ")+1);
@@ -47,7 +53,6 @@ public void run(){
 			}
 			switch (cmd) {
 			case "LGIN":
-				
 				userName = msg.substring(0,msg.indexOf(" "));
 				password = msg.substring(msg.indexOf(" ") + 1);
 				if(new UserBLL().checkLoginInfo(userName, password)) {
@@ -66,7 +71,9 @@ public void run(){
 					 port = generator.nextInt((PASV_PORT_END - PASV_PORT_START) + 1) + PASV_PORT_START;
 					try {
 						server = new ServerSocket(port);
-						dataConnection = new DataConnectionHandler(server, ch);
+						soc.getRemoteSocketAddress();
+						dataConnection = new DataConnectionHandler(server, this);
+						dataConnection.start();
 						break;
 					} catch (IOException e) {
 						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
@@ -75,8 +82,22 @@ public void run(){
 				}
 				this.dos.writeUTF("PORT " + port);
 				break;
+			case "LIST":
+				putMessage("LIST " + msg);
+				break;
+			case "STOR":
+				putMessage("STOR " + msg);
+				break;
+			case "RETR":
+				putMessage("RETR " + msg);
+			case "CWD":
+				if(!msg.equals(".."))
+					workingDir = msg;
+				else 
+					workingDir = workingDir.substring(0, workingDir.lastIndexOf("/", workingDir.length() - 2)+1);
+				break;
 			case "PWD":
-				this.dos.writeUTF(workingDir);
+				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );
@@ -95,7 +116,32 @@ public void run(){
 			e.printStackTrace();
 		}
 	}
-	
-	
 }
+
+private synchronized void putMessage(String cmd)
+        throws InterruptedException
+    {
+        // checks whether the queue is full or not
+        while (messages.size() == MAX)
+            // waits for the queue to get empty
+            wait();
+        // then again adds element or messages
+        messages.addElement(cmd);
+        notify();
+    }
+  
+    public synchronized String getMessage()
+        throws InterruptedException
+    {
+        notify();
+        while (messages.size() == 0)
+            wait();
+        String message = (String)messages.firstElement();
+  
+        // extracts the message from the queue
+        messages.removeElement(message);
+        return message;
+    }
 }
+
+

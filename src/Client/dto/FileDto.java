@@ -1,40 +1,14 @@
-package Server.models;
+package Client.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class Files implements Serializable {
+public class FileDto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int FID, ParentID, Permission;
+	//private int FID, ParentID, Permission;
 	private String Name, Type, Path, Owner, LastEditedBy;
 	private Date LastEditedDate, CreatedDate;
 	private long Size;
-	public Files(int fID, int parentID, int permission, String name, String type, String path, String owner,
-			String lastEditedBy, Date lastEditedDate, Date createdDate, long size) {
-		super();
-		FID = fID;
-		ParentID = parentID;
-		Permission = permission;
-		Name = name;
-		Type = type;
-		Path = path;
-		Owner = owner;
-		LastEditedBy = lastEditedBy;
-		LastEditedDate = lastEditedDate;
-		CreatedDate = createdDate;
-		Size = size;
-	}
-	
-	public Files( ) {
-		
-	}
-	
-	public int getPermission() {
-		return Permission;
-	}
-	public void setPermission(int permission) {
-		Permission = permission;
-	}
 	public String getName() {
 		return Name;
 	}
@@ -84,18 +58,4 @@ public class Files implements Serializable {
 		Size = size;
 	}
 
-	
-	public int getFID() {
-		return FID;
-	}
-	public void setFID(int fID) {
-		FID = fID;
-	}
-	public int getParentID() {
-		return ParentID;
-	}
-	public void setParentID(int parentID) {
-		ParentID = parentID;
-	}
-	
 }

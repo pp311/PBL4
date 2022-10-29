@@ -215,6 +215,7 @@ public class Login extends JFrame implements ActionListener{
 						new Client(soc, dis, dos).setVisible(true);;
 						frame.dispose();
 						Thread.currentThread().interrupt();
+						break;
 					}
 					else if(code.equals("530")) {
 						JOptionPane.showMessageDialog(null, msg);
