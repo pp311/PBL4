@@ -30,6 +30,7 @@ public class DataConnectionHandler extends Thread{
 	private DataOutputStream dos;
 	private byte[] buffer;
 	private int read;
+	private volatile String response = "";
 	public DataConnectionHandler(ServerSocket soc, ListenHandler producer) {
 		this.soc = soc;
 		this.producer = producer;
@@ -63,8 +64,8 @@ public class DataConnectionHandler extends Thread{
 							result.add(fDto);
 						}
 					}
-					
 					oos.writeObject(result);
+					response = "226 Directory send OK";
 					break;
 				}
 				case "STOR":
@@ -78,7 +79,7 @@ public class DataConnectionHandler extends Thread{
 						dos.flush();
 						buffer = new byte[MAX_BUFFER];
 					}
-					
+					response = "226 Transfer completed";
 					dis.close();
 					dos.close();
 					
@@ -94,7 +95,7 @@ public class DataConnectionHandler extends Thread{
 						dos.flush();
 						buffer = new byte[MAX_BUFFER];
 					}
-					
+					response = "226 Transfer completed";
 					dis.close();
 					dos.close();
 					break;
@@ -108,7 +109,9 @@ public class DataConnectionHandler extends Thread{
 		} catch (IOException | InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();	
-			
 		}
+	}
+	public String getResponseMessage() {
+		return response;
 	}
 }

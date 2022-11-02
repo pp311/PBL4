@@ -1,4 +1,3 @@
-create database FTP;
 use FTP;
 
 create table Files (
@@ -40,12 +39,15 @@ create table User_Group (
 
 create table Share (
     FID int,
-    UID int,
+    UID int null,
+    GID int null,
     Permission int,
     constraint `Share_User_FK` foreign key Share(UID) references User(UID),
+    constraint `Share_Group_FK` foreign key Share(GID) references `Group`(GID),
     constraint `Share_File_FK` foreign key Share(FID) references Files(FID)
 );
 
 insert into User(UserName, FullName, Email, Phone, Password, Role) values('admin1', 'Phuc Phan', 'pp311@gmail.com', '0875124512', '123', 'admin');
 insert into User(UserName, FullName, Email, Phone, Password, Role) values('user1', 'May', 'may@gmail.com', '0875124421', '123', 'user');
+insert into User(UserName, FullName, Email, Phone, Password, Role) values('user2', 'June', 'june@gmail.com', '0875124427', '123', 'user');
 

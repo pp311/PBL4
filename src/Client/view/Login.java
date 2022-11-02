@@ -213,7 +213,13 @@ public class Login extends JFrame implements ActionListener{
 					String msg=ch.substring(ch.indexOf(" ")+1);
 					if(code.equals("230")) {
 						System.out.println(ch);
-						new Client(soc, dis, dos, server).setVisible(true);;
+						EventQueue.invokeLater(new Runnable() {			
+							@Override
+							public void run() {
+								new Client(soc, dis, dos, server).setVisible(true);		
+							}
+						});
+						
 						frame.dispose();
 						Thread.currentThread().interrupt();
 						break;

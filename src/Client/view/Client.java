@@ -65,7 +65,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		try {
 			ch = dis.readUTF();
 			System.out.println(ch);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -99,6 +99,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			files = (ArrayList<FileDto>)oos.readObject();
 			oos.close();
 			datasoc.close();
+			showServerResponse();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,8 +144,9 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				for(FileDto file : files ) {
 					if(file.getName().equals(fileName) && file.getType().equals("Dir")) {
 						dos.writeUTF("CWD " + workingDir + fileName + "/");
+						showServerResponse();
 						printCurrentDir();
-						loadTable();
+						loadTable();						
 						break;
 					}
 				}
@@ -163,7 +165,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private boolean makeDirectory(String dirName) {
 		try {
 			dos.writeUTF("MKD " + dirName);
-			
+			showServerResponse();
 		} catch (Exception e) {
 			// TODO: handle exception
 			return false;
@@ -180,7 +182,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			try {
 				makeDirectory(workingDir + name);
 				printCurrentDir();
-				loadTable();			
+				loadTable();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -190,6 +192,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		if(e.getSource() == btnBack) {
 			try {
 				dos.writeUTF("CWD ..");
+				showServerResponse();
 				printCurrentDir();
 				loadTable();
 			} catch (IOException e1) {
@@ -256,10 +259,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					                }
 						    	  success = downloadDirectory(downloadPath, saveDir);
 						      }
-				      //hàm downloadDirectory t chưa viết để return boolean
+						      
 				      if (success) {
 				    	  JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " has been downloaded successfully.");
-			            }
+			            };
 			      }
 			} catch (Exception e1) {
 				// TODO: handle exception
@@ -309,6 +312,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private boolean deleteFile(String deletePath) {
 		try {
 			dos.writeUTF("DELE " + deletePath);	
+			showServerResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -369,10 +373,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
-			//showServerResponse();
 			datadis.close();
 			datados.close();
 			datasoc.close();
+			showServerResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -442,10 +446,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				datados.flush();
 				buffer = new byte[MAX_BUFFER];
 			}
-			//showServerResponse();
 			datadis.close();
 			datados.close();
 			datasoc.close();
+			showServerResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -496,7 +500,6 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			dir = dir.substring(dir.indexOf(" ") + 1);
 			workingDir = dir;
 			lblNewLabel.setText(dir);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

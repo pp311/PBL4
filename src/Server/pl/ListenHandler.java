@@ -27,6 +27,7 @@ class ListenHandler extends Thread {
 	private String workingDir = "/";
 	public String baseDir = "/home/shared";
 	static final int MAX = 7;
+	private String response;
     private Vector messages = new Vector();
 	
 public ListenHandler(Socket i) {
@@ -85,28 +86,33 @@ public void run(){
 				break;
 			case "LIST":
 				putMessage("LIST " + msg);
-				if(dataServer.isClosed())
-					dos.writeUTF("226 Closing data connection. Requested file action successful");
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
 				break;
 			case "STOR":
 				putMessage("STOR " + msg);
-				if(dataServer.isClosed())
-					dos.writeUTF("226 Closing data connection. Requested file action successful");
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
 				break;
 			case "RETR":
 				putMessage("RETR " + msg);
-				if(dataServer.isClosed())
-					dos.writeUTF("226 Closing data connection. Requested file action successful");
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
 				break;
 			case "DELE":
 				File deleteDir = new File(baseDir + msg);
-				deleteDirectory(deleteDir);				
+				deleteDirectory(deleteDir);
+				dos.writeUTF("250 Delete operation successful");
 				break;
 			case "CWD":
 				if(!msg.equals(".."))
 					workingDir = msg;
 				else 
 					workingDir = workingDir.substring(0, workingDir.lastIndexOf("/", workingDir.length() - 2)+1);
+				dos.writeUTF("250 Directory successfully changed");
 				break;
 			case "PWD":
 				this.dos.writeUTF("PWD " + workingDir);
@@ -120,6 +126,12 @@ public void run(){
 //                	JOptionPane.showMessageDialog(null, "Failed to create directory. See server's reply.");		                 
 //                }
 				//this.dos.writeUTF("MKD "+ workingDir);
+                if(success) {
+                	dos.writeUTF("257 \"/" + msg + "\" created");
+                }
+                else {
+                	dos.writeUTF("502 Command not implemented");
+                }
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );
