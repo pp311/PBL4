@@ -124,13 +124,13 @@ public class Login extends JFrame implements ActionListener{
 		
 		rb_Tftp = new JRadioButton("TFTP");
 		buttonGroup.add(rb_Tftp);
-		rb_Tftp.setBounds(255, 341, 65, 27);
+		rb_Tftp.setBounds(255, 341, 80, 27);
 		contentPane.add(rb_Tftp);
 		rb_Tftp.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		rb_Ftp = new JRadioButton("FTP");
 		buttonGroup.add(rb_Ftp);
-		rb_Ftp.setBounds(127, 341, 55, 27);
+		rb_Ftp.setBounds(127, 341, 80, 27);
 		contentPane.add(rb_Ftp);
 		rb_Ftp.setSelected(true);
 		rb_Ftp.setFont(new Font("Times New Roman", Font.BOLD, 15));

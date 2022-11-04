@@ -5,6 +5,8 @@ import java.io.*;
 import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.*;
 
@@ -14,6 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import Client.bll.DownloadTask;
+import Client.bll.UploadTask;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,17 +27,18 @@ import java.awt.event.MouseEvent;
 
 
 public class Client extends JFrame implements ActionListener, Runnable {
-	private static final int MAX_BUFFER = 8192;
+	public static final int MAX_BUFFER = 8192;
 	private JPanel contentPane;
 	private Socket soc;
-	private DataOutputStream dos;
-	private DataInputStream dis;
-	private String server;
+	public DataOutputStream dos;
+	public DataInputStream dis;
+	public String server;
 	
 	private JTable table;
 	DefaultTableModel dtm;
 	private String workingDir = "/";
 
+	public volatile boolean isFileTransfering = false;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JProgressBar progressBar;
@@ -42,7 +48,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private JButton btnUploadFile;
 	private JButton btnDelete;
 	private JButton btnNewFolder;
+	private JButton btnShare;
 	private ArrayList<FileDto> files;
+	
+	//ExecutorService threadPool = Executors.newFixedThreadPool(1);
 
 	/**
 	 * Launch the application.
@@ -60,7 +69,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		});
 	}
 	
-	private String showServerResponse() {
+	public String showServerResponse() {
 		String ch = "";
 		try {
 			ch = dis.readUTF();
@@ -87,7 +96,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	    return String.format("%.1f %ciB", value / 1024.0, ci.current());
 	}
 	
-	private ArrayList<FileDto> listFiles (String path) {
+	public ArrayList<FileDto> listFiles (String path) {
 		ArrayList<FileDto> files = null;
 		try {
 			dos.writeUTF("PASV");
@@ -107,7 +116,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		return files;
 	}
 	
-	private void loadTable() {
+	public void loadTable() {
 		try {
 			dtm.setRowCount(0);
 			files = listFiles("");
@@ -136,6 +145,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	//khi click thì xác định dòng dc click => lấy dc tên file/folder => gọi changeWorkingDirectory
 	//để ycau server đổi đường dẫn hiện tại => gọi loadData để reload lại bảng
 	private void tableClick(JTable table) {
+		if(isFileTransfering) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+			return;
+		}
 		int row = table.getSelectedRow();
 		int col = table.getSelectedColumn();
 		try {
@@ -155,14 +168,14 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		}
 	}
 	
-	private FileDto getFileInfo(String filename) {
+	public FileDto getFileInfo(String filename) {
 		for(FileDto file : files) {
 			if(file.getName().equals(filename)) return file;
 		}
 		return null;
 	}
 	
-	private boolean makeDirectory(String dirName) {
+	public boolean makeDirectory(String dirName) {
 		try {
 			dos.writeUTF("MKD " + dirName);
 			showServerResponse();
@@ -176,7 +189,17 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		chooser = new JFileChooser(); 
+		
+		if(e.getSource() == btnShare) {
+			Share frame = new Share();
+			frame.setVisible(true);
+		}
+		
 		if(e.getSource() == btnNewFolder) {
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
 			String name = JOptionPane.showInputDialog(null,"Enter Name");
 			if (name !=null) {
 			try {
@@ -190,6 +213,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			}
 		}
 		if(e.getSource() == btnBack) {
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
 			try {
 				dos.writeUTF("CWD ..");
 				showServerResponse();
@@ -201,6 +228,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			}
 		}
 		if(e.getSource() == btnUploadFile) {
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
 			chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			chooser.setAcceptAllFileFilterUsed(false);
 			if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -210,16 +241,21 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				//giống khi download, khi upload cug cần đg dẫn kèm cả tên file cần up lên
 				String uploadDir = workingDir + filename;
 				try {
-					boolean done = true;
-					if(localFile.isFile()) {
-						done = uploadSingleFile(localFile, uploadDir);
-					}
-					else uploadDirectory(localFile, uploadDir);
-					if (done) {
-						loadTable();
-						JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " is uploaded successfully.");
-		            }
-					else System.out.println("failed");
+					UploadTask task = new UploadTask(localFile, uploadDir, this);
+					task.execute();
+					isFileTransfering = true;
+//					boolean done = true;
+//					if(localFile.isFile()) {
+//						//done = uploadSingleFile(localFile, uploadDir);
+//						UploadTask task = new UploadTask(localFile, uploadDir, this);
+//						task.execute();
+//					}
+//					else uploadDirectory(localFile, uploadDir);
+//					if (done) {
+//						loadTable();
+//						JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " is uploaded successfully.");
+//		            }
+//					else System.out.println("failed");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -227,6 +263,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			}
 		}
 		if(e.getSource() == btnDownload) {
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
 			if(table.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(null, "No file selected.");
 			}
@@ -247,30 +287,40 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				      //khi làm việc với đường dẫn của server thì có thể ghi thẳng / vì server là Linux
 				      //nhưng khi làm việc với dg dẫn của client thì dùng File.separator
 				      saveDir += File.separator + filename;
-				      boolean success = true;
+				      //boolean success = true;
+				      DownloadTask task;
 				      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
-						      if(!getFileInfo(filename).getType().equals("Dir"))
-						    		  success = downloadSingleFile(downloadPath, saveDir);
+						      if(!getFileInfo(filename).getType().equals("Dir")) {
+						    		 // success = downloadSingleFile(downloadPath, saveDir);
+						    	  	task = new DownloadTask(downloadPath, saveDir, this, false);
+								}
 						      else {
 						    	  File newDir = new File(saveDir);
 						    	  boolean created = newDir.mkdirs();
 					                if (created) {
 					                    System.out.println("CREATED the directory: " + saveDir);
 					                }
-						    	  success = downloadDirectory(downloadPath, saveDir);
+					                task = new DownloadTask(downloadPath, saveDir, this, true);
+						    	  //success = downloadDirectory(downloadPath, saveDir);
 						      }
-						      
-				      if (success) {
-				    	  JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " has been downloaded successfully.");
-			            };
+						      task.execute();
+						      isFileTransfering = true;
+//				      if (success) {
+//				    	  JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " has been downloaded successfully.");
+//			            };
 			      }
 			} catch (Exception e1) {
 				// TODO: handle exception
 			}
 		}
 		if(e.getSource() == btnDelete) {
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
 			if(table.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(null, "No file selected.");
+				return;
 			}
 			String filename = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
 			int response = JOptionPane.showConfirmDialog(null, "Do you really want to delete " +filename + "?", "Confirm",
@@ -356,141 +406,6 @@ public class Client extends JFrame implements ActionListener, Runnable {
 //        
 //    }
 	
-	
-	private boolean downloadSingleFile(String downloadPath, String saveDir) {
-		try {
-			dos.writeUTF("PASV");
-			String response = showServerResponse();
-			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-			Socket datasoc = new Socket(server, port);
-			dos.writeUTF("RETR " + downloadPath);
-			DataInputStream datadis = new DataInputStream(datasoc.getInputStream());
-			DataOutputStream datados = new DataOutputStream(new FileOutputStream(saveDir));
-			byte buffer[] = new byte[MAX_BUFFER];
-			int read = 0;
-			while((read = datadis.read(buffer)) != -1) {
-				datados.write(buffer, 0, read);
-				datados.flush();
-				buffer = new byte[MAX_BUFFER];
-			}
-			datadis.close();
-			datados.close();
-			datasoc.close();
-			showServerResponse();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	//để tải 1 folder, thực hiện tải theo đệ quy
-		//đầu tiên liệt kê hết folder và file có trong folder cần tải
-		//nếu gặp file thì tải file đó về
-		//nếu gặp folder thì tạo folder đó ở local, r gọi đệ quy hàm để tải folder con đó về
-		public boolean downloadDirectory( String remoteDirPath, String saveDirPath) throws IOException {
-		    String dirToList = remoteDirPath;
-		    try {
-		    	ArrayList<FileDto> subFiles = listFiles(dirToList);
-				 
-			    if (subFiles != null && subFiles.size() > 0) {
-			        for (FileDto aFile : subFiles) {
-			            String remoteFilePath = remoteDirPath + "/" + aFile.getName();
-			            //lưu ý currentLocalPath có thể là dg dẫn tới folder hoặc file
-			            String currentLocalPath = saveDirPath + File.separator + aFile.getName();
-			            if (aFile.getType() == "Dir") {
-			                // create the directory in saveDir
-			                File newDir = new File(currentLocalPath);
-			                boolean created = newDir.mkdirs();
-			                if (created) {
-			                    System.out.println("CREATED the directory: " + currentLocalPath);
-			                } else {
-			                	throw new Exception("COULD NOT create the directory: " + currentLocalPath);			                 
-			                }
-			                // download the sub directory
-			                downloadDirectory(remoteFilePath, currentLocalPath);
-			            } else {
-			                // download the file
-			                boolean success = downloadSingleFile(remoteFilePath, currentLocalPath);
-			                if (success) {
-			                    System.out.println("DOWNLOADED the file: " + currentLocalPath);
-			                } else {
-			                	throw new Exception("COULD NOT download the file: "+ currentLocalPath);
-			                }
-			            }
-			        }
-			    }
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.err.println(e);
-				return false;
-			}
-		    return true;
-		}
-	
-	
-	private boolean uploadSingleFile(File localFile, String uploadDir) {
-		try {
-			dos.writeUTF("PASV");
-			String response = showServerResponse();
-			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-			Socket datasoc = new Socket(server, port);
-			dos.writeUTF("STOR " + uploadDir);
-			DataInputStream datadis = new DataInputStream(new FileInputStream(localFile));
-			DataOutputStream datados = new DataOutputStream(datasoc.getOutputStream());
-			byte buffer[] = new byte[MAX_BUFFER];
-			int read = 0;
-			while((read = datadis.read(buffer)) != -1) {
-				datados.write(buffer, 0, read);
-				datados.flush();
-				buffer = new byte[MAX_BUFFER];
-			}
-			datadis.close();
-			datados.close();
-			datasoc.close();
-			showServerResponse();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} 
-		
-		return true;
-	}
-	
-//	tương tự khi download, upload folder theo đệ quy
-//		có thể coi File như 1 String chỉ đg dẫn bth
-		public void uploadDirectory( File localDir, String remoteDirPath) throws IOException {	
-			//tạo folder trên server
-			boolean created = makeDirectory(remoteDirPath);
-	        if (created) {
-	            System.out.println("CREATED the directory: " + remoteDirPath);
-	        } else {
-	            System.out.println("COULD NOT create the directory: " + remoteDirPath);
-	        }
-	        //duyệt toàn bộ file trong folder cần upload
-		    File[] subFiles = localDir.listFiles();
-		    if (subFiles != null && subFiles.length > 0) {
-		        for (File item : subFiles) {
-		            String remoteFilePath = remoteDirPath + "/" + item.getName();
-		            String currentLocalPath = localDir + File.separator + item.getName();
-		            if (item.isFile()) {
-		                // upload the file
-		            	File localFile = new File(currentLocalPath);	               	            
-		                boolean uploaded = uploadSingleFile(localFile, remoteFilePath);
-		                if (uploaded) {
-		                    System.out.println("UPLOADED a file to: " + remoteFilePath);
-		                } else {
-		                    System.out.println("COULD NOT upload the file: " + currentLocalPath);
-		                }
-		            } else {
-		                // upload the sub directory
-		                uploadDirectory( new File(currentLocalPath), remoteFilePath);
-		            }
-		        }
-		    }
-		}
 	
 	private void printCurrentDir() {
 		try {
@@ -600,6 +515,11 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		lblngDngTruyn.setHorizontalAlignment(SwingConstants.CENTER);
 		lblngDngTruyn.setBounds(12, 27, 657, 46);
 		contentPane.add(lblngDngTruyn);
+		
+		btnShare = new JButton("Share");
+		btnShare.setBounds(573, 126, 93, 25);
+		contentPane.add(btnShare);
+		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);
 		btnDownload.addActionListener(this);
 		btnUploadFile.addActionListener(this);
@@ -610,6 +530,4 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		printCurrentDir();
 		loadTable();
 	}
-
-	
 }
