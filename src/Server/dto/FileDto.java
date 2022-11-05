@@ -5,7 +5,25 @@ import java.util.Date;
 
 public class FileDto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//private int FID, ParentID, Permission;
+	private int FID, ParentID, Permission;
+	public int getFID() {
+		return FID;
+	}
+	public void setFID(int fID) {
+		FID = fID;
+	}
+	public int getParentID() {
+		return ParentID;
+	}
+	public void setParentID(int parentID) {
+		ParentID = parentID;
+	}
+	public int getPermission() {
+		return Permission;
+	}
+	public void setPermission(int permission) {
+		Permission = permission;
+	}
 	private String Name, Type, Path, Owner, LastEditedBy;
 	private Date LastEditedDate, CreatedDate;
 	private long Size;

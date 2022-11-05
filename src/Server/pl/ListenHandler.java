@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.Vector;
 
+import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
 
 class ListenHandler extends Thread {
@@ -21,11 +22,11 @@ class ListenHandler extends Thread {
 	public DataOutputStream dos;
 	public Socket soc;
 	public Server server;
-	public ServerSocket dataServer;
-	private String userName = "";
+	private ServerSocket dataServer;
+	public String userName = "";
 	private String password = "";
 	private String workingDir = "/";
-	public String baseDir = "/home/shared";
+	public String baseDir = "D:\\Tai xuong\\ftp";
 	static final int MAX = 7;
 	private String response;
     private Vector messages = new Vector();
@@ -74,13 +75,13 @@ public void run(){
 					 port = generator.nextInt((PASV_PORT_END - PASV_PORT_START) + 1) + PASV_PORT_START;
 					try {
 						dataServer = new ServerSocket(port);
-						
+//						dataConnection = new DataConnectionHandler(dataServer, this);
+//						dataConnection.start();
 						break;
 					} catch (IOException e) {
 						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
 						//catch ở đây để vòng lặp while dc tiếp tuc lặp
 					}	
-					
 				}
 				this.dos.writeUTF("227 Entering Passive Mode (" + port + ")");
 				Socket clientSoc = dataServer.accept();
@@ -94,7 +95,7 @@ public void run(){
 				dataConnection = new DataConnectionHandler(clientActiveSoc, this);
 				dataConnection.start();
 				this.dos.writeUTF("227 Server connected to " + ip + "/" + port);
-				break;
+				break;	
 			case "LIST":
 				putMessage("LIST " + msg);
 				dataConnection.join();
@@ -129,7 +130,7 @@ public void run(){
 				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			case "MKD":
-				File newDir = new File(baseDir + "/" + msg);
+				File newDir = new File(baseDir + "\\" + msg);
                 boolean success = newDir.mkdir();
 //                if (success) {
 //                	JOptionPane.showMessageDialog(null, "Successfully created directory: " + name);
@@ -198,5 +199,3 @@ private synchronized void putMessage(String cmd)
         return message;
     }
 }
-
-

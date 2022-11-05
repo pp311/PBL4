@@ -7,10 +7,10 @@ public class Files implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int FID, ParentID, Permission;
 	private String Name, Type, Path, Owner, LastEditedBy;
-	private Date LastEditedDate, CreatedDate;
+	private java.sql.Timestamp LastEditedDate, CreatedDate;
 	private long Size;
 	public Files(int fID, int parentID, int permission, String name, String type, String path, String owner,
-			String lastEditedBy, Date lastEditedDate, Date createdDate, long size) {
+			String lastEditedBy, java.sql.Timestamp lastEditedDate, java.sql.Timestamp createdDate, long size) {
 		super();
 		FID = fID;
 		ParentID = parentID;
@@ -65,16 +65,16 @@ public class Files implements Serializable {
 	public void setLastEditedBy(String lastEditedBy) {
 		LastEditedBy = lastEditedBy;
 	}
-	public Date getLastEditedDate() {
+	public java.sql.Timestamp getLastEditedDate() {
 		return LastEditedDate;
 	}
-	public void setLastEditedDate(Date lastEditedDate) {
+	public void setLastEditedDate(java.sql.Timestamp lastEditedDate) {
 		LastEditedDate = lastEditedDate;
 	}
-	public Date getCreatedDate() {
+	public java.sql.Timestamp getCreatedDate() {
 		return CreatedDate;
 	}
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(java.sql.Timestamp createdDate) {
 		CreatedDate = createdDate;
 	}
 	public long getSize() {
