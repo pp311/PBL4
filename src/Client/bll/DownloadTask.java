@@ -5,14 +5,18 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import Client.view.Client;
 import Server.dto.FileDto;
+import Server.pl.DataConnectionHandler;
 
 public class DownloadTask extends SwingWorker<Void, Void>{
 	Client client;
@@ -20,13 +24,15 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 	String saveDir;
 	boolean isDirectory;
 	String filename;
-	
-	public DownloadTask(String downloadPath, String saveDir, Client client, boolean isDirectory) {
+	String mode;
+	private static final int PORT_RANGE_START = 20000;
+	private static final int PORT_RANGE_END = 22000;
+	public DownloadTask(String downloadPath, String saveDir, Client client, boolean isDirectory, String mode) {
 		this.downloadPath = downloadPath;
 		this.saveDir = saveDir;
 		this.client = client;
 		this.isDirectory = isDirectory;
-		
+		this.mode = mode;
 		this.filename = downloadPath.substring(downloadPath.lastIndexOf("/") + 1);
 		
 	}
@@ -42,13 +48,38 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 	
 	private boolean downloadSingleFile(String downloadPath, String saveDir) {
 		try {
-			client.dos.writeUTF("PASV");
-			String response = client.showServerResponse();
-			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-			Socket datasoc = new Socket(client.server, port);
+			DataInputStream datadis;
+			DataOutputStream datados;
+			ServerSocket dataServer = null;
+			Socket datasoc = null;
+			Random generator = new Random();
+			//ServerSocket server;
+			int port = 0;
+			if(mode == "PASV") {
+				client.dos.writeUTF("PASV");
+				String response = client.showServerResponse();
+				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
+				datasoc = new Socket(client.server, port);
+			}
+			else {
+				while(true) {
+					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
+					try {
+						dataServer = new ServerSocket(port);
+						break;
+					} catch (IOException e) {
+						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
+						//catch ở đây để vòng lặp while dc tiếp tuc lặp
+					}		
+				}
+				client.dos.writeUTF("PORT (" + InetAddress.getLocalHost().getHostAddress() + "|" + port + ")");
+				datasoc = dataServer.accept();
+				client.showServerResponse();
+			}
 			client.dos.writeUTF("RETR " + downloadPath);
-			DataInputStream datadis = new DataInputStream(datasoc.getInputStream());
-			DataOutputStream datados = new DataOutputStream(new FileOutputStream(saveDir));
+			datadis = new DataInputStream(datasoc.getInputStream());
+			datados = new DataOutputStream(new FileOutputStream(saveDir));
+			
 			byte buffer[] = new byte[Client.MAX_BUFFER];
 			int read = 0;
 			while((read = datadis.read(buffer)) != -1) {
@@ -59,6 +90,7 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 			datadis.close();
 			datados.close();
 			datasoc.close();
+			if(dataServer != null) dataServer.close();
 			client.showServerResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

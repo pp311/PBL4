@@ -21,7 +21,7 @@ class ListenHandler extends Thread {
 	public DataOutputStream dos;
 	public Socket soc;
 	public Server server;
-	private ServerSocket dataServer;
+	public ServerSocket dataServer;
 	private String userName = "";
 	private String password = "";
 	private String workingDir = "/";
@@ -74,15 +74,26 @@ public void run(){
 					 port = generator.nextInt((PASV_PORT_END - PASV_PORT_START) + 1) + PASV_PORT_START;
 					try {
 						dataServer = new ServerSocket(port);
-						dataConnection = new DataConnectionHandler(dataServer, this);
-						dataConnection.start();
+						
 						break;
 					} catch (IOException e) {
 						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
 						//catch ở đây để vòng lặp while dc tiếp tuc lặp
 					}	
+					
 				}
 				this.dos.writeUTF("227 Entering Passive Mode (" + port + ")");
+				Socket clientSoc = dataServer.accept();
+				dataConnection = new DataConnectionHandler(clientSoc, this);
+				dataConnection.start();
+				break;
+			case "PORT":
+				String ip = msg.substring(1, msg.indexOf("|"));
+				port = Integer.valueOf(msg.substring(msg.indexOf("|")+1, msg.indexOf(")")));
+				Socket clientActiveSoc = new Socket(ip, port);
+				dataConnection = new DataConnectionHandler(clientActiveSoc, this);
+				dataConnection.start();
+				this.dos.writeUTF("227 Server connected to " + ip + "/" + port);
 				break;
 			case "LIST":
 				putMessage("LIST " + msg);

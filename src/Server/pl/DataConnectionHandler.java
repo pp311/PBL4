@@ -23,7 +23,8 @@ import Server.dto.*;
 
 
 public class DataConnectionHandler extends Thread{
-	private ServerSocket soc;
+	//private ServerSocket soc;
+	private Socket clientSoc;
 	private ListenHandler producer;
 	private static final int MAX_BUFFER = 8192;
 	private DataInputStream dis;
@@ -31,14 +32,15 @@ public class DataConnectionHandler extends Thread{
 	private byte[] buffer;
 	private int read;
 	private volatile String response = "";
-	public DataConnectionHandler(ServerSocket soc, ListenHandler producer) {
-		this.soc = soc;
+	public DataConnectionHandler(Socket clientSoc, ListenHandler producer) {
+		this.clientSoc = clientSoc;
 		this.producer = producer;
+
 	}
 	
 	public void run() {
 		try {
-			Socket clientSoc = soc.accept();
+				//Socket clientSoc = producer.dataServer.accept();
 			
 				String message = producer.getMessage();
 	            String cmd = message.substring(0, message.indexOf(" "));
@@ -103,7 +105,7 @@ public class DataConnectionHandler extends Thread{
 					
 				}
 	            clientSoc.close();
-	            soc.close();
+//	            soc.close();
 	            
 			
 		} catch (IOException | InterruptedException e1) {

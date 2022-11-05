@@ -50,6 +50,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	private JButton btnNewFolder;
 	private JButton btnShare;
 	private ArrayList<FileDto> files;
+	private String defaultMode = "PORT";
 	
 	//ExecutorService threadPool = Executors.newFixedThreadPool(1);
 
@@ -292,7 +293,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
 						      if(!getFileInfo(filename).getType().equals("Dir")) {
 						    		 // success = downloadSingleFile(downloadPath, saveDir);
-						    	  	task = new DownloadTask(downloadPath, saveDir, this, false);
+						    	  	task = new DownloadTask(downloadPath, saveDir, this, false, defaultMode);
 								}
 						      else {
 						    	  File newDir = new File(saveDir);
@@ -300,7 +301,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					                if (created) {
 					                    System.out.println("CREATED the directory: " + saveDir);
 					                }
-					                task = new DownloadTask(downloadPath, saveDir, this, true);
+					                task = new DownloadTask(downloadPath, saveDir, this, true, defaultMode);
 						    	  //success = downloadDirectory(downloadPath, saveDir);
 						      }
 						      task.execute();
