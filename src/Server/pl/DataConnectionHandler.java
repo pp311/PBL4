@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Server.bll.UploadBLL;
 import Server.dto.*;
 
 
@@ -35,12 +36,11 @@ public class DataConnectionHandler extends Thread{
 	public DataConnectionHandler(Socket clientSoc, ListenHandler producer) {
 		this.clientSoc = clientSoc;
 		this.producer = producer;
-
 	}
 	
 	public void run() {
 		try {
-				//Socket clientSoc = producer.dataServer.accept();
+				//Socket clientSoc = soc.accept();
 			
 				String message = producer.getMessage();
 	            String cmd = message.substring(0, message.indexOf(" "));
@@ -81,7 +81,34 @@ public class DataConnectionHandler extends Thread{
 						dos.flush();
 						buffer = new byte[MAX_BUFFER];
 					}
-					response = "226 Transfer completed";
+					
+					File file = new File (baseDir+params);
+					FileDto fDto = new FileDto();
+					Path p = Paths.get(file.getAbsolutePath());
+					BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+					fDto.setName(file.getName());
+					fDto.setType(attr.isDirectory() ? "Dir" : "File");
+					fDto.setPath(p.toString());
+					//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+					fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+					if (new UploadBLL().checkFileExists(fDto)==false )
+					{
+						fDto.setOwner(producer.userName);
+						//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+					}
+					else {
+						fDto.setOwner("");
+					}	
+					fDto.setLastEditedBy(producer.userName);
+					fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+					fDto.setSize(attr.size());
+					if (new UploadBLL().uploadFile(fDto)) {
+						response = "226 Transfer completed";
+					}
+					else {
+						response = "502 Command not implemented";
+					}
+					
 					dis.close();
 					dos.close();
 					
