@@ -7,11 +7,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
 
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
+import Server.dto.FileDto;
 
 class ListenHandler extends Thread {
 	private static final int PASV_PORT_START = 25000;
@@ -26,6 +32,7 @@ class ListenHandler extends Thread {
 	public String userName = "";
 	private String password = "";
 	private String workingDir = "/";
+//	public String baseDir = "D:\\Tai xuong\\ftp";
 	public String baseDir = "/home/shared";
 	static final int MAX = 7;
 	private String response;
@@ -116,8 +123,27 @@ public void run(){
 				break;
 			case "DELE":
 				File deleteDir = new File(baseDir + msg);
-				deleteDirectory(deleteDir);
-				dos.writeUTF("250 Delete operation successful");
+				FileDto fileDto = new FileDto();
+				Path pa = Paths.get(deleteDir.getAbsolutePath());
+				BasicFileAttributes attri = Files.readAttributes(pa, BasicFileAttributes.class);
+				fileDto.setPath(pa.toString());
+				fileDto.setName(deleteDir.getName());
+				fileDto.setType(attri.isDirectory() ? "Dir" : "File");
+//				if (fileDto.getType().compareTo("Dir")==0)
+//				{
+//					
+//				}
+//				else {
+//					
+//				}
+				if (new UploadBLL().delFile(fileDto)) {
+					deleteDirectory(deleteDir);
+					dos.writeUTF("250 Delete operation successful");
+				}
+				else {
+					dos.writeUTF("502 Command not implemented");
+				}
+				
 				break;
 			case "CWD":
 				if(!msg.equals(".."))
@@ -130,20 +156,51 @@ public void run(){
 				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			case "MKD":
-				File newDir = new File(baseDir + File.separator + msg);
+				File newDir = new File(baseDir + "\\" + msg);
                 boolean success = newDir.mkdir();
+                FileDto fDto = new FileDto();
+                Path p = Paths.get(newDir.getAbsolutePath());
+				BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+				fDto.setName(newDir.getName());
+				fDto.setType("Dir");
+				fDto.setPath(p.toString());
+				fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+				if (new UploadBLL().checkFileExists(fDto)==false )
+				{
+					fDto.setOwner(userName);
+				}
+				else {
+					fDto.setOwner("");
+				}	
+				fDto.setLastEditedBy(userName);
+				fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+				fDto.setSize(attr.size());
+				int x= new UploadBLL().parentID(fDto);
+			    if (x!=0)
+			    {
+			    	fDto.setParentID(x);
+			    }
+			    else {
+					fDto.setParentID(0);
+				}
+				if (new UploadBLL().uploadFile(fDto) && success) {
+					dos.writeUTF("257 \"/" + msg + "\" created");
+				}
+				else {
+					dos.writeUTF("502 Command not implemented");
+				}
 //                if (success) {
 //                	JOptionPane.showMessageDialog(null, "Successfully created directory: " + name);
 //                } else {
 //                	JOptionPane.showMessageDialog(null, "Failed to create directory. See server's reply.");		                 
 //                }
 				//this.dos.writeUTF("MKD "+ workingDir);
-                if(success) {
-                	dos.writeUTF("257 \"/" + msg + "\" created");
-                }
-                else {
-                	dos.writeUTF("502 Command not implemented");
-                }
+//                if(success) {
+//                	dos.writeUTF("257 \"/" + msg + "\" created");
+//                }
+//                else {
+//                	dos.writeUTF("502 Command not implemented");
+//                }
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );

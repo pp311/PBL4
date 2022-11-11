@@ -29,7 +29,7 @@ public class UploadDAL {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql1);
 			String path = files.getPath();
-			path = path.substring(0, path.indexOf(File.separator));
+			path = path.substring(0, path.lastIndexOf(File.separator));
 			ps.setString(1, files.getPath());
 			//ps.setString(2, files.getName());
 			ResultSet rs = ps.executeQuery();
@@ -105,6 +105,79 @@ public class UploadDAL {
 			return false;
 		}
 		return false;
+	}
+//	public boolean delDir(Files files)
+//	{
+//		String sql = "delete from Files where Path = ? and Name = ?";
+//		try {
+//			Connection db = DBConnection.getInstance().getConection();
+//			ps = db.prepareStatement(sql);
+//			ps.setString(1, files.getPath());
+//			ps.setString(2, files.getName());
+//			ps.execute();
+//		}
+//		catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//			return false;
+//		}
+//		return true;
+//	}
+	public boolean delFile(Files files)
+	{
+		String sql = "delete from Files where Path = ? and Name = ?";
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			ps.setString(1, files.getPath());
+			ps.setString(2, files.getName());
+			ps.execute();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public int findFID(Files files)
+	{
+		String sql1 = "select FID from Files where Name = ? and Path = ? ";		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			String path = files.getPath();
+			path = path.substring(0, path.indexOf("\\"));
+			ps.setString(1, files.getName());
+			ps.setString(2, files.getPath());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				return rs.getInt("FID");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+		return 0;
+	}
+	public boolean deleteFile(Files files)
+	{
+		String sql = "delete from Files where FID = ?";
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			ps.setInt(1, files.getFID());
+			ps.execute();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
 }
