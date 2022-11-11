@@ -4,6 +4,7 @@ import Server.models.*;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,13 +23,13 @@ public class UploadDAL {
 	}
 	public int parentID (Files files)
 	{
-		String sql1 = "select FID from files where Path = ? ";
+		String sql1 = "select FID from Files where Path = ? ";
 	
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql1);
 			String path = files.getPath();
-			path = path.substring(0, path.indexOf("\\"));
+			path = path.substring(0, path.indexOf(File.separator));
 			ps.setString(1, files.getPath());
 			//ps.setString(2, files.getName());
 			ResultSet rs = ps.executeQuery();
@@ -52,7 +53,7 @@ public class UploadDAL {
 		    Connection db = DBConnection.getInstance().getConection();
 		    files.setFID(parentID(files));
 			if(files.getOwner() != null && files.getOwner() != "") {
-				String sql = "insert into files(ParentID, Name, Type, Path, Size, CreatedDate, Owner, LastEditedDate, LastEditedBy, Permission) values "
+				String sql = "insert into Files(ParentID, Name, Type, Path, Size, CreatedDate, Owner, LastEditedDate, LastEditedBy, Permission) values "
 						+ "( ?, ?, ?,?,?,?,?, ?, ? ,?)";	
 				ps = db.prepareStatement(sql);
 				ps.setInt(1, files.getParentID());
@@ -67,7 +68,7 @@ public class UploadDAL {
 				ps.setInt(10, files.getPermission());
 			}
 			else {
-				String sql = "update files set Size = ?, LastEditedDate = ?, LastEditedBy = ? where Name = ? and Path = ? ";	
+				String sql = "update Files set Size = ?, LastEditedDate = ?, LastEditedBy = ? where Name = ? and Path = ? ";	
 				ps = db.prepareStatement(sql);
 				
 				ps.setLong(1, files.getSize());
@@ -89,7 +90,7 @@ public class UploadDAL {
 	}
 	public boolean checkFileExists(Files files )
 	{
-		String sql = "select * from files where Name = ? and Path = ? ";
+		String sql = "select * from Files where Name = ? and Path = ? ";
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql);
