@@ -124,15 +124,23 @@ public class UploadDAL {
 //		return true;
 //	}
 	public boolean delFile(Files files)
-	{
-		String sql = "delete from Files where Path = ? and Name = ?";
+	{ 
 		try {
+			String sql;
 			Connection db = DBConnection.getInstance().getConection();
-			ps = db.prepareStatement(sql);
-			ps.setString(1, files.getPath());
-			ps.setString(2, files.getName());
+			if(files.getType() == "Dir") {
+				sql = "delete from Files where Path like ?";
+				ps = db.prepareStatement(sql);
+				ps.setString(1, files.getPath() + "%");
+			}
+			else {
+				sql = "delete from Files where Path = ? and Name = ?";
+				ps = db.prepareStatement(sql);
+				ps.setString(1, files.getPath());
+				ps.setString(2, files.getName());
+			}
 			ps.execute();
-		}
+		}		
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

@@ -42,6 +42,7 @@ public class UploadBLL {
 		Files file = new Files();
 		file.setName(fDto.getName());
 		file.setPath(fDto.getPath());
+		file.setType(fDto.getType());
 		return uploadDAL.delFile(file);
 	}
 }

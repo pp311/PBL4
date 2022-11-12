@@ -33,7 +33,7 @@ class ListenHandler extends Thread {
 	private String password = "";
 	private String workingDir = "/";
 //	public String baseDir = "D:\\Tai xuong\\ftp";
-	public String baseDir = "/home/shared";
+	public String baseDir = "/home/shared/";
 	static final int MAX = 7;
 	private String response;
     private Vector messages = new Vector();
@@ -156,7 +156,7 @@ public void run(){
 				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			case "MKD":
-				File newDir = new File(baseDir + "\\" + msg);
+				File newDir = new File(baseDir + File.separator + msg);
                 boolean success = newDir.mkdir();
                 FileDto fDto = new FileDto();
                 Path p = Paths.get(newDir.getAbsolutePath());
