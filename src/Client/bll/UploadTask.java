@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -15,7 +19,7 @@ import javax.swing.SwingWorker;
 
 import Client.view.Client;
 
-public class UploadTask extends SwingWorker<Void, Void>{
+public class UploadTask extends SwingWorker<String, String>{
 	private File localFile;
 	private String uploadDir;
 	private Client client;
@@ -30,7 +34,7 @@ public class UploadTask extends SwingWorker<Void, Void>{
 		this.mode = mode;
 	}
 	@Override
-	protected Void doInBackground() throws Exception {
+	protected String doInBackground() throws Exception {
 		// TODO Auto-generated method stub
 		if(localFile.isFile()) {
 			uploadSingleFile(localFile, uploadDir);			
@@ -41,8 +45,18 @@ public class UploadTask extends SwingWorker<Void, Void>{
 		return null;
 	}
 	
+	@Override
+	protected void process(List<String> chunks) {
+		client.lblTask.setText(chunks.get(chunks.size()-1));
+	} 
+	
 	private void uploadSingleFile(File localFile, String uploadDir) {
 		try {
+			Path p = Paths.get(localFile.getAbsolutePath());
+			long size = Files.size(p);
+			long uploaded = 0;
+			int percentCompleted = 0;
+			publish("Uploading " + localFile.getAbsolutePath());
 			ServerSocket dataServer = null;
 			Socket datasoc = null;
 			int port = 0;
@@ -76,6 +90,9 @@ public class UploadTask extends SwingWorker<Void, Void>{
 			while((read = datadis.read(buffer)) != -1) {
 				datados.write(buffer, 0, read);
 				datados.flush();
+				uploaded += read;
+				percentCompleted = (int) (uploaded * 100 / size);
+				setProgress(percentCompleted);
 				buffer = new byte[Client.MAX_BUFFER];
 			}
 			datadis.close();
@@ -131,12 +148,17 @@ public class UploadTask extends SwingWorker<Void, Void>{
 	@Override
     protected void done() {
         if (!isCancelled()) {
-            JOptionPane.showMessageDialog(null,
-                    "\"" + localFile.getName() + "\"" + " has been uploaded successfully!", "Message",
-                    JOptionPane.INFORMATION_MESSAGE);
+        	int ok = JOptionPane.showOptionDialog(null,
+            		"\"" + localFile.getName() + "\"" + " has been downloaded successfully!", "Message",
+            		JOptionPane.OK_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if(ok == JOptionPane.OK_OPTION) {
+            	client.progressBar.setVisible(false);
+            	client.lblPercent.setText("");
+            	client.lblTask.setText("");
+            }
             client.loadTable();
-            client.isFileTransfering = false;
         }
-    }  
-	
+        client.isFileTransfering = false;
+	}
 }

@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import Client.view.Client;
 import Server.dto.FileDto;
 import Server.pl.DataConnectionHandler;
 
-public class DownloadTask extends SwingWorker<Void, Void>{
+public class DownloadTask extends SwingWorker<String, String>{
 	Client client;
 	String downloadPath;
 	String saveDir;
@@ -37,7 +38,7 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 		
 	}
 	@Override
-	protected Void doInBackground() throws Exception {
+	protected String doInBackground() throws Exception {
 		if(!isDirectory) {
 			downloadSingleFile(downloadPath, saveDir);
 		}
@@ -45,9 +46,18 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 		
 		return null;
 	}
+	@Override
+	protected void process(List<String> chunks) {
+		client.lblTask.setText(chunks.get(chunks.size()-1));
+	} 
 	
 	private boolean downloadSingleFile(String downloadPath, String saveDir) {
 		try {
+			FileDto fileInfo = client.listFiles(downloadPath).get(0);
+			long size = fileInfo.getSize();
+			long downloaded = 0;
+			int percentCompleted = 0;
+			publish("Downloading " + downloadPath);
 			DataInputStream datadis;
 			DataOutputStream datados;
 			ServerSocket dataServer = null;
@@ -85,8 +95,12 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 			while((read = datadis.read(buffer)) != -1) {
 				datados.write(buffer, 0, read);
 				datados.flush();
+				downloaded += read;
+				percentCompleted = (int) (downloaded * 100 / size);
+				setProgress(percentCompleted);
 				buffer = new byte[Client.MAX_BUFFER];
 			}
+			//publish("Closing connection...");
 			datadis.close();
 			datados.close();
 			datasoc.close();
@@ -114,7 +128,7 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 				            String remoteFilePath = remoteDirPath + "/" + aFile.getName();
 				            //lưu ý currentLocalPath có thể là dg dẫn tới folder hoặc file
 				            String currentLocalPath = saveDirPath + File.separator + aFile.getName();
-				            if (aFile.getType() == "Dir") {
+				            if (aFile.getType().equals("Dir")) {
 				                // create the directory in saveDir
 				                File newDir = new File(currentLocalPath);
 				                boolean created = newDir.mkdirs();
@@ -146,12 +160,18 @@ public class DownloadTask extends SwingWorker<Void, Void>{
 			@Override
 		    protected void done() {
 		        if (!isCancelled()) {
-		            JOptionPane.showMessageDialog(null,
-		            		"\"" + filename + "\"" + " has been uploaded successfully!", "Message",
-		                    JOptionPane.INFORMATION_MESSAGE);
+		            int ok = JOptionPane.showOptionDialog(null,
+		            		"\"" + filename + "\"" + " has been downloaded successfully!", "Message",
+		            		JOptionPane.OK_OPTION,
+		                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
+		            if(ok == JOptionPane.OK_OPTION) {
+		            	client.progressBar.setVisible(false);
+		            	client.lblPercent.setText("");
+		            	client.lblTask.setText("");
+		            }
 		            client.loadTable();
-		            client.isFileTransfering = false;
 		        }
+		        client.isFileTransfering = false;
 		    }  
 	
 

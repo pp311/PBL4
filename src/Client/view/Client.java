@@ -27,9 +27,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 
-public class Client extends JFrame implements ActionListener, Runnable {
+public class Client extends JFrame implements ActionListener, Runnable, PropertyChangeListener {
 	public static final int MAX_BUFFER = 8192;
 	private JPanel contentPane;
 	private Socket soc;
@@ -44,8 +46,9 @@ public class Client extends JFrame implements ActionListener, Runnable {
 
 	public volatile boolean isFileTransfering = false;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JProgressBar progressBar;
+	public JLabel lblPercent;
+	public JLabel lblTask;
+	public JProgressBar progressBar;
 	private JButton btnBack;
 	private JButton btnDownload;
 	private JFileChooser chooser;
@@ -268,7 +271,10 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				//giống khi download, khi upload cug cần đg dẫn kèm cả tên file cần up lên
 				String uploadDir = workingDir + filename;
 				try {
+					progressBar.setValue(0);
+				    progressBar.setVisible(true);
 					UploadTask task = new UploadTask(localFile, uploadDir, this, defaultMode);
+					task.addPropertyChangeListener(this);
 					task.execute();
 					isFileTransfering = true;
 //					boolean done = true;
@@ -315,6 +321,9 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				      //nhưng khi làm việc với dg dẫn của client thì dùng File.separator
 				      saveDir += File.separator + filename;
 				      //boolean success = true;
+				      progressBar.setValue(0);
+				      progressBar.setVisible(true);
+				      
 				      DownloadTask task;
 				      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
 						      if(!getFileInfo(filename).getType().equals("Dir")) {
@@ -330,6 +339,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					                task = new DownloadTask(downloadPath, saveDir, this, true, defaultMode);
 						    	  //success = downloadDirectory(downloadPath, saveDir);
 						      }
+						      task.addPropertyChangeListener(this);
 						      task.execute();
 						      isFileTransfering = true;
 //				      if (success) {
@@ -465,7 +475,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		this.dos = dos;
 		this.server = server;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 400, 700, 450);
+		setBounds(400, 400, 700, 480);
 
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -529,13 +539,12 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		getContentPane().add(btnNewFolder);
 		
 		progressBar = new JProgressBar();
-		progressBar.setBounds(74, 411, 502, 25);
+		progressBar.setBounds(59, 435, 502, 25);
 		getContentPane().add(progressBar);
 		progressBar.setVisible(false);
-		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setVisible(false);
-		lblNewLabel_1.setBounds(581, 411, 70, 25);
-		getContentPane().add(lblNewLabel_1);
+		lblPercent = new JLabel("");
+		lblPercent.setBounds(579, 435, 70, 25);
+		getContentPane().add(lblPercent);
 		
 		JLabel lblngDngTruyn = new JLabel("ỨNG DỤNG TRUYỀN TẢI FILE");
 		lblngDngTruyn.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -546,15 +555,29 @@ public class Client extends JFrame implements ActionListener, Runnable {
 		btnShare = new JButton("Share");
 		btnShare.setBounds(573, 126, 93, 25);
 		contentPane.add(btnShare);
+		
+		lblTask = new JLabel("");
+		lblTask.setBounds(59, 411, 502, 15);
+		contentPane.add(lblTask);
 		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);
 		btnDownload.addActionListener(this);
 		btnUploadFile.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnNewFolder.addActionListener(this);
-		
+		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại
 		printCurrentDir();
 		loadTable();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		if(evt.getPropertyName() == "progress") {
+			int progress = (int) evt.getNewValue();
+            progressBar.setValue(progress);
+            lblPercent.setText("" + progress + "%");
+		}
 	}
 }
