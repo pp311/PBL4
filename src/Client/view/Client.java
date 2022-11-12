@@ -2,9 +2,12 @@ package Client.view;
 
 import java.awt.*;
 import java.io.*;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,7 +36,8 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	public DataOutputStream dos;
 	public DataInputStream dis;
 	public String server;
-	
+	private static final int PORT_RANGE_START = 20000;
+	private static final int PORT_RANGE_END = 22000;
 	private JTable table;
 	DefaultTableModel dtm;
 	private String workingDir = "/";
@@ -99,11 +103,32 @@ public class Client extends JFrame implements ActionListener, Runnable {
 	
 	public ArrayList<FileDto> listFiles (String path) {
 		ArrayList<FileDto> files = null;
+		int port = 0;
+		Socket datasoc = null;
+		ServerSocket dataServer = null;
+		Random generator = new Random();
 		try {
-			dos.writeUTF("PASV");
-			String response = showServerResponse();
-			int port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-			Socket datasoc = new Socket(server, port);
+			if (this.defaultMode == "PASV") {
+				dos.writeUTF("PASV");
+				String response = showServerResponse();
+				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
+				datasoc = new Socket(server, port);				
+			}
+			else {
+				while(true) {
+					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
+					try {
+						dataServer = new ServerSocket(port);
+						break;
+					} catch (IOException e) {
+						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
+						//catch ở đây để vòng lặp while dc tiếp tuc lặp
+					}
+				}
+				dos.writeUTF("PORT (" + InetAddress.getLocalHost().getHostAddress() + "|" + port + ")");
+				datasoc = dataServer.accept();
+				showServerResponse();
+			}
 			dos.writeUTF("LIST " + (path != null && path != "" ? path : workingDir));
 			ObjectInputStream oos = new ObjectInputStream(datasoc.getInputStream());
 			files = (ArrayList<FileDto>)oos.readObject();
@@ -218,6 +243,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
 				return;
 			}
+			if(workingDir.equals("/")) return;
 			try {
 				dos.writeUTF("CWD ..");
 				showServerResponse();
@@ -242,7 +268,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 				//giống khi download, khi upload cug cần đg dẫn kèm cả tên file cần up lên
 				String uploadDir = workingDir + filename;
 				try {
-					UploadTask task = new UploadTask(localFile, uploadDir, this);
+					UploadTask task = new UploadTask(localFile, uploadDir, this, defaultMode);
 					task.execute();
 					isFileTransfering = true;
 //					boolean done = true;
