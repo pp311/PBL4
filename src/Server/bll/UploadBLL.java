@@ -31,4 +31,18 @@ public class UploadBLL {
 		file.setPath(fDto.getPath());
 		return uploadDAL.checkFileExists(file);
 	}
+	public int parentID (FileDto fDto)
+	{
+		Files file = new Files();
+		file.setPath(fDto.getPath());
+		return uploadDAL.parentID(file);
+	}
+	public boolean delFile (FileDto fDto)
+	{
+		Files file = new Files();
+		file.setName(fDto.getName());
+		file.setPath(fDto.getPath());
+		file.setType(fDto.getType());
+		return uploadDAL.delFile(file);
+	}
 }

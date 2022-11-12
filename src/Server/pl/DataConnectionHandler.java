@@ -102,6 +102,14 @@ public class DataConnectionHandler extends Thread{
 					fDto.setLastEditedBy(producer.userName);
 					fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
 					fDto.setSize(attr.size());
+					int x= new UploadBLL().parentID(fDto);
+				    if (x!=0)
+				    {
+				    	fDto.setParentID(x);
+				    }
+				    else {
+						fDto.setParentID(0);
+					}
 					if (new UploadBLL().uploadFile(fDto)) {
 						response = "226 Transfer completed";
 					}
