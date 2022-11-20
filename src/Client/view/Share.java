@@ -167,7 +167,7 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 		contentPane.add(lblAnyoneCan);
 		
 		JComboBox cbbAnyone = new JComboBox();
-		cbbAnyone.setModel(new DefaultComboBoxModel(new String[] {"None", "View", "Edit", "Delete"}));
+		cbbAnyone.setModel(new DefaultComboBoxModel(new String[] {"View", "Edit", "Delete"}));
 		cbbAnyone.setSelectedIndex(0);
 		cbbAnyone.setEditable(true);
 		cbbAnyone.setBounds(152, 80, 171, 24);

@@ -63,7 +63,7 @@ public class Login extends JFrame implements ActionListener{
 	public Login() {
 		setTitle("Form Đăng Nhập");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 500);
+		setBounds(100, 100, 480, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -72,22 +72,22 @@ public class Login extends JFrame implements ActionListener{
 		
 		JLabel lblNewLabel = new JLabel("Sever IP : ");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblNewLabel.setBounds(30, 78, 123, 46);
+		lblNewLabel.setBounds(30, 186, 123, 46);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblPort = new JLabel("Port : ");
 		lblPort.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblPort.setBounds(30, 140, 123, 46);
+		lblPort.setBounds(30, 244, 123, 46);
 		contentPane.add(lblPort);
 		
 		JLabel lblUsername = new JLabel("Username : ");
 		lblUsername.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblUsername.setBounds(30, 197, 123, 46);
+		lblUsername.setBounds(30, 70, 123, 46);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password : ");
 		lblPassword.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblPassword.setBounds(30, 263, 123, 46);
+		lblPassword.setBounds(30, 128, 123, 46);
 		contentPane.add(lblPassword);
 		
 		JLabel lblNewLabel_1 = new JLabel("LOGIN");
@@ -96,49 +96,54 @@ public class Login extends JFrame implements ActionListener{
 		contentPane.add(lblNewLabel_1);
 		
 		tf_sever = new JTextField();
-		tf_sever.setBounds(156, 88, 265, 30);
+		tf_sever.setBounds(156, 196, 265, 30);
 		contentPane.add(tf_sever);
 		tf_sever.setColumns(10);
 		
 		tf_port = new JTextField();
 		tf_port.setColumns(10);
-		tf_port.setBounds(156, 150, 265, 30);
+		tf_port.setBounds(156, 254, 265, 30);
 		tf_port.setText("2100");
 		contentPane.add(tf_port);
 		
 		
 		tf_username = new JTextField();
 		tf_username.setColumns(10);
-		tf_username.setBounds(156, 207, 265, 30);
+		tf_username.setBounds(156, 80, 265, 30);
 		contentPane.add(tf_username);
 		
 		btn_OK = new JButton("OK");
 		btn_OK.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btn_OK.setBounds(93, 409, 105, 39);
+		btn_OK.setBounds(93, 347, 105, 39);
 		contentPane.add(btn_OK);
 		
 		btn_Cancel = new JButton("Cancel");
 		btn_Cancel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btn_Cancel.setBounds(266, 409, 105, 39);
+		btn_Cancel.setBounds(264, 347, 105, 39);
 		contentPane.add(btn_Cancel);
 		
 		rb_Tftp = new JRadioButton("TFTP");
 		buttonGroup.add(rb_Tftp);
-		rb_Tftp.setBounds(255, 341, 65, 27);
+		rb_Tftp.setBounds(254, 298, 65, 27);
 		contentPane.add(rb_Tftp);
 		rb_Tftp.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		rb_Ftp = new JRadioButton("FTP");
 		buttonGroup.add(rb_Ftp);
-		rb_Ftp.setBounds(127, 341, 55, 27);
+		rb_Ftp.setBounds(118, 298, 55, 27);
 		contentPane.add(rb_Ftp);
 		rb_Ftp.setSelected(true);
 		rb_Ftp.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		pf_password = new JPasswordField();
 		pf_password.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		pf_password.setBounds(156, 271, 265, 30);
+		pf_password.setBounds(156, 137, 265, 30);
 		contentPane.add(pf_password);
+		
+		rb_Ftp.setVisible(false);
+		rb_Tftp.setVisible(false);
+		lblPort.setVisible(false);
+		tf_port.setVisible(false);
 		
 		btn_OK.addActionListener(this);
 		btn_Cancel.addActionListener(this);

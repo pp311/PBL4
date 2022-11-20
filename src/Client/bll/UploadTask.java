@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -36,12 +37,14 @@ public class UploadTask extends SwingWorker<String, String>{
 	@Override
 	protected String doInBackground() throws Exception {
 		// TODO Auto-generated method stub
+		long start = System.nanoTime(); 
 		if(localFile.isFile()) {
 			uploadSingleFile(localFile, uploadDir);			
 		} else {
 			uploadDirectory(localFile, uploadDir);
 		}
-		
+		long totalTime = System.nanoTime() - start;
+		System.out.println(TimeUnit.MILLISECONDS.convert(totalTime, TimeUnit.NANOSECONDS));
 		return null;
 	}
 	
@@ -150,9 +153,9 @@ public class UploadTask extends SwingWorker<String, String>{
         if (!isCancelled()) {
         	int ok = JOptionPane.showOptionDialog(null,
             		"\"" + localFile.getName() + "\"" + " has been downloaded successfully!", "Message",
-            		JOptionPane.OK_OPTION,
+            		JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, null, null, null);
-            if(ok == JOptionPane.OK_OPTION) {
+            if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {
             	client.progressBar.setVisible(false);
             	client.lblPercent.setText("");
             	client.lblTask.setText("");

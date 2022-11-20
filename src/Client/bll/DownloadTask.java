@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -39,11 +40,14 @@ public class DownloadTask extends SwingWorker<String, String>{
 	}
 	@Override
 	protected String doInBackground() throws Exception {
+		long start = System.nanoTime(); 
 		if(!isDirectory) {
 			downloadSingleFile(downloadPath, saveDir);
 		}
 		else downloadDirectory(downloadPath, saveDir);
 		
+		long totalTime = System.nanoTime() - start;
+		System.out.println(TimeUnit.MILLISECONDS.convert(totalTime, TimeUnit.NANOSECONDS));
 		return null;
 	}
 	@Override
@@ -162,9 +166,9 @@ public class DownloadTask extends SwingWorker<String, String>{
 		        if (!isCancelled()) {
 		            int ok = JOptionPane.showOptionDialog(null,
 		            		"\"" + filename + "\"" + " has been downloaded successfully!", "Message",
-		            		JOptionPane.OK_OPTION,
+		            		JOptionPane.OK_CANCEL_OPTION,
 		                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
-		            if(ok == JOptionPane.OK_OPTION) {
+		            if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {
 		            	client.progressBar.setVisible(false);
 		            	client.lblPercent.setText("");
 		            	client.lblTask.setText("");

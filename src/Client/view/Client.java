@@ -5,6 +5,10 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import Client.bll.DownloadTask;
+import Client.bll.TFTPTransfer;
 import Client.bll.UploadTask;
 
 import java.awt.Font;
@@ -56,8 +61,10 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private JButton btnDelete;
 	private JButton btnNewFolder;
 	private JButton btnShare;
+	private JButton btnSettings;
 	private ArrayList<FileDto> files;
-	private String defaultMode = "PORT";
+	public String defaultMode = "PASV";
+	public String defaultMethod = "FTP";
 	
 	//ExecutorService threadPool = Executors.newFixedThreadPool(1);
 
@@ -219,6 +226,11 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	public void actionPerformed(ActionEvent e) {
 		chooser = new JFileChooser(); 
 		
+		if(e.getSource() == btnSettings) {
+			Settings frame = new Settings(defaultMethod, defaultMode, this);
+			frame.setVisible(true);
+		}
+		
 		if(e.getSource() == btnShare) {
 			Share frame = new Share();
 			frame.setVisible(true);
@@ -273,10 +285,34 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				try {
 					progressBar.setValue(0);
 				    progressBar.setVisible(true);
-					UploadTask task = new UploadTask(localFile, uploadDir, this, defaultMode);
-					task.addPropertyChangeListener(this);
-					task.execute();
-					isFileTransfering = true;
+				    if(!defaultMethod.equals("TFTP")) {
+				    	UploadTask task = new UploadTask(localFile, uploadDir, this, defaultMode);
+						task.addPropertyChangeListener(this);
+						task.execute();
+						isFileTransfering = true;
+				    }
+				    else {
+				    	
+				    	if(localFile.isDirectory()) {
+				    		JOptionPane.showMessageDialog(null, "Không hỗ trợ upload thư mục đối với TFTP");
+				    		return;
+				    	}
+				    	FileDto fileInfo = new FileDto();
+				    	Path p = Paths.get(localFile.getAbsolutePath());
+						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+				    	fileInfo.setName(filename);
+				    	fileInfo.setPath(workingDir + filename);
+				    	fileInfo.setSize(attr.size());
+				    	if(attr.size() > 32500*32500) {
+				    		JOptionPane.showMessageDialog(null, "TFTP chỉ hỗ trợ upload file dưới 1GB");
+				    	}
+				    	
+				    	TFTPTransfer task = new TFTPTransfer("Upload", this, fileInfo, server, localFile.getAbsolutePath());
+				    	task.addPropertyChangeListener(this);
+						task.execute();
+						isFileTransfering = true;
+				    }
+					
 //					boolean done = true;
 //					if(localFile.isFile()) {
 //						//done = uploadSingleFile(localFile, uploadDir);
@@ -324,8 +360,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				      progressBar.setValue(0);
 				      progressBar.setVisible(true);
 				      
-				      DownloadTask task;
-				      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
+				      if(!defaultMethod.equals("TFTP")) {
+				    	  DownloadTask task;
+					      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
 						      if(!getFileInfo(filename).getType().equals("Dir")) {
 						    		 // success = downloadSingleFile(downloadPath, saveDir);
 						    	  	task = new DownloadTask(downloadPath, saveDir, this, false, defaultMode);
@@ -342,6 +379,24 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 						      task.addPropertyChangeListener(this);
 						      task.execute();
 						      isFileTransfering = true;
+				      }
+				      else {
+				    	  FileDto fileInfo = getFileInfo(filename);
+				    	  if(fileInfo.getType().equals("Dir")) {
+					    		JOptionPane.showMessageDialog(null, "Không hỗ trợ download thư mục đối với TFTP");
+					    		return;
+					    	}
+				    	  if(fileInfo.getSize() > 32500*32500) {
+					    		JOptionPane.showMessageDialog(null, "TFTP chỉ hỗ trợ download file dưới 1GB");
+					    		return;
+					    	}
+				    	  fileInfo.setPath(workingDir + filename);
+				    	  TFTPTransfer task = new TFTPTransfer("Download", this, fileInfo, server, saveDir);
+				    	  task.addPropertyChangeListener(this);
+					      task.execute();
+					      isFileTransfering = true;
+				      }
+				      
 //				      if (success) {
 //				    	  JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " has been downloaded successfully.");
 //			            };
@@ -559,12 +614,17 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		lblTask = new JLabel("");
 		lblTask.setBounds(59, 411, 502, 15);
 		contentPane.add(lblTask);
+		
+		btnSettings = new JButton("Settings");
+		btnSettings.setBounds(561, 67, 105, 25);
+		contentPane.add(btnSettings);
 		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);
 		btnDownload.addActionListener(this);
 		btnUploadFile.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnNewFolder.addActionListener(this);
+		btnSettings.addActionListener(this);
 		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại
 		printCurrentDir();
