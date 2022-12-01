@@ -37,13 +37,13 @@ public class TFTPListenHandler extends Thread{
 	public static final short ERR_EXISTS = 6;
 	public static String mode;
 	private ListenHandler lh;
+
 	public static final String[] errorCodes = {"Not defined", "File not found.", "Access violation.", 
 												"Disk full or allocation exceeded.", "Illegal TFTP operation.", 
 												"Unknown transfer ID.", "File already exists.", 
 												"No such user."};
 	
-	public TFTPListenHandler(ListenHandler lh) {
-		this.lh = lh;
+	public TFTPListenHandler() {
 	}
 	
 	public void run() {
@@ -227,13 +227,13 @@ public class TFTPListenHandler extends Thread{
 							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 							if (new UploadBLL().checkFileExists(fDto)==false )
 							{
-								fDto.setOwner(lh.userName);
+								fDto.setOwner("admin1");
 								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
 							}
 							else {
 								fDto.setOwner("");
 							}	
-							fDto.setLastEditedBy(lh.userName);
+							fDto.setLastEditedBy("admin1");
 							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
 							fDto.setSize(attr.size());
 							int x= new UploadBLL().parentID(fDto);

@@ -3,6 +3,7 @@ package Client.view;
 import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -11,6 +12,8 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -135,7 +138,25 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 						//catch ở đây để vòng lặp while dc tiếp tuc lặp
 					}
 				}
-				dos.writeUTF("PORT (" + InetAddress.getLocalHost().getHostAddress() + "|" + port + ")");
+				
+				String ipAddr = "";
+				Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+				for (NetworkInterface netint : Collections.list(nets)) {
+				    if (!netint.isLoopback()) {
+				        //theOneAddress = Collections.list(netint.getInetAddresses()).stream().findFirst().orElse(null);
+				    	ArrayList<InetAddress> list = Collections.list(netint.getInetAddresses());
+				    	for(int i = 0; i < list.size(); i++) {
+				    		if(list.get(i).toString().contains(":")) {
+				    			continue;
+				    		}
+				    		else {
+				    			ipAddr = list.get(i).toString();
+				    			ipAddr = ipAddr.substring(1);
+				    		}
+				    	}
+				    }
+				}
+				dos.writeUTF("PORT (" + ipAddr + "|" + port + ")");
 				datasoc = dataServer.accept();
 				showServerResponse();
 			}

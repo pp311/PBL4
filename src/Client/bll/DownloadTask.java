@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -86,7 +89,25 @@ public class DownloadTask extends SwingWorker<String, String>{
 						//catch ở đây để vòng lặp while dc tiếp tuc lặp
 					}		
 				}
-				client.dos.writeUTF("PORT (" + InetAddress.getLocalHost().getHostAddress() + "|" + port + ")");
+				String ipAddr = "";
+				Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+				for (NetworkInterface netint : Collections.list(nets)) {
+				    if (!netint.isLoopback()) {
+				        //theOneAddress = Collections.list(netint.getInetAddresses()).stream().findFirst().orElse(null);
+				    	ArrayList<InetAddress> list = Collections.list(netint.getInetAddresses());
+				    	for(int i = 0; i < list.size(); i++) {
+				    		if(list.get(i).toString().contains(":")) {
+				    			continue;
+				    		}
+				    		else {
+				    			ipAddr = list.get(i).toString();
+				    			ipAddr = ipAddr.substring(1);
+				    		}
+				    	}
+				    }
+				}
+				
+				client.dos.writeUTF("PORT (" + ipAddr + "|" + port + ")");
 				datasoc = dataServer.accept();
 				client.showServerResponse();
 			}

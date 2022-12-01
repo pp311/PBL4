@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Server.bll.FileBLL;
 import Server.bll.UploadBLL;
 import Server.dto.*;
 
@@ -49,35 +50,37 @@ public class DataConnectionHandler extends Thread{
 	            switch (cmd) {
 				case "LIST": {
 					ObjectOutputStream oos = new ObjectOutputStream(clientSoc.getOutputStream());
-					File f = new File (baseDir + params);
-					File[] files = f.listFiles();
-					ArrayList<FileDto> result = new ArrayList<FileDto>();
-					if(files != null) {
-						for(File file : files) {
-							FileDto fDto = new FileDto();
-							fDto.setName(file.getName());
-							Path p = Paths.get(file.getAbsolutePath());
-							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-							
-							fDto.setSize(attr.size());
-							fDto.setType(attr.isDirectory() ? "Dir" : "File");
-							DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-							result.add(fDto);
-						}
-					}
-					else if(f.isFile()) {
-						FileDto fDto = new FileDto();
-						fDto.setName(f.getName());
-						Path p = Paths.get(f.getAbsolutePath());
-						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-						
-						fDto.setSize(attr.size());
-						fDto.setType(attr.isDirectory() ? "Dir" : "File");
-						DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-						result.add(fDto);
-					}
+					int parentID = new UploadBLL().parentID(baseDir + params);
+					ArrayList<FileDto> result = new FileBLL().getAllFiles(parentID);
+//					File f = new File (baseDir + params);
+//					File[] files = f.listFiles();
+//					ArrayList<FileDto> result = new ArrayList<FileDto>();
+//					if(files != null) {
+//						for(File file : files) {
+//							FileDto fDto = new FileDto();
+//							fDto.setName(file.getName());
+//							Path p = Paths.get(file.getAbsolutePath());
+//							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+//							
+//							fDto.setSize(attr.size());
+//							fDto.setType(attr.isDirectory() ? "Dir" : "File");
+//							DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+//							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+//							result.add(fDto);
+//						}
+//					}
+//					else if(f.isFile()) {
+//						FileDto fDto = new FileDto();
+//						fDto.setName(f.getName());
+//						Path p = Paths.get(f.getAbsolutePath());
+//						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+//						
+//						fDto.setSize(attr.size());
+//						fDto.setType(attr.isDirectory() ? "Dir" : "File");
+//						DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+//						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+//						result.add(fDto);
+//					}
 					oos.writeObject(result);
 					response = "226 Directory send OK";
 					break;

@@ -46,6 +46,32 @@ public class UploadDAL {
 		}
 		return 0;
 	}
+	
+	public int parentID (String path)
+	{
+		path = path.substring(0, path.lastIndexOf(File.separator));
+		String sql1 = "select FID from Files where Path = " + "'" + path + "'";
+	
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			//ps.setString(1, files.getPath());
+			//ps.setString(2, files.getName());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				int i = rs.getInt("FID");
+				return i;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+		return 0;
+	}
+	
 	public boolean uploadFile (Files files)
 	{
 		//DateFormat df=new SimpleDateFormat("DD/MM/YYYY hh:mm:ss");

@@ -77,8 +77,9 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 	@Override
     protected void done() {
         if (!isCancelled()) {
+        	String action = requestType.equals("Upload") ? "uploaded" : "downloaded";
             int ok = JOptionPane.showOptionDialog(null,
-            		"\"" + fileInfo.getName() + "\"" + " has been downloaded successfully!", "Message",
+            		"\"" + fileInfo.getName() + "\"" + " has been " + action + " successfully!", "Message",
             		JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {

@@ -22,6 +22,7 @@ public class UploadBLL {
 		file.setLastEditedDate(new java.sql.Timestamp(fDto.getLastEditedDate().getTime()));
 		file.setCreatedDate(new java.sql.Timestamp(fDto.getCreatedDate().getTime()));
 		file.setSize(fDto.getSize());
+		file.setParentID(fDto.getParentID());
 		return uploadDAL.uploadFile(file);
 	}
 	public boolean checkFileExists (FileDto fDto)
@@ -36,6 +37,11 @@ public class UploadBLL {
 		Files file = new Files();
 		file.setPath(fDto.getPath());
 		return uploadDAL.parentID(file);
+	}
+	
+	public int parentID (String path)
+	{
+		return uploadDAL.parentID(path);
 	}
 	public boolean delFile (FileDto fDto)
 	{
