@@ -221,7 +221,7 @@ public class Login extends JFrame implements ActionListener{
 						EventQueue.invokeLater(new Runnable() {			
 							@Override
 							public void run() {
-								new Client(soc, dis, dos, server).setVisible(true);		
+								new Client(soc, dis, dos, server, tf_username.getText()).setVisible(true);		
 							}
 						});
 						

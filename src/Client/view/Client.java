@@ -68,6 +68,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private ArrayList<FileDto> files;
 	public String defaultMode = "PASV";
 	public String defaultMethod = "FTP";
+	public String username = "";
 	
 	//ExecutorService threadPool = Executors.newFixedThreadPool(1);
 
@@ -78,7 +79,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//Client frame = new Client();
+					//Client frame = new Client(null, null, null, null, null);
 					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -180,14 +181,18 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			//showServerResponse();
 			DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	        for (FileDto file : files) {
-	        	String[] strarr = new String[4];
+	        	String[] strarr = new String[7];
 	            strarr[0] = file.getName();
 //	            if(file.isDirectory()) {
 //	            	int count = ftpClient.listFiles(workingDir + "/" + file.getName()).length;
 //	            	strarr[1] =  count + " " + (count == 1 ? "item" : "items");
 //	            }
-	            strarr[1] = humanReadableByteCountBin(file.getSize());
-	            strarr[2] = dateFormater.format(file.getCreatedDate().getTime());
+	            strarr[1] = file.getType().equals("Dir") ? "Directory" : "File";
+	            strarr[2] = humanReadableByteCountBin(file.getSize());
+	            strarr[3] = dateFormater.format(file.getLastEditedDate().getTime());
+	            strarr[4] = file.getLastEditedBy();
+	            strarr[5] = file.getOwner();
+	            strarr[6] = file.getPermission() == 1 ? "readonly" : "write";
 	           // strarr[3] = file.getUser();
 	            dtm.addRow(strarr);
 	        }
@@ -545,13 +550,14 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	/**
 	 * Create the frame.
 	 */
-	public Client(Socket soc, DataInputStream dis, DataOutputStream dos, String server) {
+	public Client(Socket soc, DataInputStream dis, DataOutputStream dos, String server, String username) {
 		this.soc = soc;
 		this.dis = dis;
 		this.dos = dos;
 		this.server = server;
+		this.username = username;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 400, 700, 480);
+		setBounds(400, 400, 900, 480);
 
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -560,9 +566,14 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		String[] columnNames = {"File name",
+		String[] columnNames = {"Name",
+				"Type",
                 "Size",
-                "Date"};
+                "Last Edited Date",
+                "Last Edited By",
+                "Owner",
+                "Permission"
+		};
 		dtm = new DefaultTableModel(columnNames,0)  {
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -571,7 +582,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		table = new JTable(dtm);
 		table.setShowGrid(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setBounds(12, 36, 500, 500);
+		table.setBounds(12, 36, 700, 500);
 		table.addMouseListener(new MouseAdapter() {
 	         public void mouseClicked(MouseEvent me) {
 	            if (me.getClickCount() == 2) {     // to detect doble click events
@@ -584,10 +595,14 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		table.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
+		table.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
 		getContentPane().add(table);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 163, 643, 236);
+		scrollPane.setBounds(26, 163, 834, 236);
 		getContentPane().add(scrollPane);
 		
 		lblNewLabel = new JLabel("New label");
@@ -615,17 +630,17 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		getContentPane().add(btnNewFolder);
 		
 		progressBar = new JProgressBar();
-		progressBar.setBounds(59, 435, 502, 25);
+		progressBar.setBounds(59, 435, 648, 25);
 		getContentPane().add(progressBar);
 		progressBar.setVisible(false);
 		lblPercent = new JLabel("");
-		lblPercent.setBounds(579, 435, 70, 25);
+		lblPercent.setBounds(712, 435, 70, 25);
 		getContentPane().add(lblPercent);
 		
 		JLabel lblngDngTruyn = new JLabel("ỨNG DỤNG TRUYỀN TẢI FILE");
 		lblngDngTruyn.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblngDngTruyn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblngDngTruyn.setBounds(12, 27, 657, 46);
+		lblngDngTruyn.setBounds(12, 27, 749, 46);
 		contentPane.add(lblngDngTruyn);
 		
 		btnShare = new JButton("Share");
@@ -633,11 +648,11 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		contentPane.add(btnShare);
 		
 		lblTask = new JLabel("");
-		lblTask.setBounds(59, 411, 502, 15);
+		lblTask.setBounds(59, 411, 648, 15);
 		contentPane.add(lblTask);
 		
 		btnSettings = new JButton("Settings");
-		btnSettings.setBounds(561, 67, 105, 25);
+		btnSettings.setBounds(680, 126, 105, 25);
 		contentPane.add(btnSettings);
 		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);

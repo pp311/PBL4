@@ -24,8 +24,8 @@ import Server.dto.FileDto;
 public class TFTPListenHandler extends Thread{
 	public static final int TFTPPORT = 6900;
 	public static final int BUFFSIZE = 32768 + 4;
-	//public static final String BASE_DIR = "/home/shared/";
-	public static final String BASE_DIR = "D:\\Tai xuong\\ftp";
+	public static final String BASE_DIR = "/home/shared";
+	//public static final String BASE_DIR = "D:\\Tai xuong\\ftp";
 	public static final short OP_RRQ = 1;
 	public static final short OP_WRQ = 2;
 	public static final short OP_DAT = 3;
@@ -36,8 +36,7 @@ public class TFTPListenHandler extends Thread{
 	public static final short ERR_ACCESS = 2;
 	public static final short ERR_EXISTS = 6;
 	public static String mode;
-	private ListenHandler lh;
-
+	private String username;
 	public static final String[] errorCodes = {"Not defined", "File not found.", "Access violation.", 
 												"Disk full or allocation exceeded.", "Illegal TFTP operation.", 
 												"Unknown transfer ID.", "File already exists.", 
@@ -79,11 +78,11 @@ public class TFTPListenHandler extends Thread{
 
 							if (reqtype == OP_RRQ) {      /* read request */
 								requestedFile.insert(0, BASE_DIR);
-								HandleRQ(clientSoc, requestedFile.toString(), OP_RRQ);
+								HandleRQ(clientSoc, requestedFile.toString(), OP_RRQ, username);
 							}
 							else {                       /* write request */
 								requestedFile.insert(0, BASE_DIR);
-								HandleRQ(clientSoc, requestedFile.toString(),OP_WRQ);  
+								HandleRQ(clientSoc, requestedFile.toString(),OP_WRQ, username);  
 							}
 							clientSoc.close();
 						} catch (SocketException e) {
@@ -113,26 +112,27 @@ public class TFTPListenHandler extends Thread{
 		}
 		
 		String fileName = new String(buff, 2, delimiterIndex-2);
-//		System.out.println("Requested file = " + fileName);
+		System.out.println("Requested file = " + fileName);
 		requestedFile.append(fileName);
 		
 		for (int i = delimiterIndex+1; i < buff.length; i++) {
 			if (buff[i] == 0) {
 				String temp = new String(buff,delimiterIndex+1,i-(delimiterIndex+1));
+				username = temp;
 //				System.out.println("Transfer mode = " + temp);
-				mode = temp;
-				if (temp.equalsIgnoreCase("octet")) {
+//				mode = temp;
+//				if (temp.equalsIgnoreCase("octet")) {
 					return opcode;
-				} else {
-					System.err.println("TFTP: No mode specified.");
-				}
+//				} else {
+//					System.err.println("TFTP: No mode specified.");
+//				}
 			}
 		}
 		System.err.println("TFTP: Did not find delimiter.");
 		return 0;
 	} 
 	
-	private void HandleRQ(DatagramSocket clientSoc, String string, int op) {
+	private void HandleRQ(DatagramSocket clientSoc, String string, int op, String username) {
 		//System.out.println(string);
 		File file = new File(string);
 		byte[] buff = new byte[BUFFSIZE-4];
@@ -227,13 +227,13 @@ public class TFTPListenHandler extends Thread{
 							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 							if (new UploadBLL().checkFileExists(fDto)==false )
 							{
-								fDto.setOwner("admin1");
+								fDto.setOwner(username);
 								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
 							}
 							else {
 								fDto.setOwner("");
 							}	
-							fDto.setLastEditedBy("admin1");
+							fDto.setLastEditedBy(username);
 							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
 							fDto.setSize(attr.size());
 							int x= new UploadBLL().parentID(fDto);

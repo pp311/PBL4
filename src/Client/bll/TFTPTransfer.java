@@ -98,8 +98,11 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 		wrap.putShort(opRequest);
 		wrap.put(filePath.getBytes());
 		wrap.put((byte) 0);
-		wrap.put(mode.getBytes());
+//		wrap.put(mode.getBytes());
+//		wrap.put((byte) 0);
+		wrap.put(client.username.getBytes());
 		wrap.put((byte) 0);
+		
 		DatagramPacket packet = new DatagramPacket(wrap.array(),wrap.array().length, serverAddr, TFTPPORT);
 		int retryCount = 0;
 		byte[] rec = new byte[BUFFSIZE];
