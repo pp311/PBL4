@@ -8,11 +8,13 @@ public class Server {
 	ServerSocket serverSoc;
 	int port = 2100;
 	public Server() {
-		TFTPListenHandler tftpServer = new TFTPListenHandler();
-		tftpServer.start();
 		try {
 			serverSoc = new ServerSocket(port);
-			listenClientConnect();
+			Socket clientSoc = serverSoc.accept();
+			ListenHandler lh = new ListenHandler(clientSoc);
+			lh.start();
+			TFTPListenHandler tftpServer = new TFTPListenHandler(lh);
+			tftpServer.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -23,19 +23,20 @@ public class UploadDAL {
 	}
 	public int parentID (Files files)
 	{
-		String sql1 = "select FID from Files where Path = ? ";
+		String path = files.getPath();
+		path = path.substring(0, path.lastIndexOf(File.separator));
+		String sql1 = "select FID from Files where Path = " + "'" + path + "'";
 	
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql1);
-			String path = files.getPath();
-			path = path.substring(0, path.lastIndexOf(File.separator));
-			ps.setString(1, files.getPath());
+			//ps.setString(1, files.getPath());
 			//ps.setString(2, files.getName());
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{
-				return rs.getInt("FID");
+				int i = rs.getInt("FID");
+				return i;
 			}
 			
 		} catch (SQLException e) {

@@ -32,8 +32,8 @@ class ListenHandler extends Thread {
 	public String userName = "";
 	private String password = "";
 	private String workingDir = "/";
-//	public String baseDir = "D:\\Tai xuong\\ftp";
-	public String baseDir = "/home/shared/";
+	public String baseDir = "D:\\Tai xuong\\ftp";
+//	public String baseDir = "/home/shared/";
 	static final int MAX = 7;
 	private String response;
     private Vector messages = new Vector();
