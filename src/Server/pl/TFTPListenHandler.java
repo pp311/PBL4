@@ -12,11 +12,20 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
+
+import Server.bll.UploadBLL;
+import Server.dto.FileDto;
 
 public class TFTPListenHandler extends Thread{
 	public static final int TFTPPORT = 6900;
 	public static final int BUFFSIZE = 32768 + 4;
-	public static final String BASE_DIR = "/home/shared/";
+	//public static final String BASE_DIR = "/home/shared/";
+	public static final String BASE_DIR = "D:\\Tai xuong\\ftp";
 	public static final short OP_RRQ = 1;
 	public static final short OP_WRQ = 2;
 	public static final short OP_DAT = 3;
@@ -27,13 +36,14 @@ public class TFTPListenHandler extends Thread{
 	public static final short ERR_ACCESS = 2;
 	public static final short ERR_EXISTS = 6;
 	public static String mode;
+	private ListenHandler lh;
 	public static final String[] errorCodes = {"Not defined", "File not found.", "Access violation.", 
 												"Disk full or allocation exceeded.", "Illegal TFTP operation.", 
 												"Unknown transfer ID.", "File already exists.", 
 												"No such user."};
 	
-	public TFTPListenHandler() {
-		
+	public TFTPListenHandler(ListenHandler lh) {
+		this.lh = lh;
 	}
 	
 	public void run() {
@@ -207,6 +217,40 @@ public class TFTPListenHandler extends Thread{
 						byte[] data = dataPacket.getData();
 						try {
 							output.write(data, 4, dataPacket.getLength()-4);
+							FileDto fDto = new FileDto();
+							Path p = Paths.get(file.getAbsolutePath());
+							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+							fDto.setName(file.getName());
+							fDto.setType(attr.isDirectory() ? "Dir" : "File");
+							fDto.setPath(p.toString());
+							//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+							if (new UploadBLL().checkFileExists(fDto)==false )
+							{
+								fDto.setOwner(lh.userName);
+								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+							}
+							else {
+								fDto.setOwner("");
+							}	
+							fDto.setLastEditedBy(lh.userName);
+							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+							fDto.setSize(attr.size());
+							int x= new UploadBLL().parentID(fDto);
+						    if (x!=0)
+						    {
+						    	fDto.setParentID(x);
+						    }
+						    else {
+								fDto.setParentID(0);
+							}
+							if (new UploadBLL().uploadFile(fDto)) {
+								System.out.println("226 Transfer completed");
+							}
+							else {
+								System.out.println("502 Command not implemented");
+							}
+							
 							//System.out.println(dataPacket.getLength());
 						} catch (IOException e) {
 							System.err.println("IO Error writing data.");
