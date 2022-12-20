@@ -11,13 +11,13 @@ import Server.models.Files;
 
 public class FileDAL {
 	PreparedStatement ps;
-	public boolean changePermission(Files file, int permission) {
+	public boolean changePermission(int FID, int permission) {
 		String sql = "update Files set Permission = ? where FID = ?";
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql);
 			ps.setInt(1, permission);
-			ps.setInt(2, file.getFID());
+			ps.setInt(2, FID);
 			ps.execute();
 		}
 		catch (Exception e) {

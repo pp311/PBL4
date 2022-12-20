@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,7 +21,9 @@ import java.util.Date;
 import java.util.List;
 
 import Server.bll.FileBLL;
+import Server.bll.ShareBLL;
 import Server.bll.UploadBLL;
+import Server.bll.UserBLL;
 import Server.dto.*;
 
 
@@ -34,6 +37,7 @@ public class DataConnectionHandler extends Thread{
 	private byte[] buffer;
 	private int read;
 	private volatile String response = "";
+	private ObjectOutputStream oos;
 	public DataConnectionHandler(Socket clientSoc, ListenHandler producer) {
 		this.clientSoc = clientSoc;
 		this.producer = producer;
@@ -42,14 +46,38 @@ public class DataConnectionHandler extends Thread{
 	public void run() {
 		try {
 				//Socket clientSoc = soc.accept();
-			
 				String message = producer.getMessage();
 	            String cmd = message.substring(0, message.indexOf(" "));
 	            String params = message.substring(message.indexOf(" ")+1);
 	            String baseDir = producer.baseDir; 
 	            switch (cmd) {
+	            case "LSUSER":
+	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
+					ArrayList<UserDto> userlist = new UserBLL().getAllUser();
+					oos.writeObject(userlist);
+					oos.close();
+					response = "226 User list send OK";
+	            break;
+	            case "SHARE":
+	            	ObjectInputStream ois = new ObjectInputStream(clientSoc.getInputStream());
+	            	try {
+						ArrayList<Integer> usernameList = (ArrayList<Integer>)ois.readObject();
+						new ShareBLL().setShare(usernameList, Integer.valueOf(params));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            	ois.close();	
+	            	break;
+	            case "LSSHARE":
+	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
+					ArrayList<UserDto> userlist2 = new ShareBLL().getSharedList(Integer.valueOf(params));
+					oos.writeObject(userlist2);
+					oos.close();
+					response = "226 User list send OK";
+	            	break;
 				case "LIST": {
-					ObjectOutputStream oos = new ObjectOutputStream(clientSoc.getOutputStream());
+					oos = new ObjectOutputStream(clientSoc.getOutputStream());
 					int parentID = new UploadBLL().parentID(baseDir + params);
 					ArrayList<FileDto> result = new FileBLL().getAllFiles(parentID);
 //					File f = new File (baseDir + params);
@@ -82,6 +110,7 @@ public class DataConnectionHandler extends Thread{
 //						result.add(fDto);
 //					}
 					oos.writeObject(result);
+					oos.close();
 					response = "226 Directory send OK";
 					break;
 				}

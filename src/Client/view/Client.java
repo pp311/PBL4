@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 import javax.swing.*;
 
 import Server.dto.FileDto;
+import Server.dto.UserDto;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -140,24 +142,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 					}
 				}
 				
-				String ipAddr = "";
-				Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-				for (NetworkInterface netint : Collections.list(nets)) {
-				    if (!netint.isLoopback()) {
-				        //theOneAddress = Collections.list(netint.getInetAddresses()).stream().findFirst().orElse(null);
-				    	ArrayList<InetAddress> list = Collections.list(netint.getInetAddresses());
-				    	for(int i = 0; i < list.size(); i++) {
-				    		if(list.get(i).toString().contains(":")) {
-				    			continue;
-				    		}
-				    		else {
-				    			ipAddr = list.get(i).toString();
-				    			ipAddr = ipAddr.substring(1);
-				    		}
-				    	}
-				    }
-				}
-				dos.writeUTF("PORT (" + ipAddr + "|" + port + ")");
+				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
 				datasoc = dataServer.accept();
 				showServerResponse();
 			}
@@ -258,7 +243,21 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		}
 		
 		if(e.getSource() == btnShare) {
-			Share frame = new Share();
+			if(isFileTransfering) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chờ quá trình truyển tải file hoàn tất để tiếp tục!");
+				return;
+			}
+			if(table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(null, "No file selected.");
+				return;
+			}
+			String filename = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
+			FileDto fileDto = getFileInfo(filename);
+			if(!fileDto.getOwner().equals(username)) {
+				JOptionPane.showMessageDialog(null, "Permission denied.");
+				return;
+			}
+			Share frame = new Share(fileDto, this);
 			frame.setVisible(true);
 		}
 		
@@ -364,6 +363,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			}
 			if(table.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(null, "No file selected.");
+				return;
 			}
 			try {
 				String filename = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
@@ -540,10 +540,173 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		
 	}
 	
+	public ArrayList<UserDto> getAllUser () {
+		ArrayList<UserDto> userList = null;
+		int port = 0;
+		Socket datasoc = null;
+		ServerSocket dataServer = null;
+		Random generator = new Random();
+		try {
+			if (this.defaultMode == "PASV") {
+				dos.writeUTF("PASV");
+				String response = showServerResponse();
+				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
+				datasoc = new Socket(server, port);				
+			}
+			else {
+				while(true) {
+					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
+					try {
+						dataServer = new ServerSocket(port);
+						break;
+					} catch (IOException e) {
+						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
+						//catch ở đây để vòng lặp while dc tiếp tuc lặp
+					}
+				}
+				
+				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
+				datasoc = dataServer.accept();
+				showServerResponse();
+			}
+			dos.writeUTF("LSUSER all");
+			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
+			userList = (ArrayList<UserDto>)ois.readObject();
+			ois.close();
+			datasoc.close();
+			showServerResponse();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+	}
+	
+	public void setShare(ArrayList<Integer> uidList, int fid) {
+		int port = 0;
+		Socket datasoc = null;
+		ServerSocket dataServer = null;
+		Random generator = new Random();
+		try {
+			if (this.defaultMode == "PASV") {
+				dos.writeUTF("PASV");
+				String response = showServerResponse();
+				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
+				datasoc = new Socket(server, port);				
+			}
+			else {
+				while(true) {
+					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
+					try {
+						dataServer = new ServerSocket(port);
+						break;
+					} catch (IOException e) {
+						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
+						//catch ở đây để vòng lặp while dc tiếp tuc lặp
+					}
+				}
+
+				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
+				datasoc = dataServer.accept();
+				showServerResponse();
+			}
+			dos.writeUTF("SHARE " + fid);
+			ObjectOutputStream oos = new ObjectOutputStream(datasoc.getOutputStream());
+			oos.writeObject(uidList);
+			oos.close();
+			datasoc.close();
+			showServerResponse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setAnyonePermission(int FID, int perm) {
+		String command = perm == 2 ? "SETWR" : "SETRD";
+		try {
+			dos.writeUTF(command + " " + FID);
+			showServerResponse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<UserDto> getSharedUser(int FID) {
+		ArrayList<UserDto> userList = null;
+		int port = 0;
+		Socket datasoc = null;
+		ServerSocket dataServer = null;
+		Random generator = new Random();
+		try {
+			if (this.defaultMode == "PASV") {
+				dos.writeUTF("PASV");
+				String response = showServerResponse();
+				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
+				datasoc = new Socket(server, port);				
+			}
+			else {
+				while(true) {
+					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
+					try {
+						dataServer = new ServerSocket(port);
+						break;
+					} catch (IOException e) {
+						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
+						//catch ở đây để vòng lặp while dc tiếp tuc lặp
+					}
+				}
+				
+				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
+				datasoc = dataServer.accept();
+				showServerResponse();
+			}
+			dos.writeUTF("LSSHARE " + FID);
+			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
+			userList = (ArrayList<UserDto>)ois.readObject();
+			ois.close();
+			datasoc.close();
+			showServerResponse();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+	}
+	
+	public String getLocalIP() {
+		String ipAddr = "";
+		Enumeration<NetworkInterface> nets;
+		try {
+			nets = NetworkInterface.getNetworkInterfaces();
+		
+		for (NetworkInterface netint : Collections.list(nets)) {
+		    if (!netint.isLoopback()) {
+		        //theOneAddress = Collections.list(netint.getInetAddresses()).stream().findFirst().orElse(null);
+		    	ArrayList<InetAddress> list = Collections.list(netint.getInetAddresses());
+		    	for(int i = 0; i < list.size(); i++) {
+		    		if(list.get(i).toString().contains(":")) {
+		    			continue;
+		    		}
+		    		else {
+		    			ipAddr = list.get(i).toString();
+		    			ipAddr = ipAddr.substring(1);
+		    		}
+		    	}
+		    }
+		}
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ipAddr;
 	}
 	
 
@@ -676,4 +839,6 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
             lblPercent.setText("" + progress + "%");
 		}
 	}
+	
+	
 }

@@ -1,7 +1,11 @@
 package Server.bll;
 
+import java.util.ArrayList;
+
 import Server.dal.UserDAL;
 import Server.dto.LoginDto;
+import Server.dto.UserDto;
+import Server.models.User;
 
 public class UserBLL {
 	private UserDAL userDal;
@@ -14,4 +18,8 @@ public class UserBLL {
 	public boolean checkLoginInfo(String username, String password) {
 		return userDal.Login(username, password);
 	}
+	public ArrayList<UserDto> getAllUser() {
+		return new UserDAL().getAllUser();
+	}
+	
 }

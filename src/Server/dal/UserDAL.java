@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 import Server.dto.*;
+import Server.models.User;
 
 
 public class UserDAL {
@@ -51,5 +53,31 @@ public class UserDAL {
 			return false;
 		}
 		return false;
+	}
+	
+	public ArrayList<UserDto> getAllUser() {
+		String sql1 = "select * from User ";
+		ArrayList<UserDto> list = new ArrayList<UserDto>();		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				UserDto u = new UserDto();
+				u.setUID(rs.getInt("UID"));
+				u.setUserName(rs.getString("UserName"));
+				u.setFullName(rs.getString("FullName"));
+				u.setRole(rs.getString("Role"));
+				if(u.getRole().equals("user"))
+					list.add(u);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return list;
 	}
 }

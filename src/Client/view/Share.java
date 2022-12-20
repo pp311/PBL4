@@ -11,6 +11,9 @@ import javax.swing.event.DocumentListener;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
+import Server.dto.FileDto;
+import Server.dto.UserDto;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -55,6 +58,12 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 	private JLabel lblShared;
 	private JLabel lblAll_1;
 	private JLabel lblShared_1;
+	private JComboBox cbbAnyone;
+	private int currentPermission;
+	private Client client;
+	private List<UserDto> userList;
+	private List<UserDto> userList_Shared;
+	private FileDto fileDto;
 
 	/**
 	 * Launch the application.
@@ -63,7 +72,7 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Share frame = new Share();
+					Share frame = new Share(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,15 +83,22 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 	
 	private ArrayList<String> getUsers() {
 		ArrayList<String> users = new ArrayList<>();
-		users.add("Nguyen A");
-		users.add("Pham B");
-		users.add("Le C");
-		users.add("Tran D");
-		users.add("Phan E");
-		users.add("Dang F");
-		users.add("Ly G");
-		users.add("Dinh H");
-		users.add("Doan J");
+		for (UserDto user : userList) {
+			users.add(user.getUserName());
+			for (UserDto user_s : userList_Shared) {
+				if(user.getUserName().equals(user_s.getUserName()))
+					users.remove(user.getUserName());
+			}
+		}
+		Collections.sort(users);
+		return users;
+	}
+	
+	private ArrayList<String> getSharedUsers() {
+		ArrayList<String> users = new ArrayList<>();
+			for (UserDto user_s : userList_Shared) {
+					users.add(user_s.getUserName());
+			}
 		Collections.sort(users);
 		return users;
 	}
@@ -92,6 +108,12 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 			dlmUsers.addElement(user);
 		});
 		listUsers.setModel(dlmUsers);
+		
+		getSharedUsers().stream().forEach(user -> {
+			dlmAddedUsers.addElement(user);
+		});
+		listAddedUsers.setModel(dlmAddedUsers);
+		
 		
 		getGroups().stream().forEach(group -> {
 			dlmGroups.addElement(group);
@@ -111,7 +133,8 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 	
 	
 	private void searchFilterUsers(String searchTerm) {
-		ArrayList<String> users = getUsers();
+		
+		ArrayList<String> users = (ArrayList<String>)lUsers;
 		CustomListModel<String> newDlm = new CustomListModel<String>(new ArrayList<String>());
 		
 		
@@ -143,7 +166,13 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 	/**
 	 * Create the frame.
 	 */
-	public Share() {
+	public Share(FileDto fileDto, Client client) {
+		this.currentPermission = fileDto.getPermission();
+		this.client = client;
+		this.userList = client.getAllUser();
+		this.userList_Shared = client.getSharedUser(fileDto.getFID());
+		this.fileDto = fileDto;
+		
 		dlmUsers = new CustomListModel<String>(lUsers);
 		dlmAddedUsers = new CustomListModel<String>(lAddedUsers);
 		dlmGroups = new CustomListModel<String>(lGroups);
@@ -166,8 +195,8 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 		lblAnyoneCan.setBounds(22, 80, 103, 23);
 		contentPane.add(lblAnyoneCan);
 		
-		JComboBox cbbAnyone = new JComboBox();
-		cbbAnyone.setModel(new DefaultComboBoxModel(new String[] {"View", "Edit", "Delete"}));
+		cbbAnyone = new JComboBox();
+		cbbAnyone.setModel(new DefaultComboBoxModel(new String[] {"View", "Edit"}));
 		cbbAnyone.setSelectedIndex(0);
 		cbbAnyone.setEditable(true);
 		cbbAnyone.setBounds(152, 80, 171, 24);
@@ -271,9 +300,23 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 		btnRemoveGroup.addActionListener(this);
 		btnSave.addActionListener(this);
 		
+		listGroups.setVisible(false);
+		listAddedGroups.setVisible(false);
+		btnAddGroup.setVisible(false);
+		btnRemoveGroup.setVisible(false);
+		lblGroups.setVisible(false);
+		tfGroups.setVisible(false);
+		lblShare.setVisible(false);
+		cbbShare.setVisible(false);
+		lblAll_1.setVisible(false);
+		lblShared_1.setVisible(false);
+		lblUsers.setVisible(false);
+		tfUsers.setVisible(false);
+		
 		tfGroups.getDocument().addDocumentListener(this);
 		tfUsers.getDocument().addDocumentListener(this);
 		
+		cbbAnyone.setSelectedIndex(currentPermission-1);
 		bindData();
 	}
 	
@@ -287,6 +330,20 @@ public class Share extends JFrame implements ActionListener, DocumentListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnCancel) {
+			this.dispose();
+		}
+		if(e.getSource() == btnSave) {
+			int anyonePermission = cbbAnyone.getSelectedIndex();
+			client.setAnyonePermission(fileDto.getFID(), anyonePermission+1);
+			ArrayList<Integer> uidList = new ArrayList<Integer>();
+			for (String username : lAddedUsers) {
+				for (UserDto user : userList) {
+					if(user.getUserName().equals(username))
+						uidList.add(user.getUID());
+				}
+			}
+			client.setShare(uidList, fileDto.getFID());
+			client.loadTable();
 			this.dispose();
 		}
 		if(e.getSource() == btnAddUser) {

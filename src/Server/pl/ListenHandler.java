@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
 
+import Server.bll.FileBLL;
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
 import Server.dto.FileDto;
@@ -201,6 +202,32 @@ public void run(){
 //                else {
 //                	dos.writeUTF("502 Command not implemented");
 //                }
+				break;
+			case "LSUSER":
+				putMessage("LSUSER " + msg);
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
+				break;
+			case "LSSHARE":
+				putMessage("LSSHARE " + msg);
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
+				break;
+			case "SHARE":
+				putMessage("SHARE " + msg);
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
+				break;
+			case "SETWR":
+				new FileBLL().changePermission(Integer.valueOf(msg), 2);
+				dos.writeUTF("Change permission successfully");
+				break;
+			case "SETRD":
+				new FileBLL().changePermission(Integer.valueOf(msg), 1);
+				dos.writeUTF("Change permission successfully");
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );
