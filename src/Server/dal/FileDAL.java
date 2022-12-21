@@ -94,7 +94,18 @@ public class FileDAL {
 				f.setLastEditedDate(rs.getTimestamp("LastEditedDate"));
 				f.setCreatedDate(rs.getTimestamp("CreatedDate"));
 				f.setType(rs.getString("Type"));
-				sql1 = "select * from Share where FID = ? and UID = ?";
+				sql1 = "with recursive cte (FID, ParentID) as (\n"
+						+ "  select     FID, ParentID\n"
+						+ "  from       Files\n"
+						+ "  where      FID = ?\n"
+						+ "  union all\n"
+						+ "  select     p.FID,\n"
+						+ "             p.ParentID\n"
+						+ "  from       Files p\n"
+						+ "  inner join cte\n"
+						+ "          on p.FID = cte.ParentID\n"
+						+ ")\n"
+						+ "select * from Share where UID = ? and FID in (select FID from cte);";
 				ps = db.prepareStatement(sql1);
 				ps.setInt(1, f.getFID());
 				ps.setInt(2, UID);
