@@ -68,6 +68,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private JButton btnShare;
 	private JButton btnSettings;
 	private ArrayList<FileDto> files;
+	private UserDto userInfo;
 	public String defaultMode = "PASV";
 	public String defaultMethod = "FTP";
 	public String username = "";
@@ -102,23 +103,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		return ch;
 	}
 	
-	private static String humanReadableByteCountBin(long bytes) {
-	    long absB = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
-	    if (absB < 1024) {
-	        return bytes + " B";
-	    }
-	    long value = absB;
-	    CharacterIterator ci = new StringCharacterIterator("KMGTPE");
-	    for (int i = 40; i >= 0 && absB > 0xfffccccccccccccL >> i; i -= 10) {
-	        value >>= 10;
-	        ci.next();
-	    }
-	    value *= Long.signum(bytes);
-	    return String.format("%.1f %ciB", value / 1024.0, ci.current());
-	}
-	
-	public ArrayList<FileDto> listFiles (String path) {
-		ArrayList<FileDto> files = null;
+	public Socket connectToDataConnection() {
 		int port = 0;
 		Socket datasoc = null;
 		ServerSocket dataServer = null;
@@ -146,12 +131,40 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				datasoc = dataServer.accept();
 				showServerResponse();
 			}
-			dos.writeUTF("LIST " + (path != null && path != "" ? path : workingDir));
-			ObjectInputStream oos = new ObjectInputStream(datasoc.getInputStream());
-			files = (ArrayList<FileDto>)oos.readObject();
-			oos.close();
-			datasoc.close();
-			showServerResponse();
+		}catch (Exception e) {
+				// TODO: handle exception
+			System.err.println(e);
+			return null;
+			}
+		return datasoc;
+	}
+	
+	private static String humanReadableByteCountBin(long bytes) {
+	    long absB = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
+	    if (absB < 1024) {
+	        return bytes + " B";
+	    }
+	    long value = absB;
+	    CharacterIterator ci = new StringCharacterIterator("KMGTPE");
+	    for (int i = 40; i >= 0 && absB > 0xfffccccccccccccL >> i; i -= 10) {
+	        value >>= 10;
+	        ci.next();
+	    }
+	    value *= Long.signum(bytes);
+	    return String.format("%.1f %ciB", value / 1024.0, ci.current());
+	}
+	
+	public ArrayList<FileDto> listFiles (String path) {
+		ArrayList<FileDto> files = null;
+		Socket datasoc = null;
+		try {
+		datasoc = connectToDataConnection();
+		dos.writeUTF("LIST " + (path != null && path != "" ? path : workingDir));
+		ObjectInputStream oos = new ObjectInputStream(datasoc.getInputStream());
+		files = (ArrayList<FileDto>)oos.readObject();
+		oos.close();
+		datasoc.close();
+		showServerResponse();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,7 +179,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			//showServerResponse();
 			DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	        for (FileDto file : files) {
-	        	String[] strarr = new String[7];
+	        	String[] strarr = new String[8];
 	            strarr[0] = file.getName();
 //	            if(file.isDirectory()) {
 //	            	int count = ftpClient.listFiles(workingDir + "/" + file.getName()).length;
@@ -178,7 +191,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	            strarr[4] = file.getLastEditedBy();
 	            strarr[5] = file.getOwner();
 	            strarr[6] = file.getPermission() == 1 ? "readonly" : "write";
-	           // strarr[3] = file.getUser();
+	            strarr[7] = file.isShared() ? "v" : "";
 	            dtm.addRow(strarr);
 	        }
 			
@@ -542,33 +555,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	
 	public ArrayList<UserDto> getAllUser () {
 		ArrayList<UserDto> userList = null;
-		int port = 0;
 		Socket datasoc = null;
-		ServerSocket dataServer = null;
-		Random generator = new Random();
 		try {
-			if (this.defaultMode == "PASV") {
-				dos.writeUTF("PASV");
-				String response = showServerResponse();
-				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-				datasoc = new Socket(server, port);				
-			}
-			else {
-				while(true) {
-					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
-					try {
-						dataServer = new ServerSocket(port);
-						break;
-					} catch (IOException e) {
-						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
-						//catch ở đây để vòng lặp while dc tiếp tuc lặp
-					}
-				}
-				
-				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
-				datasoc = dataServer.accept();
-				showServerResponse();
-			}
+			datasoc = connectToDataConnection();
 			dos.writeUTF("LSUSER all");
 			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
 			userList = (ArrayList<UserDto>)ois.readObject();
@@ -583,33 +572,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	}
 	
 	public void setShare(ArrayList<Integer> uidList, int fid) {
-		int port = 0;
 		Socket datasoc = null;
-		ServerSocket dataServer = null;
-		Random generator = new Random();
 		try {
-			if (this.defaultMode == "PASV") {
-				dos.writeUTF("PASV");
-				String response = showServerResponse();
-				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-				datasoc = new Socket(server, port);				
-			}
-			else {
-				while(true) {
-					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
-					try {
-						dataServer = new ServerSocket(port);
-						break;
-					} catch (IOException e) {
-						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
-						//catch ở đây để vòng lặp while dc tiếp tuc lặp
-					}
-				}
-
-				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
-				datasoc = dataServer.accept();
-				showServerResponse();
-			}
+			datasoc = connectToDataConnection();
 			dos.writeUTF("SHARE " + fid);
 			ObjectOutputStream oos = new ObjectOutputStream(datasoc.getOutputStream());
 			oos.writeObject(uidList);
@@ -641,33 +606,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	
 	public ArrayList<UserDto> getSharedUser(int FID) {
 		ArrayList<UserDto> userList = null;
-		int port = 0;
 		Socket datasoc = null;
-		ServerSocket dataServer = null;
-		Random generator = new Random();
 		try {
-			if (this.defaultMode == "PASV") {
-				dos.writeUTF("PASV");
-				String response = showServerResponse();
-				port = Integer.valueOf(response.substring(response.indexOf("(")+1, response.indexOf(")")));
-				datasoc = new Socket(server, port);				
-			}
-			else {
-				while(true) {
-					 port = generator.nextInt((PORT_RANGE_END - PORT_RANGE_START) + 1) + PORT_RANGE_START;
-					try {
-						dataServer = new ServerSocket(port);
-						break;
-					} catch (IOException e) {
-						//nếu đã có kết nối ở port dc chon thì sẽ có lôĩ
-						//catch ở đây để vòng lặp while dc tiếp tuc lặp
-					}
-				}
-				
-				dos.writeUTF("PORT (" + getLocalIP() + "|" + port + ")");
-				datasoc = dataServer.accept();
-				showServerResponse();
-			}
+			datasoc = connectToDataConnection();
 			dos.writeUTF("LSSHARE " + FID);
 			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
 			userList = (ArrayList<UserDto>)ois.readObject();
@@ -719,6 +660,21 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		this.dos = dos;
 		this.server = server;
 		this.username = username;
+		
+		Socket datasoc = null;
+		try {
+			datasoc = connectToDataConnection();
+			dos.writeUTF("UINFO " + username);
+			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
+			userInfo = (UserDto)ois.readObject();
+			ois.close();
+			datasoc.close();
+			showServerResponse();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 400, 900, 480);
 
@@ -729,14 +685,27 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		String[] columnNames = {"Name",
-				"Type",
-                "Size",
-                "Last Edited Date",
-                "Last Edited By",
-                "Owner",
-                "Permission"
-		};
+		String[] columnNames = null;
+		if (userInfo.getRole().equals("admin")) {
+			columnNames = new String[] {"Name",
+					"Type",
+	                "Size",
+	                "Last Edited Date",
+	                "Last Edited By",
+	                "Owner",
+	                "Permission"
+			};
+		} else {
+			columnNames = new String[] {"Name",
+					"Type",
+	                "Size",
+	                "Last Edited Date",
+	                "Last Edited By",
+	                "Owner",
+	                "Permission",
+	                "Shared"
+			};
+		}
 		dtm = new DefaultTableModel(columnNames,0)  {
 		    public boolean isCellEditable(int row, int column) {
 		       return false;
@@ -762,6 +731,8 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		table.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
+		if(!userInfo.getRole().equals("admin"))
+			table.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 		getContentPane().add(table);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -826,6 +797,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnSettings.addActionListener(this);
 		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại
+		
+		
+		
 		printCurrentDir();
 		loadTable();
 	}

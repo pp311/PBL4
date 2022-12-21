@@ -36,6 +36,29 @@ public class UserDAL {
 		}
 		return false;
 	}
+	public UserDto getCurrentUserInfo(String userName) {
+		String sql = "select * from User where UserName = ?";
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			UserDto userDto = new UserDto();
+			if(rs.next()) {
+				userDto.setRole(rs.getString("Role"));
+				userDto.setUID(rs.getInt("UID"));
+				userDto.setFullName(rs.getString("FullName"));
+				userDto.setEmail(rs.getString("Email"));
+				userDto.setPhone(rs.getString("Phone"));
+				userDto.setUserName(rs.getString("UserName"));
+				return userDto;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 	
 	public boolean hasUserName(String userName) {
 		String sql = "select UID from User where UserName = ?";

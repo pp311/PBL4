@@ -19,6 +19,7 @@ import Server.bll.FileBLL;
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
 import Server.dto.FileDto;
+import Server.dto.UserDto;
 
 class ListenHandler extends Thread {
 	private static final int PASV_PORT_START = 25000;
@@ -30,8 +31,10 @@ class ListenHandler extends Thread {
 	public Socket soc;
 	public Server server;
 	private ServerSocket dataServer;
+	public int UID = 0;
 	public String userName = "";
 	private String password = "";
+	public String role = "";
 	private String workingDir = "/";
 //	public String baseDir = "D:\\Tai xuong\\ftp";
 	public String baseDir = "/home/shared";
@@ -68,6 +71,9 @@ public void run(){
 				userName = msg.substring(0,msg.indexOf(" "));
 				password = msg.substring(msg.indexOf(" ") + 1);
 				if(new UserBLL().checkLoginInfo(userName, password)) {
+					UserDto u = new UserBLL().getCurrentUserInfo(userName);
+					role = u.getRole();
+					UID = u.getUID();
 					this.dos.writeUTF("230 User logged in, proceed.");
 				}
 				else {
@@ -228,6 +234,12 @@ public void run(){
 			case "SETRD":
 				new FileBLL().changePermission(Integer.valueOf(msg), 1);
 				dos.writeUTF("Change permission successfully");
+				break;
+			case "UINFO":
+				putMessage("UINFO " + msg);
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );

@@ -6,6 +6,7 @@ import java.util.Date;
 public class FileDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int FID, ParentID, Permission;
+	private boolean Shared;
 	public int getFID() {
 		return FID;
 	}
@@ -74,6 +75,12 @@ public class FileDto implements Serializable {
 	}
 	public void setSize(long size) {
 		Size = size;
+	}
+	public boolean isShared() {
+		return Shared;
+	}
+	public void setShared(boolean shared) {
+		Shared = shared;
 	}
 
 }

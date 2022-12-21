@@ -15,6 +15,9 @@ public class UserBLL {
 	public boolean hasUserName(String username) {
 		return userDal.hasUserName(username);
 	}
+	public UserDto getCurrentUserInfo(String username) {
+		return userDal.getCurrentUserInfo(username);
+	}
 	public boolean checkLoginInfo(String username, String password) {
 		return userDal.Login(username, password);
 	}

@@ -51,6 +51,13 @@ public class DataConnectionHandler extends Thread{
 	            String params = message.substring(message.indexOf(" ")+1);
 	            String baseDir = producer.baseDir; 
 	            switch (cmd) {
+	            case "UINFO":
+	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
+					UserDto userinfo = new UserBLL().getCurrentUserInfo(params);
+					oos.writeObject(userinfo);
+					oos.close();
+					response = "226 User info send OK";
+				break;
 	            case "LSUSER":
 	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
 					ArrayList<UserDto> userlist = new UserBLL().getAllUser();
@@ -79,7 +86,11 @@ public class DataConnectionHandler extends Thread{
 				case "LIST": {
 					oos = new ObjectOutputStream(clientSoc.getOutputStream());
 					int parentID = new UploadBLL().parentID(baseDir + params);
-					ArrayList<FileDto> result = new FileBLL().getAllFiles(parentID);
+					ArrayList<FileDto> result;
+					if(producer.role.equals("user"))
+						result = new FileBLL().getAllFiles(parentID, producer.UID);
+					else
+						result = new FileBLL().getAllFiles(parentID);
 //					File f = new File (baseDir + params);
 //					File[] files = f.listFiles();
 //					ArrayList<FileDto> result = new ArrayList<FileDto>();
