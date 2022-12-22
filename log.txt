@@ -77,6 +77,7 @@
 22/12/2022 11:43:08 : admin1 : RRQ /a/aspnet-core.pdf (TFTP)
 22/12/2022 11:43:09 : admin1 : PASV
 22/12/2022 11:43:09 : admin1 : LIST /a/
+<<<<<<< HEAD
 22/12/2022 11:44:43 :  : LGIN admin1 ***
 22/12/2022 11:44:43 : admin1 : PASV
 22/12/2022 11:44:43 : admin1 : UINFO admin1
@@ -1372,3 +1373,504 @@
 22/12/2022 10:35:56 : admin1 : LIST /a/
 22/12/2022 10:36:06 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
 22/12/2022 10:36:11 : admin1 : QUIT
+=======
+22/12/2022 02:30:07 :  : LGIN admin1 ***
+22/12/2022 02:31:55 :  : LGIN admin1 ***
+22/12/2022 02:35:17 :  : LGIN admin1 ***
+22/12/2022 02:35:23 :  : LGIN admin1 ***
+22/12/2022 02:37:14 :  : LGIN admin1 ***
+>>>>>>> 8a74a30751e65f5f1bf4b0ce85aa5c5bcac13eff
+22/12/2022 11:39:43 :  : LGIN admin1 ***
+22/12/2022 11:39:44 : admin1 : PASV
+22/12/2022 11:39:44 : admin1 : UINFO admin1
+22/12/2022 11:39:44 : admin1 : PWD
+22/12/2022 11:39:44 : admin1 : PASV
+22/12/2022 11:39:44 : admin1 : LIST /
+22/12/2022 11:39:46 : admin1 : CWD /a/
+22/12/2022 11:39:46 : admin1 : PWD
+22/12/2022 11:39:46 : admin1 : PASV
+22/12/2022 11:39:46 : admin1 : LIST /a/
+22/12/2022 11:39:50 : admin1 : CWD ..
+22/12/2022 11:39:50 : admin1 : PWD
+22/12/2022 11:39:50 : admin1 : PASV
+22/12/2022 11:39:50 : admin1 : LIST /
+22/12/2022 11:39:52 : admin1 : CWD /a/
+22/12/2022 11:39:52 : admin1 : PWD
+22/12/2022 11:39:52 : admin1 : PASV
+22/12/2022 11:39:52 : admin1 : LIST /a/
+22/12/2022 11:39:56 : admin1 : QUIT
+22/12/2022 11:40:05 :  : LGIN user1 ***
+22/12/2022 11:40:05 : user1 : PASV
+22/12/2022 11:40:05 : user1 : UINFO user1
+22/12/2022 11:40:05 : user1 : PWD
+22/12/2022 11:40:05 : user1 : PASV
+22/12/2022 11:40:05 : user1 : LIST /
+22/12/2022 11:40:14 : user1 : CWD /a/
+22/12/2022 11:40:14 : user1 : PWD
+22/12/2022 11:40:14 : user1 : PASV
+22/12/2022 11:40:14 : user1 : LIST /a/
+22/12/2022 11:40:19 : user1 : DELE /a/Chap_4_anh.pptx
+22/12/2022 11:40:20 : user1 : PASV
+22/12/2022 11:40:21 : user1 : LIST /a/
+22/12/2022 11:40:27 : user1 : DELE /a/Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne.pdf
+22/12/2022 11:40:28 : user1 : PASV
+22/12/2022 11:40:28 : user1 : LIST /a/
+22/12/2022 11:48:22 :  : LGIN admin1 ***
+22/12/2022 11:48:22 : admin1 : PASV
+22/12/2022 11:48:22 : admin1 : UINFO admin1
+22/12/2022 11:48:22 : admin1 : PWD
+22/12/2022 11:48:22 : admin1 : PASV
+22/12/2022 11:48:22 : admin1 : LIST /
+22/12/2022 11:48:24 : admin1 : CWD /a/
+22/12/2022 11:48:24 : admin1 : PWD
+22/12/2022 11:48:24 : admin1 : PASV
+22/12/2022 11:48:24 : admin1 : LIST /a/
+22/12/2022 11:48:28 : admin1 : DELE /a/CK_CTD.docx
+22/12/2022 11:48:28 : admin1 : PASV
+22/12/2022 11:53:07 :  : LGIN admin1 ***
+22/12/2022 11:53:11 :  : LGIN admin1 ***
+22/12/2022 11:53:11 : admin1 : PASV
+22/12/2022 11:53:11 : admin1 : UINFO admin1
+22/12/2022 11:53:11 : admin1 : PWD
+22/12/2022 11:53:11 : admin1 : PASV
+22/12/2022 11:53:11 : admin1 : LIST /
+22/12/2022 11:53:13 : admin1 : CWD /a/
+22/12/2022 11:53:13 : admin1 : PWD
+22/12/2022 11:53:13 : admin1 : PASV
+22/12/2022 11:53:13 : admin1 : LIST /a/
+22/12/2022 11:53:16 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 11:53:17 : admin1 : PASV
+22/12/2022 11:53:17 : admin1 : LIST /a/
+22/12/2022 11:53:19 : admin1 : QUIT
+22/12/2022 11:53:31 :  : LGIN user1 ***
+22/12/2022 11:53:31 : user1 : PASV
+22/12/2022 11:53:31 : user1 : UINFO user1
+22/12/2022 11:53:31 : user1 : PWD
+22/12/2022 11:53:31 : user1 : PASV
+22/12/2022 11:53:31 : user1 : LIST /
+22/12/2022 11:53:33 : user1 : CWD /a/
+22/12/2022 11:53:33 : user1 : PWD
+22/12/2022 11:53:33 : user1 : PASV
+22/12/2022 11:53:33 : user1 : LIST /a/
+22/12/2022 11:53:37 : user1 : DELE /a/Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne.pdf
+22/12/2022 11:53:43 : user1 : DELE /a/Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne.pdf
+22/12/2022 11:53:48 : user1 : QUIT
+22/12/2022 11:54:47 :  : LGIN admin1 ***
+22/12/2022 11:54:47 : admin1 : PASV
+22/12/2022 11:54:47 : admin1 : UINFO admin1
+22/12/2022 11:54:47 : admin1 : PWD
+22/12/2022 11:54:47 : admin1 : PASV
+22/12/2022 11:54:47 : admin1 : LIST /
+22/12/2022 11:55:03 : admin1 : QUIT
+22/12/2022 11:55:12 :  : LGIN user1 ***
+22/12/2022 11:55:12 : user1 : PASV
+22/12/2022 11:55:12 : user1 : UINFO user1
+22/12/2022 11:55:12 : user1 : PWD
+22/12/2022 11:55:12 : user1 : PASV
+22/12/2022 11:55:12 : user1 : LIST /
+22/12/2022 11:55:17 : user1 : MKD /b
+22/12/2022 11:55:17 : user1 : PWD
+22/12/2022 11:55:17 : user1 : PASV
+22/12/2022 11:55:17 : user1 : LIST /
+22/12/2022 11:55:18 : user1 : CWD /b/
+22/12/2022 11:55:18 : user1 : PWD
+22/12/2022 11:55:18 : user1 : PASV
+22/12/2022 11:55:18 : user1 : LIST /b/
+22/12/2022 11:55:29 : user1 : MKD /b/NguyenAmHuanLuyen-16k
+22/12/2022 11:55:29 : user1 : MKD /b/NguyenAmHuanLuyen-16k/05MVB
+22/12/2022 11:55:29 : user1 : PASV
+22/12/2022 11:55:29 : user1 : STOR /b/NguyenAmHuanLuyen-16k/05MVB/i.wav
+22/12/2022 11:55:29 : user1 : PASV
+22/12/2022 11:55:29 : user1 : STOR /b/NguyenAmHuanLuyen-16k/05MVB/o.wav
+22/12/2022 11:55:29 : user1 : PASV
+22/12/2022 11:55:29 : user1 : STOR /b/NguyenAmHuanLuyen-16k/05MVB/e.wav
+22/12/2022 11:55:29 : user1 : PASV
+22/12/2022 11:55:29 : user1 : STOR /b/NguyenAmHuanLuyen-16k/05MVB/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/05MVB/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/14FHH
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/14FHH/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/14FHH/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/14FHH/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/14FHH/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/14FHH/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/20MVK
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/20MVK/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/20MVK/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/20MVK/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/20MVK/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/20MVK/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/17MTH
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/17MTH/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/17MTH/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/17MTH/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/17MTH/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/17MTH/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/03MAB
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/03MAB/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/03MAB/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/03MAB/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/03MAB/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/03MAB/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/22MHL
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/22MHL/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/22MHL/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/22MHL/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/22MHL/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/22MHL/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/19MXK
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/19MXK/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/19MXK/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/19MXK/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/19MXK/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/19MXK/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/02FVA
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/02FVA/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/02FVA/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/02FVA/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/02FVA/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/02FVA/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/21MTL
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/21MTL/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/21MTL/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/21MTL/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/21MTL/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/21MTL/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/11MVD
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/11MVD/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/11MVD/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/11MVD/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/11MVD/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/11MVD/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/15MMH
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/15MMH/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/15MMH/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/15MMH/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/15MMH/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/15MMH/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/01MDA
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/01MDA/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/01MDA/o.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/01MDA/e.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/01MDA/u.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/01MDA/a.wav
+22/12/2022 11:55:30 : user1 : MKD /b/NguyenAmHuanLuyen-16k/16FTH
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/16FTH/i.wav
+22/12/2022 11:55:30 : user1 : PASV
+22/12/2022 11:55:30 : user1 : STOR /b/NguyenAmHuanLuyen-16k/16FTH/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/16FTH/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/16FTH/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/16FTH/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/07FTC
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/07FTC/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/07FTC/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/07FTC/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/07FTC/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/07FTC/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/08MLD
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/08MLD/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/08MLD/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/08MLD/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/08MLD/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/08MLD/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/12FTD
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/12FTD/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/12FTD/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/12FTD/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/12FTD/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/12FTD/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/10MSD
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/10MSD/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/10MSD/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/10MSD/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/10MSD/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/10MSD/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/04MHB
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/04MHB/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/04MHB/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/04MHB/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/04MHB/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/04MHB/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/06FTB
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/06FTB/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/06FTB/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/06FTB/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/06FTB/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/06FTB/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/18MNK
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/18MNK/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/18MNK/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/18MNK/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/18MNK/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/18MNK/a.wav
+22/12/2022 11:55:31 : user1 : MKD /b/NguyenAmHuanLuyen-16k/09MPD
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/09MPD/i.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/09MPD/o.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/09MPD/e.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/09MPD/u.wav
+22/12/2022 11:55:31 : user1 : PASV
+22/12/2022 11:55:31 : user1 : STOR /b/NguyenAmHuanLuyen-16k/09MPD/a.wav
+22/12/2022 11:55:33 : user1 : PASV
+22/12/2022 11:55:33 : user1 : LIST /b/
+22/12/2022 11:55:44 : user1 : PASV
+22/12/2022 11:55:44 : user1 : LSUSER all
+22/12/2022 11:55:44 : user1 : PASV
+22/12/2022 11:55:44 : user1 : LSSHARE 5464
+22/12/2022 11:55:51 : user1 : SETRD 5464
+22/12/2022 11:55:51 : user1 : PASV
+22/12/2022 11:55:51 : user1 : SHARE 5464
+22/12/2022 11:55:51 : user1 : PASV
+22/12/2022 11:55:51 : user1 : LIST /b/
+22/12/2022 11:55:53 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:55:53 : user1 : PWD
+22/12/2022 11:55:53 : user1 : PASV
+22/12/2022 11:55:53 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:55:54 : user1 : CWD ..
+22/12/2022 11:55:54 : user1 : PWD
+22/12/2022 11:55:54 : user1 : PASV
+22/12/2022 11:55:54 : user1 : LIST /b/
+22/12/2022 11:56:00 : user1 : QUIT
+22/12/2022 11:56:07 :  : LGIN user2 ***
+22/12/2022 11:56:07 : user2 : PASV
+22/12/2022 11:56:07 : user2 : UINFO user2
+22/12/2022 11:56:07 : user2 : PWD
+22/12/2022 11:56:07 : user2 : PASV
+22/12/2022 11:56:07 : user2 : LIST /
+22/12/2022 11:56:11 : user2 : CWD /b/
+22/12/2022 11:56:11 : user2 : PWD
+22/12/2022 11:56:11 : user2 : PASV
+22/12/2022 11:56:11 : user2 : LIST /b/
+22/12/2022 11:56:13 : user2 : CWD /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:56:13 : user2 : PWD
+22/12/2022 11:56:13 : user2 : PASV
+22/12/2022 11:56:13 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:56:21 : user2 : MKD /b/NguyenAmHuanLuyen-16k/a
+22/12/2022 11:56:21 : user2 : PWD
+22/12/2022 11:56:21 : user2 : PASV
+22/12/2022 11:56:21 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:56:30 : user2 : MKD /b/NguyenAmHuanLuyen-16k/0001f
+22/12/2022 11:56:30 : user2 : PWD
+22/12/2022 11:56:30 : user2 : PASV
+22/12/2022 11:56:30 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:56:51 : user2 : MKD /b/NguyenAmHuanLuyen-16k/0asja
+22/12/2022 11:56:51 : user2 : PWD
+22/12/2022 11:56:51 : user2 : PASV
+22/12/2022 11:56:51 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:56:59 : user2 : PASV
+22/12/2022 11:56:59 : user2 : STOR /b/NguyenAmHuanLuyen-16k/2022.12.22_Danh-sach-duoc-va-khong-duoc-bao-ve_Thay-Dat.pdf
+22/12/2022 11:57:01 : user2 : PASV
+22/12/2022 11:57:01 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:57:07 : user2 : QUIT
+22/12/2022 11:57:15 :  : LGIN user1 ***
+22/12/2022 11:57:15 : user1 : PASV
+22/12/2022 11:57:15 : user1 : UINFO user1
+22/12/2022 11:57:15 : user1 : PWD
+22/12/2022 11:57:15 : user1 : PASV
+22/12/2022 11:57:15 : user1 : LIST /
+22/12/2022 11:57:18 : user1 : CWD /b/
+22/12/2022 11:57:18 : user1 : PWD
+22/12/2022 11:57:18 : user1 : PASV
+22/12/2022 11:57:18 : user1 : LIST /b/
+22/12/2022 11:57:20 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:57:20 : user1 : PWD
+22/12/2022 11:57:20 : user1 : PASV
+22/12/2022 11:57:20 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:57:25 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0001f
+22/12/2022 11:57:36 : user1 : CWD ..
+22/12/2022 11:57:36 : user1 : PWD
+22/12/2022 11:57:36 : user1 : PASV
+22/12/2022 11:57:36 : user1 : LIST /b/
+22/12/2022 11:57:38 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:57:38 : user1 : PWD
+22/12/2022 11:57:38 : user1 : PASV
+22/12/2022 11:57:38 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+22/12/2022 11:57:42 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0001f
+23/12/2022 12:01:21 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0001f
+23/12/2022 12:01:27 : user1 : DELE /b/NguyenAmHuanLuyen-16k/04MHB
+23/12/2022 12:01:27 : user1 : PASV
+23/12/2022 12:01:27 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:01:33 : user1 : CWD /b/NguyenAmHuanLuyen-16k/a/
+23/12/2022 12:01:33 : user1 : PWD
+23/12/2022 12:01:33 : user1 : PASV
+23/12/2022 12:01:33 : user1 : LIST /b/NguyenAmHuanLuyen-16k/a/
+23/12/2022 12:01:34 : user1 : CWD ..
+23/12/2022 12:01:34 : user1 : PWD
+23/12/2022 12:01:34 : user1 : PASV
+23/12/2022 12:01:34 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:01:38 : user1 : DELE /b/NguyenAmHuanLuyen-16k/01MDA
+23/12/2022 12:01:38 : user1 : PASV
+23/12/2022 12:01:38 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:01:45 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0asja
+23/12/2022 12:02:00 : user1 : QUIT
+23/12/2022 12:02:28 :  : LGIN user1 ***
+23/12/2022 12:02:28 : user1 : PASV
+23/12/2022 12:02:28 : user1 : UINFO user1
+23/12/2022 12:02:28 : user1 : PWD
+23/12/2022 12:02:28 : user1 : PASV
+23/12/2022 12:02:28 : user1 : LIST /
+23/12/2022 12:02:31 : user1 : CWD /b/
+23/12/2022 12:02:31 : user1 : PWD
+23/12/2022 12:02:31 : user1 : PASV
+23/12/2022 12:02:31 : user1 : LIST /b/
+23/12/2022 12:02:32 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:02:32 : user1 : PWD
+23/12/2022 12:02:32 : user1 : PASV
+23/12/2022 12:02:32 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:02:34 : user1 : CWD ..
+23/12/2022 12:02:34 : user1 : PWD
+23/12/2022 12:02:34 : user1 : PASV
+23/12/2022 12:02:34 : user1 : LIST /b/
+23/12/2022 12:02:35 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:02:35 : user1 : PWD
+23/12/2022 12:02:35 : user1 : PASV
+23/12/2022 12:02:35 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:03:26 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0asja
+23/12/2022 12:07:18 :  : LGIN user1 ***
+23/12/2022 12:07:18 : user1 : PASV
+23/12/2022 12:07:18 : user1 : UINFO user1
+23/12/2022 12:07:19 : user1 : PWD
+23/12/2022 12:07:19 : user1 : PASV
+23/12/2022 12:07:19 : user1 : LIST /
+23/12/2022 12:07:20 : user1 : CWD /b/
+23/12/2022 12:07:20 : user1 : PWD
+23/12/2022 12:07:20 : user1 : PASV
+23/12/2022 12:07:20 : user1 : LIST /b/
+23/12/2022 12:07:21 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:07:21 : user1 : PWD
+23/12/2022 12:07:21 : user1 : PASV
+23/12/2022 12:07:21 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:07:27 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0asja
+23/12/2022 12:10:34 :  : LGIN user1 ***
+23/12/2022 12:10:34 : user1 : PASV
+23/12/2022 12:10:34 : user1 : UINFO user1
+23/12/2022 12:10:34 : user1 : PWD
+23/12/2022 12:10:34 : user1 : PASV
+23/12/2022 12:10:34 : user1 : LIST /
+23/12/2022 12:10:37 : user1 : CWD /b/
+23/12/2022 12:10:37 : user1 : PWD
+23/12/2022 12:10:37 : user1 : PASV
+23/12/2022 12:10:37 : user1 : LIST /b/
+23/12/2022 12:10:38 : user1 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:10:38 : user1 : PWD
+23/12/2022 12:10:38 : user1 : PASV
+23/12/2022 12:10:38 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:10:43 : user1 : DELE /b/NguyenAmHuanLuyen-16k/0asja
+23/12/2022 12:10:43 : user1 : PASV
+23/12/2022 12:10:43 : user1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:10:48 : user1 : QUIT
+23/12/2022 12:10:59 :  : LGIN admin1 ***
+23/12/2022 12:10:59 : admin1 : PASV
+23/12/2022 12:10:59 : admin1 : UINFO admin1
+23/12/2022 12:10:59 : admin1 : PWD
+23/12/2022 12:10:59 : admin1 : PASV
+23/12/2022 12:10:59 : admin1 : LIST /
+23/12/2022 12:11:02 : admin1 : CWD /b/
+23/12/2022 12:11:02 : admin1 : PWD
+23/12/2022 12:11:02 : admin1 : PASV
+23/12/2022 12:11:02 : admin1 : LIST /b/
+23/12/2022 12:11:04 : admin1 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:11:04 : admin1 : PWD
+23/12/2022 12:11:04 : admin1 : PASV
+23/12/2022 12:11:04 : admin1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:11:11 : admin1 : DELE /b/NguyenAmHuanLuyen-16k/08MLD
+23/12/2022 12:11:11 : admin1 : PASV
+23/12/2022 12:11:11 : admin1 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 12:11:15 : admin1 : QUIT

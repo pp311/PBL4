@@ -110,7 +110,17 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		}
 		return ch;
 	}
-	
+	public Boolean showServerResponse1() {
+		String ch = "";
+		try {
+			ch = dis.readUTF();
+			if (ch.substring(0, 1).equals("6")) return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
 	public Socket connectToDataConnection() {
 		int port = 0;
 		Socket datasoc = null;
@@ -487,7 +497,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 					    boolean deleted = deleteFile(deletePath);
 					    if (deleted) {
 							loadTable();
+							//if (showServerResponse1()==true) {
 					        JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " was deleted successfully.");
+							//}
 					    } else {
 					    	JOptionPane.showMessageDialog(null, "Could not delete the file.");
 					    }
@@ -501,7 +513,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 								loadTable();
 						        JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " was deleted successfully.");
 						    } else {
-						    	JOptionPane.showMessageDialog(null, "Could not delete the file.");
+						    	JOptionPane.showMessageDialog(null, "Permission denied.");
 						    }			        			    			      				    
 					} catch (Exception ex) {
 					    System.out.println("Oh no, there was an error: " + ex.getMessage());
@@ -516,13 +528,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private boolean deleteFile(String deletePath) {
 		try {
 			dos.writeUTF("DELE " + deletePath);	
-			showServerResponse();
+			return showServerResponse1();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 //	public boolean deleteDirectory(String deletePath) throws IOException {

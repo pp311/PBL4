@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
@@ -143,28 +144,52 @@ public void run(){
 				dos.writeUTF(response);
 				break;
 			case "DELE":
-				File deleteDir = new File(baseDir + msg);
-				FileDto fileDto = new FileDto();
-				Path pa = Paths.get(deleteDir.getAbsolutePath());
-				BasicFileAttributes attri = Files.readAttributes(pa, BasicFileAttributes.class);
-				fileDto.setPath(pa.toString());
-				fileDto.setName(deleteDir.getName());
-				fileDto.setType(attri.isDirectory() ? "Dir" : "File");
-//				if (fileDto.getType().compareTo("Dir")==0)
-//				{
-//					
-//				}
-//				else {
-//					
-//				}
-				if (new UploadBLL().delFile(fileDto)) {
-					deleteDirectory(deleteDir);
-					dos.writeUTF("250 Delete operation successful");
+				
+					File deleteDir = new File(baseDir + msg);
+					FileDto fileDto = new FileDto();
+					Path pa = Paths.get(deleteDir.getAbsolutePath());
+					BasicFileAttributes attri = Files.readAttributes(pa, BasicFileAttributes.class);
+					fileDto.setPath(pa.toString());
+					fileDto.setName(deleteDir.getName());
+					fileDto.setType(attri.isDirectory() ? "Dir" : "File");
+					fileDto.setFID(new UploadBLL().findFID(fileDto));
+	//				if (fileDto.getType().compareTo("Dir")==0)
+	//				{
+	//					
+	//				}
+	//				else {
+	//					
+	//				}
+				if (role.equals("admin"))
+				{
+					if (new UploadBLL().delFile(fileDto)) {
+						deleteDirectory(deleteDir);
+						dos.writeUTF("250 Delete operation successful");
+					}
+					else {
+						dos.writeUTF("502 Command not implemented");
+					}	
 				}
 				else {
-					dos.writeUTF("502 Command not implemented");
+					List<String> list = new UploadBLL().getAllOwner(fileDto);
+					int dem=0;
+					for (int i=0;i<list.size();i++)
+					{
+						if(list.get(i).equals(userName)) dem++;
+					}
+					if (dem>0){
+						if (new UploadBLL().delFile(fileDto)) {
+							deleteDirectory(deleteDir);
+							dos.writeUTF("250 Delete operation successful");
+						}
+						else {
+							dos.writeUTF("502 Command not implemented");
+						}
+					}
+					else {
+					dos.writeUTF("601 Permission denied");
+					}
 				}
-				
 				break;
 			case "CWD":
 				if(!msg.equals(".."))
