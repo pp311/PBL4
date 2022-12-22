@@ -95,7 +95,10 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		String ch = "";
 		try {
 			ch = dis.readUTF();
-			System.out.println(ch);
+			if (ch.substring(0, 1).equals("6")) {
+				JOptionPane.showMessageDialog(null, ch);
+			}
+			else System.out.println(ch);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
