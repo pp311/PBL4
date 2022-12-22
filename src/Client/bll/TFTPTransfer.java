@@ -240,7 +240,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 						state = writePacketToFile(fos, dataPacket);
 						downloaded += firstDataPack.getLength() - 4;
 						percentCompleted = (int) (downloaded * 100 / fileSize);
-						setProgress(percentCompleted);
+						setProgress(percentCompleted <= 100 ? percentCompleted : 100);
 						if(state == -1) {
 							sendError(socket,ERR_ACCESS, "Trouble writing data.");
 							return;

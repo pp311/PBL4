@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Server.bll.UploadBLL;
@@ -35,12 +37,13 @@ public class TFTPListenHandler extends Thread{
 	public static final short ERR_FNF = 1;
 	public static final short ERR_ACCESS = 2;
 	public static final short ERR_EXISTS = 6;
+	public static final short ERR_PERMISSION = 8;
 	public static String mode;
 	private String username;
 	public static final String[] errorCodes = {"Not defined", "File not found.", "Access violation.", 
 												"Disk full or allocation exceeded.", "Illegal TFTP operation.", 
 												"Unknown transfer ID.", "File already exists.", 
-												"No such user."};
+												"No such user.", "Permission denied."};
 	
 	public TFTPListenHandler() {
 	}
@@ -66,6 +69,10 @@ public class TFTPListenHandler extends Thread{
 				StringBuffer requestedFile = new StringBuffer();
 				int reqtype = ParseRQ(buff, requestedFile);
 				
+				FileWriter fw = new FileWriter("log.txt", true);
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+				fw.append(simpleDateFormat.format(new Date()) + " : " + username + " : " + (reqtype == OP_RRQ ? "RRQ " : "WRQ ") + requestedFile.toString() + " (TFTP)" + "\n");
+				fw.close();
 				new Thread() {
 					public void run() {
 						try {

@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
@@ -58,7 +60,7 @@ public void run(){
 	while(true) {
 		try {
 			ch= dis.readUTF();
-			System.out.println(userName + ": " + ch);
+			
 			//những lệnh như PWD ko chứa dấu " " nên gọi substring sẽ lỗi
 			if(ch.startsWith("PWD") || ch.startsWith("PASV")) cmd = ch;
 			else {
@@ -66,6 +68,16 @@ public void run(){
 				msg=ch.substring(ch.indexOf(" ")+1);
 				cmd = cmd.toUpperCase();				
 			}
+			
+			FileWriter fw = new FileWriter("log.txt", true);
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			if(!cmd.equals("LGIN"))
+				fw.append(simpleDateFormat.format(new Date()) + " : " + userName + " : " + ch + "\n");
+			else
+				fw.append(simpleDateFormat.format(new Date()) + " : " + userName + " : " + ch.substring(0, ch.lastIndexOf(" ")) + " ***" + "\n");
+			fw.close();
+			System.out.println(userName + " : " + ch);
+			
 			switch (cmd) {
 			case "LGIN":
 				userName = msg.substring(0,msg.indexOf(" "));
