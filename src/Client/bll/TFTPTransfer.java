@@ -1,5 +1,6 @@
 package Client.bll;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 	//private DatagramSocket serverSoc;
 	private Client client;
 	//private byte[] buff;
+	private FileInputStream fis;
 	
 	public TFTPTransfer(String requestType, Client client, FileDto fileInfo, String serverIP, String saveDir) {
 		this.requestType = requestType;
@@ -84,10 +86,28 @@ public class TFTPTransfer extends SwingWorker<String, String> {
                     JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {
             	client.progressBar.setVisible(false);
+            	client.btnStop.setVisible(false);
             	client.lblPercent.setText("");
+            	client.lblPercent.setVisible(false);
             	client.lblTask.setText("");
-            }
             client.loadTable();
+        }
+        } else {
+        	client.progressBar.setVisible(false);
+        	client.btnStop.setVisible(false);
+        	client.lblPercent.setText("");
+        	client.lblPercent.setVisible(false);
+        	client.lblTask.setText("");
+        	if (requestType.equals("Download")) {
+        		new File(saveDir).delete();
+        	} else {
+        		try {
+        			fis.close();
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
         }
         client.isFileTransfering = false;
     }  
@@ -108,14 +128,14 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 		byte[] rec = new byte[BUFFSIZE];
 		DatagramPacket receiver = new DatagramPacket(rec, rec.length);
 		
-		while(true) {
+		while(!isCancelled()) {
 		    if (retryCount++ >= 6) {
 		        System.err.println("Timed out. Closing connection.");
 		        return null;
 		    }
 		    try {
 		    	socket.send(packet);
-		    	socket.setSoTimeout(3000);
+		    	socket.setSoTimeout(1000);
 		    	socket.receive(receiver);
 		        
 		        short blockNum = getData(receiver);	             
@@ -140,7 +160,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 				}
 		    }
 		}
-		//return null;
+		return null;
 	}
 	
 	private void uploadFile(String filePath, InetAddress serverAddr) {
@@ -160,8 +180,8 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 			try {
 				short blockNum = 1;
 				socket.connect(firstAck.getAddress(), firstAck.getPort());
-				FileInputStream fis = new FileInputStream(saveDir);
-				while (true) {
+				fis = new FileInputStream(saveDir);
+				while (!isCancelled()) {
 					int length;
 					try {
 						length = fis.read(buff);
@@ -231,7 +251,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 				socket.connect(firstDataPack.getAddress(), firstDataPack.getPort());
 				
 				short blockNum = 1;
-				while(true) {
+				while(!isCancelled()) {
 					DatagramPacket dataPacket = ReadAndWriteData(socket, ackPacket(blockNum++), blockNum);
 					if (dataPacket == null) {
 						return;
@@ -289,7 +309,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
             try {
             	System.out.println("sending ack for block: " + block);
             	serverSoc.send(sendAck);
-            	serverSoc.setSoTimeout(3000);
+            	serverSoc.setSoTimeout(1000);
             	serverSoc.receive(receiver);
                 
                 short blockNum = getData(receiver);
@@ -335,7 +355,7 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 	        try {
 	        	dataSoc.send(sender);
 	            System.out.println("Sent.");
-	            dataSoc.setSoTimeout(3000);
+	            dataSoc.setSoTimeout(1000);
 	            dataSoc.receive(receiver);
 	            
 	            short ack = getAck(receiver);

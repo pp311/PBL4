@@ -31,6 +31,8 @@ public class UploadTask extends SwingWorker<String, String>{
 	String mode;
 	private static final int PORT_RANGE_START = 20000;
 	private static final int PORT_RANGE_END = 22000;
+	DataInputStream datadis;
+	DataOutputStream datados;
 	
 	public UploadTask(File localFile, String uploadDir, Client client, String mode) {
 		this.localFile = localFile;
@@ -108,8 +110,9 @@ public class UploadTask extends SwingWorker<String, String>{
 				client.showServerResponse();
 			}
 			client.dos.writeUTF("STOR " + uploadDir);
-			DataInputStream datadis = new DataInputStream(new FileInputStream(localFile));
-			DataOutputStream datados = new DataOutputStream(datasoc.getOutputStream());
+			datadis = new DataInputStream(new FileInputStream(localFile));
+			datados = new DataOutputStream(datasoc.getOutputStream());
+			datados.writeLong(size);
 			byte buffer[] = new byte[Client.MAX_BUFFER];
 			int read = 0;
 			while((read = datadis.read(buffer)) != -1) {
@@ -179,10 +182,25 @@ public class UploadTask extends SwingWorker<String, String>{
                     JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {
             	client.progressBar.setVisible(false);
+            	client.btnStop.setVisible(false);
             	client.lblPercent.setText("");
+            	client.lblPercent.setVisible(false);
             	client.lblTask.setText("");
             }
             client.loadTable();
+        } else {
+        	client.progressBar.setVisible(false);
+        	client.btnStop.setVisible(false);
+        	client.lblPercent.setText("");
+        	client.lblPercent.setVisible(false);
+        	client.lblTask.setText("");
+        	try {
+				if(datadis != null) datadis.close();
+				if(datados != null) datados.close();
+				client.showServerResponse();
+			} catch (Exception e) {
+				System.err.println(e);
+			}
         }
         client.isFileTransfering = false;
 	}

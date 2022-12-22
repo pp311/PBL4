@@ -77,3 +77,1298 @@
 22/12/2022 11:43:08 : admin1 : RRQ /a/aspnet-core.pdf (TFTP)
 22/12/2022 11:43:09 : admin1 : PASV
 22/12/2022 11:43:09 : admin1 : LIST /a/
+22/12/2022 11:44:43 :  : LGIN admin1 ***
+22/12/2022 11:44:43 : admin1 : PASV
+22/12/2022 11:44:43 : admin1 : UINFO admin1
+22/12/2022 11:44:43 : admin1 : PWD
+22/12/2022 11:44:43 : admin1 : PASV
+22/12/2022 11:44:43 : admin1 : LIST /
+22/12/2022 11:44:48 : admin1 : CWD /a/
+22/12/2022 11:44:48 : admin1 : PWD
+22/12/2022 11:44:48 : admin1 : PASV
+22/12/2022 11:44:48 : admin1 : LIST /a/
+22/12/2022 11:44:53 : admin1 : CWD /a/c/
+22/12/2022 11:44:53 : admin1 : PWD
+22/12/2022 11:44:53 : admin1 : PASV
+22/12/2022 11:44:53 : admin1 : LIST /a/c/
+22/12/2022 11:44:55 : admin1 : CWD ..
+22/12/2022 11:44:55 : admin1 : PWD
+22/12/2022 11:44:55 : admin1 : PASV
+22/12/2022 11:44:55 : admin1 : LIST /a/
+22/12/2022 11:44:56 : admin1 : CWD /a/BaiTap/
+22/12/2022 11:44:56 : admin1 : PWD
+22/12/2022 11:44:56 : admin1 : PASV
+22/12/2022 11:44:56 : admin1 : LIST /a/BaiTap/
+22/12/2022 11:44:57 : admin1 : CWD ..
+22/12/2022 11:44:57 : admin1 : PWD
+22/12/2022 11:44:57 : admin1 : PASV
+22/12/2022 11:44:57 : admin1 : LIST /a/
+22/12/2022 11:44:58 : admin1 : CWD /a/Documents/
+22/12/2022 11:44:58 : admin1 : PWD
+22/12/2022 11:44:58 : admin1 : PASV
+22/12/2022 11:44:58 : admin1 : LIST /a/Documents/
+22/12/2022 11:45:00 : admin1 : CWD ..
+22/12/2022 11:45:00 : admin1 : PWD
+22/12/2022 11:45:00 : admin1 : PASV
+22/12/2022 11:45:00 : admin1 : LIST /a/
+22/12/2022 11:45:23 : admin1 : PASV
+22/12/2022 11:45:23 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 11:45:33 :  : LGIN admin1 ***
+22/12/2022 11:45:33 : admin1 : PASV
+22/12/2022 11:45:33 : admin1 : UINFO admin1
+22/12/2022 11:45:33 : admin1 : PWD
+22/12/2022 11:45:33 : admin1 : PASV
+22/12/2022 11:45:33 : admin1 : LIST /
+22/12/2022 11:45:34 : admin1 : CWD /a/
+22/12/2022 11:45:34 : admin1 : PWD
+22/12/2022 11:45:34 : admin1 : PASV
+22/12/2022 11:45:34 : admin1 : LIST /a/
+22/12/2022 12:12:39 :  : LGIN admin1 ***
+22/12/2022 12:12:39 : admin1 : PASV
+22/12/2022 12:12:39 : admin1 : UINFO admin1
+22/12/2022 12:12:39 : admin1 : PWD
+22/12/2022 12:12:39 : admin1 : PASV
+22/12/2022 12:12:39 : admin1 : LIST /
+22/12/2022 12:12:43 : admin1 : CWD /a/
+22/12/2022 12:12:43 : admin1 : PWD
+22/12/2022 12:12:43 : admin1 : PASV
+22/12/2022 12:12:43 : admin1 : LIST /a/
+22/12/2022 12:12:46 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 12:12:46 : admin1 : PASV
+22/12/2022 12:12:46 : admin1 : LIST /a/
+22/12/2022 12:12:48 : admin1 : CWD ..
+22/12/2022 12:12:48 : admin1 : PWD
+22/12/2022 12:12:48 : admin1 : PASV
+22/12/2022 12:12:48 : admin1 : LIST /
+22/12/2022 12:13:06 : admin1 : PASV
+22/12/2022 12:13:06 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:13:27 : admin1 : QUIT
+22/12/2022 12:14:33 :  : LGIN admin1 ***
+22/12/2022 12:14:34 : admin1 : PASV
+22/12/2022 12:14:34 : admin1 : UINFO admin1
+22/12/2022 12:14:34 : admin1 : PWD
+22/12/2022 12:14:34 : admin1 : PASV
+22/12/2022 12:14:34 : admin1 : LIST /
+22/12/2022 12:14:43 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:14:43 : admin1 : PASV
+22/12/2022 12:14:43 : admin1 : LIST /
+22/12/2022 12:14:54 : admin1 : QUIT
+22/12/2022 12:15:05 :  : LGIN admin1 ***
+22/12/2022 12:15:05 : admin1 : PASV
+22/12/2022 12:15:05 : admin1 : UINFO admin1
+22/12/2022 12:15:05 : admin1 : PWD
+22/12/2022 12:15:05 : admin1 : PASV
+22/12/2022 12:15:05 : admin1 : LIST /
+22/12/2022 12:15:14 : admin1 : PASV
+22/12/2022 12:15:14 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:15:21 : admin1 : QUIT
+22/12/2022 12:15:30 :  : LGIN admin1 ***
+22/12/2022 12:15:30 : admin1 : PASV
+22/12/2022 12:15:30 : admin1 : UINFO admin1
+22/12/2022 12:15:30 : admin1 : PWD
+22/12/2022 12:15:30 : admin1 : PASV
+22/12/2022 12:15:30 : admin1 : LIST /
+22/12/2022 12:16:56 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:16:57 : admin1 : PASV
+22/12/2022 12:16:57 : admin1 : LIST /
+22/12/2022 12:17:38 : admin1 : QUIT
+22/12/2022 12:17:50 :  : LGIN admin1 ***
+22/12/2022 12:17:50 : admin1 : PASV
+22/12/2022 12:17:50 : admin1 : UINFO admin1
+22/12/2022 12:17:50 : admin1 : PWD
+22/12/2022 12:17:50 : admin1 : PASV
+22/12/2022 12:17:50 : admin1 : LIST /
+22/12/2022 12:18:00 : admin1 : PASV
+22/12/2022 12:18:00 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:18:01 : admin1 : QUIT
+22/12/2022 12:18:09 :  : LGIN admin1 ***
+22/12/2022 12:18:09 : admin1 : PASV
+22/12/2022 12:18:09 : admin1 : UINFO admin1
+22/12/2022 12:18:10 : admin1 : PWD
+22/12/2022 12:18:10 : admin1 : PASV
+22/12/2022 12:18:10 : admin1 : LIST /
+22/12/2022 12:18:18 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:18:20 : admin1 : PASV
+22/12/2022 12:18:20 : admin1 : LIST /
+22/12/2022 12:19:45 : admin1 : QUIT
+22/12/2022 12:19:53 :  : LGIN admin1 ***
+22/12/2022 12:19:53 : admin1 : PASV
+22/12/2022 12:19:53 : admin1 : UINFO admin1
+22/12/2022 12:19:53 : admin1 : PWD
+22/12/2022 12:19:53 : admin1 : PASV
+22/12/2022 12:19:53 : admin1 : LIST /
+22/12/2022 12:20:01 : admin1 : PASV
+22/12/2022 12:20:01 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:20:05 : admin1 : QUIT
+22/12/2022 12:20:11 :  : LGIN admin1 ***
+22/12/2022 12:20:11 : admin1 : PASV
+22/12/2022 12:20:11 : admin1 : UINFO admin1
+22/12/2022 12:20:11 : admin1 : PWD
+22/12/2022 12:20:11 : admin1 : PASV
+22/12/2022 12:20:11 : admin1 : LIST /
+22/12/2022 12:20:20 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:20:23 : admin1 : PASV
+22/12/2022 12:20:23 : admin1 : LIST /
+22/12/2022 12:22:09 :  : LGIN admin1 ***
+22/12/2022 12:22:09 : admin1 : PASV
+22/12/2022 12:22:09 : admin1 : UINFO admin1
+22/12/2022 12:22:09 : admin1 : PWD
+22/12/2022 12:22:09 : admin1 : PASV
+22/12/2022 12:22:09 : admin1 : LIST /
+22/12/2022 12:22:18 : admin1 : PASV
+22/12/2022 12:22:18 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:22:19 : admin1 : QUIT
+22/12/2022 12:22:29 :  : LGIN admin1 ***
+22/12/2022 12:22:29 : admin1 : PASV
+22/12/2022 12:22:29 : admin1 : UINFO admin1
+22/12/2022 12:22:29 : admin1 : PWD
+22/12/2022 12:22:29 : admin1 : PASV
+22/12/2022 12:22:29 : admin1 : LIST /
+22/12/2022 12:22:36 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:22:37 : admin1 : PASV
+22/12/2022 12:22:37 : admin1 : LIST /
+22/12/2022 12:22:51 : admin1 : PASV
+22/12/2022 12:22:51 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:22:54 : admin1 : QUIT
+22/12/2022 12:23:00 :  : LGIN admin1 ***
+22/12/2022 12:23:00 : admin1 : PASV
+22/12/2022 12:23:00 : admin1 : UINFO admin1
+22/12/2022 12:23:00 : admin1 : PWD
+22/12/2022 12:23:00 : admin1 : PASV
+22/12/2022 12:23:00 : admin1 : LIST /
+22/12/2022 12:23:29 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:23:29 : admin1 : PASV
+22/12/2022 12:23:29 : admin1 : LIST /
+22/12/2022 12:27:24 : admin1 : QUIT
+22/12/2022 12:27:39 :  : LGIN admin1 ***
+22/12/2022 12:27:40 : admin1 : PASV
+22/12/2022 12:27:40 : admin1 : UINFO admin1
+22/12/2022 12:27:40 : admin1 : PWD
+22/12/2022 12:27:40 : admin1 : PASV
+22/12/2022 12:27:40 : admin1 : LIST /
+22/12/2022 12:27:49 : admin1 : PASV
+22/12/2022 12:27:49 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:27:52 : admin1 : QUIT
+22/12/2022 12:27:58 :  : LGIN admin1 ***
+22/12/2022 12:27:58 : admin1 : PASV
+22/12/2022 12:27:58 : admin1 : UINFO admin1
+22/12/2022 12:27:58 : admin1 : PWD
+22/12/2022 12:27:58 : admin1 : PASV
+22/12/2022 12:27:58 : admin1 : LIST /
+22/12/2022 12:28:08 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:28:08 : admin1 : PASV
+22/12/2022 12:28:08 : admin1 : LIST /
+22/12/2022 12:29:00 :  : LGIN admin1 ***
+22/12/2022 12:29:00 : admin1 : PASV
+22/12/2022 12:29:00 : admin1 : UINFO admin1
+22/12/2022 12:29:00 : admin1 : PWD
+22/12/2022 12:29:00 : admin1 : PASV
+22/12/2022 12:29:00 : admin1 : LIST /
+22/12/2022 12:29:15 : admin1 : PASV
+22/12/2022 12:29:15 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:41:12 :  : LGIN admin1 ***
+22/12/2022 12:41:12 : admin1 : PASV
+22/12/2022 12:41:12 : admin1 : UINFO admin1
+22/12/2022 12:41:12 : admin1 : PWD
+22/12/2022 12:41:12 : admin1 : PASV
+22/12/2022 12:41:12 : admin1 : LIST /
+22/12/2022 12:41:23 : admin1 : PASV
+22/12/2022 12:41:23 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:41:29 : admin1 : QUIT
+22/12/2022 12:41:32 :  : LGIN admin1 ***
+22/12/2022 12:41:32 : admin1 : PASV
+22/12/2022 12:41:32 : admin1 : UINFO admin1
+22/12/2022 12:41:32 : admin1 : PWD
+22/12/2022 12:41:32 : admin1 : PASV
+22/12/2022 12:41:32 : admin1 : LIST /
+22/12/2022 12:42:51 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:42:51 : admin1 : PASV
+22/12/2022 12:42:51 : admin1 : LIST /
+22/12/2022 12:56:09 :  : LGIN admin1 ***
+22/12/2022 12:56:09 : admin1 : PASV
+22/12/2022 12:56:09 : admin1 : UINFO admin1
+22/12/2022 12:56:09 : admin1 : PWD
+22/12/2022 12:56:09 : admin1 : PASV
+22/12/2022 12:56:09 : admin1 : LIST /
+22/12/2022 12:56:17 : admin1 : PASV
+22/12/2022 12:56:17 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:56:36 : admin1 : PASV
+22/12/2022 12:56:36 : admin1 : LIST /
+22/12/2022 12:56:52 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:56:52 : admin1 : PASV
+22/12/2022 12:56:52 : admin1 : LIST /
+22/12/2022 12:57:11 : admin1 : PASV
+22/12/2022 12:57:11 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 12:57:12 : admin1 : QUIT
+22/12/2022 12:57:37 :  : LGIN admin1 ***
+22/12/2022 12:57:37 : admin1 : PASV
+22/12/2022 12:57:37 : admin1 : UINFO admin1
+22/12/2022 12:57:37 : admin1 : PWD
+22/12/2022 12:57:37 : admin1 : PASV
+22/12/2022 12:57:37 : admin1 : LIST /
+22/12/2022 12:58:03 : admin1 : QUIT
+22/12/2022 01:02:56 :  : LGIN admin1 ***
+22/12/2022 01:02:56 : admin1 : PASV
+22/12/2022 01:02:56 : admin1 : UINFO admin1
+22/12/2022 01:02:56 : admin1 : PWD
+22/12/2022 01:02:56 : admin1 : PASV
+22/12/2022 01:02:56 : admin1 : LIST /
+22/12/2022 01:02:59 : admin1 : CWD /a/
+22/12/2022 01:02:59 : admin1 : PWD
+22/12/2022 01:02:59 : admin1 : PASV
+22/12/2022 01:02:59 : admin1 : LIST /a/
+22/12/2022 01:03:05 : admin1 : CWD ..
+22/12/2022 01:03:05 : admin1 : PWD
+22/12/2022 01:03:05 : admin1 : PASV
+22/12/2022 01:03:05 : admin1 : LIST /
+22/12/2022 01:03:14 : admin1 : QUIT
+22/12/2022 01:04:43 :  : LGIN admin1 ***
+22/12/2022 01:04:43 : admin1 : PASV
+22/12/2022 01:04:43 : admin1 : UINFO admin1
+22/12/2022 01:04:43 : admin1 : PWD
+22/12/2022 01:04:43 : admin1 : PASV
+22/12/2022 01:04:43 : admin1 : LIST /
+22/12/2022 01:04:52 : admin1 : PASV
+22/12/2022 01:04:52 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:05:12 : admin1 : PASV
+22/12/2022 01:05:12 : admin1 : LIST /
+22/12/2022 01:05:23 : admin1 : PASV
+22/12/2022 01:05:23 : admin1 : LIST /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:05:23 : admin1 : PASV
+22/12/2022 01:05:23 : admin1 : RETR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:05:43 : admin1 : PASV
+22/12/2022 01:06:15 :  : LGIN admin1 ***
+22/12/2022 01:06:15 : admin1 : PASV
+22/12/2022 01:06:15 : admin1 : UINFO admin1
+22/12/2022 01:06:15 : admin1 : PWD
+22/12/2022 01:06:15 : admin1 : PASV
+22/12/2022 01:06:15 : admin1 : LIST /
+22/12/2022 01:06:19 : admin1 : CWD /a/
+22/12/2022 01:06:19 : admin1 : PWD
+22/12/2022 01:06:19 : admin1 : PASV
+22/12/2022 01:06:19 : admin1 : LIST /a/
+22/12/2022 01:06:23 : admin1 : PASV
+22/12/2022 01:06:23 : admin1 : LIST /a/aspnet-core.pdf
+22/12/2022 01:06:23 : admin1 : PASV
+22/12/2022 01:06:23 : admin1 : RETR /a/aspnet-core.pdf
+22/12/2022 01:06:24 : admin1 : PASV
+22/12/2022 01:11:03 :  : LGIN admin1 ***
+22/12/2022 01:11:03 : admin1 : PASV
+22/12/2022 01:11:03 : admin1 : UINFO admin1
+22/12/2022 01:11:03 : admin1 : PWD
+22/12/2022 01:11:03 : admin1 : PASV
+22/12/2022 01:11:03 : admin1 : LIST /
+22/12/2022 01:11:05 : admin1 : CWD /a/
+22/12/2022 01:11:05 : admin1 : PWD
+22/12/2022 01:11:05 : admin1 : PASV
+22/12/2022 01:11:05 : admin1 : LIST /a/
+22/12/2022 01:11:16 : admin1 : PASV
+22/12/2022 01:11:16 : admin1 : LIST /a/aspnet-core.pdf
+22/12/2022 01:11:16 : admin1 : PASV
+22/12/2022 01:11:16 : admin1 : RETR /a/aspnet-core.pdf
+22/12/2022 01:11:20 : admin1 : PASV
+22/12/2022 01:12:47 :  : LGIN admin1 ***
+22/12/2022 01:12:48 : admin1 : PASV
+22/12/2022 01:12:48 : admin1 : UINFO admin1
+22/12/2022 01:12:48 : admin1 : PWD
+22/12/2022 01:12:48 : admin1 : PASV
+22/12/2022 01:12:48 : admin1 : LIST /
+22/12/2022 01:12:49 : admin1 : CWD /a/
+22/12/2022 01:12:49 : admin1 : PWD
+22/12/2022 01:12:49 : admin1 : PASV
+22/12/2022 01:12:49 : admin1 : LIST /a/
+22/12/2022 01:12:50 : admin1 : CWD ..
+22/12/2022 01:12:50 : admin1 : PWD
+22/12/2022 01:12:50 : admin1 : PASV
+22/12/2022 01:12:50 : admin1 : LIST /
+22/12/2022 01:12:54 : admin1 : CWD /a/
+22/12/2022 01:12:54 : admin1 : PWD
+22/12/2022 01:12:54 : admin1 : PASV
+22/12/2022 01:12:54 : admin1 : LIST /a/
+22/12/2022 01:12:58 : admin1 : PASV
+22/12/2022 01:12:58 : admin1 : LIST /a/aspnet-core.pdf
+22/12/2022 01:12:59 : admin1 : PASV
+22/12/2022 01:12:59 : admin1 : RETR /a/aspnet-core.pdf
+22/12/2022 01:13:00 : admin1 : PASV
+22/12/2022 01:24:40 :  : LGIN admin1 ***
+22/12/2022 01:24:41 : admin1 : PASV
+22/12/2022 01:24:41 : admin1 : UINFO admin1
+22/12/2022 01:24:41 : admin1 : PWD
+22/12/2022 01:24:41 : admin1 : PASV
+22/12/2022 01:24:41 : admin1 : LIST /
+22/12/2022 01:24:42 : admin1 : CWD /a/
+22/12/2022 01:24:42 : admin1 : PWD
+22/12/2022 01:24:42 : admin1 : PASV
+22/12/2022 01:24:42 : admin1 : LIST /a/
+22/12/2022 01:24:47 : admin1 : PASV
+22/12/2022 01:24:47 : admin1 : LIST /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:24:47 : admin1 : PASV
+22/12/2022 01:24:47 : admin1 : RETR /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:27:05 : admin1 : QUIT
+22/12/2022 01:27:22 :  : LGIN admin1 ***
+22/12/2022 01:27:22 : admin1 : PASV
+22/12/2022 01:27:22 : admin1 : UINFO admin1
+22/12/2022 01:27:22 : admin1 : PWD
+22/12/2022 01:27:22 : admin1 : PASV
+22/12/2022 01:27:22 : admin1 : LIST /
+22/12/2022 01:27:24 : admin1 : CWD /a/
+22/12/2022 01:27:24 : admin1 : PWD
+22/12/2022 01:27:24 : admin1 : PASV
+22/12/2022 01:27:24 : admin1 : LIST /a/
+22/12/2022 01:27:34 : admin1 : PASV
+22/12/2022 01:27:34 : admin1 : LIST /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:27:34 : admin1 : PASV
+22/12/2022 01:27:34 : admin1 : RETR /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:32:43 :  : LGIN admin1 ***
+22/12/2022 01:32:44 : admin1 : PASV
+22/12/2022 01:32:44 : admin1 : UINFO admin1
+22/12/2022 01:32:44 : admin1 : PWD
+22/12/2022 01:32:44 : admin1 : PASV
+22/12/2022 01:32:44 : admin1 : LIST /
+22/12/2022 01:32:46 : admin1 : CWD /a/
+22/12/2022 01:32:46 : admin1 : PWD
+22/12/2022 01:32:46 : admin1 : PASV
+22/12/2022 01:32:46 : admin1 : LIST /a/
+22/12/2022 01:32:53 : admin1 : PASV
+22/12/2022 01:32:53 : admin1 : LIST /a/
+22/12/2022 01:33:15 : admin1 : QUIT
+22/12/2022 01:33:25 :  : LGIN admin1 ***
+22/12/2022 01:33:25 : admin1 : PASV
+22/12/2022 01:33:25 : admin1 : UINFO admin1
+22/12/2022 01:33:25 : admin1 : PWD
+22/12/2022 01:33:25 : admin1 : PASV
+22/12/2022 01:33:25 : admin1 : LIST /
+22/12/2022 01:33:28 : admin1 : CWD /a/
+22/12/2022 01:33:28 : admin1 : PWD
+22/12/2022 01:33:28 : admin1 : PASV
+22/12/2022 01:33:28 : admin1 : LIST /a/
+22/12/2022 01:33:34 : admin1 : PASV
+22/12/2022 01:33:34 : admin1 : LIST /a/
+22/12/2022 01:33:37 : admin1 : QUIT
+22/12/2022 01:34:51 :  : LGIN admin1 ***
+22/12/2022 01:34:51 : admin1 : PASV
+22/12/2022 01:34:51 : admin1 : UINFO admin1
+22/12/2022 01:34:51 : admin1 : PWD
+22/12/2022 01:34:51 : admin1 : PASV
+22/12/2022 01:34:51 : admin1 : LIST /
+22/12/2022 01:34:53 : admin1 : CWD /a/
+22/12/2022 01:34:53 : admin1 : PWD
+22/12/2022 01:34:53 : admin1 : PASV
+22/12/2022 01:34:53 : admin1 : LIST /a/
+22/12/2022 01:35:13 : admin1 : PASV
+22/12/2022 01:35:13 : admin1 : LIST /a/
+22/12/2022 01:36:19 :  : LGIN admin1 ***
+22/12/2022 01:36:19 : admin1 : PASV
+22/12/2022 01:36:19 : admin1 : UINFO admin1
+22/12/2022 01:36:19 : admin1 : PWD
+22/12/2022 01:36:19 : admin1 : PASV
+22/12/2022 01:36:19 : admin1 : LIST /
+22/12/2022 01:36:21 : admin1 : CWD /a/
+22/12/2022 01:36:21 : admin1 : PWD
+22/12/2022 01:36:21 : admin1 : PASV
+22/12/2022 01:36:21 : admin1 : LIST /a/
+22/12/2022 01:38:11 :  : LGIN admin1 ***
+22/12/2022 01:38:11 : admin1 : PASV
+22/12/2022 01:38:11 : admin1 : UINFO admin1
+22/12/2022 01:38:11 : admin1 : PWD
+22/12/2022 01:38:11 : admin1 : PASV
+22/12/2022 01:38:11 : admin1 : LIST /
+22/12/2022 01:38:13 : admin1 : CWD /a/
+22/12/2022 01:38:13 : admin1 : PWD
+22/12/2022 01:38:13 : admin1 : PASV
+22/12/2022 01:38:13 : admin1 : LIST /a/
+22/12/2022 01:39:05 :  : LGIN admin1 ***
+22/12/2022 01:39:05 : admin1 : PASV
+22/12/2022 01:39:05 : admin1 : UINFO admin1
+22/12/2022 01:39:05 : admin1 : PWD
+22/12/2022 01:39:05 : admin1 : PASV
+22/12/2022 01:39:05 : admin1 : LIST /
+22/12/2022 01:39:07 : admin1 : CWD /a/
+22/12/2022 01:39:07 : admin1 : PWD
+22/12/2022 01:39:07 : admin1 : PASV
+22/12/2022 01:39:07 : admin1 : LIST /a/
+22/12/2022 01:39:25 : admin1 : PASV
+22/12/2022 01:39:32 : admin1 : RETR /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:41:08 :  : LGIN admin1 ***
+22/12/2022 01:41:08 : admin1 : PASV
+22/12/2022 01:41:08 : admin1 : UINFO admin1
+22/12/2022 01:41:08 : admin1 : PWD
+22/12/2022 01:41:08 : admin1 : PASV
+22/12/2022 01:41:08 : admin1 : LIST /
+22/12/2022 01:41:11 : admin1 : CWD /a/
+22/12/2022 01:41:11 : admin1 : PWD
+22/12/2022 01:41:11 : admin1 : PASV
+22/12/2022 01:41:11 : admin1 : LIST /a/
+22/12/2022 01:41:16 : admin1 : PASV
+22/12/2022 01:41:16 : admin1 : RETR /a/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf
+22/12/2022 01:41:17 : admin1 : PASV
+22/12/2022 01:41:17 : admin1 : LIST /a/
+22/12/2022 01:41:22 : admin1 : CWD ..
+22/12/2022 01:41:22 : admin1 : PWD
+22/12/2022 01:41:22 : admin1 : PASV
+22/12/2022 01:41:22 : admin1 : LIST /
+22/12/2022 01:41:34 : admin1 : PASV
+22/12/2022 01:41:34 : admin1 : RETR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:43:23 :  : LGIN admin1 ***
+22/12/2022 01:43:23 : admin1 : PASV
+22/12/2022 01:43:23 : admin1 : UINFO admin1
+22/12/2022 01:43:23 : admin1 : PWD
+22/12/2022 01:43:23 : admin1 : PASV
+22/12/2022 01:43:23 : admin1 : LIST /
+22/12/2022 01:43:30 : admin1 : PASV
+22/12/2022 01:43:30 : admin1 : RETR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:46:09 :  : LGIN admin1 ***
+22/12/2022 01:46:10 : admin1 : PASV
+22/12/2022 01:46:10 : admin1 : UINFO admin1
+22/12/2022 01:46:10 : admin1 : PWD
+22/12/2022 01:46:10 : admin1 : PASV
+22/12/2022 01:46:10 : admin1 : LIST /
+22/12/2022 01:46:20 : admin1 : PASV
+22/12/2022 01:46:20 : admin1 : RETR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:46:22 : admin1 : QUIT
+22/12/2022 01:46:35 :  : LGIN admin1 ***
+22/12/2022 01:46:35 : admin1 : PASV
+22/12/2022 01:46:35 : admin1 : UINFO admin1
+22/12/2022 01:46:35 : admin1 : PWD
+22/12/2022 01:46:35 : admin1 : PASV
+22/12/2022 01:46:35 : admin1 : LIST /
+22/12/2022 01:46:40 : admin1 : PASV
+22/12/2022 01:46:40 : admin1 : RETR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:47:05 :  : LGIN admin1 ***
+22/12/2022 01:47:05 : admin1 : PASV
+22/12/2022 01:47:05 : admin1 : UINFO admin1
+22/12/2022 01:47:05 : admin1 : PWD
+22/12/2022 01:47:05 : admin1 : PASV
+22/12/2022 01:47:05 : admin1 : LIST /
+22/12/2022 01:47:08 : admin1 : DELE /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:47:08 : admin1 : PASV
+22/12/2022 01:47:08 : admin1 : LIST /
+22/12/2022 01:47:17 : admin1 : PASV
+22/12/2022 01:47:17 : admin1 : STOR /ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 01:47:20 : admin1 : QUIT
+22/12/2022 02:58:47 :  : LGIN admin1 ***
+22/12/2022 02:58:48 : admin1 : PASV
+22/12/2022 02:58:48 : admin1 : UINFO admin1
+22/12/2022 02:58:48 : admin1 : PWD
+22/12/2022 02:58:48 : admin1 : PASV
+22/12/2022 02:58:48 : admin1 : LIST /
+22/12/2022 02:58:50 : admin1 : PASV
+22/12/2022 02:58:50 : admin1 : LSUSER all
+22/12/2022 02:58:50 : admin1 : PASV
+22/12/2022 02:58:50 : admin1 : LSSHARE 2107
+22/12/2022 02:58:56 : admin1 : SETRD 2107
+22/12/2022 02:58:56 : admin1 : PASV
+22/12/2022 02:58:56 : admin1 : SHARE 2107
+22/12/2022 02:58:56 : admin1 : PASV
+22/12/2022 02:58:56 : admin1 : LIST /
+22/12/2022 02:59:30 : admin1 : QUIT
+22/12/2022 03:02:07 :  : LGIN admin1 ***
+22/12/2022 03:02:07 : admin1 : PASV
+22/12/2022 03:02:07 : admin1 : UINFO admin1
+22/12/2022 03:02:07 : admin1 : PWD
+22/12/2022 03:02:07 : admin1 : PASV
+22/12/2022 03:02:07 : admin1 : LIST /
+22/12/2022 03:02:10 : admin1 : PASV
+22/12/2022 03:02:10 : admin1 : LSUSER all
+22/12/2022 03:02:10 : admin1 : PASV
+22/12/2022 03:02:10 : admin1 : LSSHARE 2107
+22/12/2022 03:02:15 : admin1 : SETRD 2107
+22/12/2022 03:02:15 : admin1 : PASV
+22/12/2022 03:02:15 : admin1 : SHARE 2107
+22/12/2022 03:02:15 : admin1 : PASV
+22/12/2022 03:02:15 : admin1 : LIST /
+22/12/2022 03:03:24 : admin1 : QUIT
+22/12/2022 03:03:41 :  : LGIN admin1 ***
+22/12/2022 03:03:41 : admin1 : PASV
+22/12/2022 03:03:41 : admin1 : UINFO admin1
+22/12/2022 03:03:41 : admin1 : PWD
+22/12/2022 03:03:41 : admin1 : PASV
+22/12/2022 03:03:41 : admin1 : LIST /
+22/12/2022 03:03:44 : admin1 : PASV
+22/12/2022 03:03:44 : admin1 : LSUSER all
+22/12/2022 03:03:44 : admin1 : PASV
+22/12/2022 03:03:44 : admin1 : LSSHARE 2107
+22/12/2022 03:03:49 : admin1 : SETRD 2107
+22/12/2022 03:03:49 : admin1 : PASV
+22/12/2022 03:03:49 : admin1 : SHARE 2107
+22/12/2022 03:03:49 : admin1 : PASV
+22/12/2022 03:03:49 : admin1 : LIST /
+22/12/2022 03:03:56 : admin1 : QUIT
+22/12/2022 03:13:02 :  : LGIN admin1 ***
+22/12/2022 03:13:02 : admin1 : PASV
+22/12/2022 03:13:02 : admin1 : UINFO admin1
+22/12/2022 03:13:02 : admin1 : PWD
+22/12/2022 03:13:02 : admin1 : PASV
+22/12/2022 03:13:02 : admin1 : LIST /
+22/12/2022 03:20:28 : admin1 : QUIT
+22/12/2022 08:10:00 :  : LGIN admin1 ***
+22/12/2022 08:10:01 : admin1 : PASV
+22/12/2022 08:10:01 : admin1 : UINFO admin1
+22/12/2022 08:10:01 : admin1 : PWD
+22/12/2022 08:10:01 : admin1 : PASV
+22/12/2022 08:10:01 : admin1 : LIST /
+22/12/2022 08:10:04 : admin1 : CWD /a/
+22/12/2022 08:10:04 : admin1 : PWD
+22/12/2022 08:10:04 : admin1 : PASV
+22/12/2022 08:10:04 : admin1 : LIST /a/
+22/12/2022 08:10:05 : admin1 : CWD /a/BaiTap/
+22/12/2022 08:10:05 : admin1 : PWD
+22/12/2022 08:10:05 : admin1 : PASV
+22/12/2022 08:10:05 : admin1 : LIST /a/BaiTap/
+22/12/2022 08:10:07 : admin1 : CWD ..
+22/12/2022 08:10:07 : admin1 : PWD
+22/12/2022 08:10:07 : admin1 : PASV
+22/12/2022 08:10:07 : admin1 : LIST /a/
+22/12/2022 08:10:07 : admin1 : CWD /a/Documents/
+22/12/2022 08:10:07 : admin1 : PWD
+22/12/2022 08:10:07 : admin1 : PASV
+22/12/2022 08:10:07 : admin1 : LIST /a/Documents/
+22/12/2022 08:10:09 : admin1 : CWD ..
+22/12/2022 08:10:09 : admin1 : PWD
+22/12/2022 08:10:09 : admin1 : PASV
+22/12/2022 08:10:09 : admin1 : LIST /a/
+22/12/2022 08:10:10 : admin1 : CWD /a/c/
+22/12/2022 08:10:10 : admin1 : PWD
+22/12/2022 08:10:10 : admin1 : PASV
+22/12/2022 08:10:10 : admin1 : LIST /a/c/
+22/12/2022 08:10:11 : admin1 : CWD ..
+22/12/2022 08:10:11 : admin1 : PWD
+22/12/2022 08:10:11 : admin1 : PASV
+22/12/2022 08:10:11 : admin1 : LIST /a/
+22/12/2022 08:10:11 : admin1 : CWD ..
+22/12/2022 08:10:11 : admin1 : PWD
+22/12/2022 08:10:11 : admin1 : PASV
+22/12/2022 08:10:11 : admin1 : LIST /
+22/12/2022 08:10:28 : admin1 : WRQ /102190077_NguyenDucNghia.pdf (TFTP)
+22/12/2022 08:10:29 : admin1 : PASV
+22/12/2022 08:10:29 : admin1 : LIST /
+22/12/2022 08:10:40 : admin1 : CWD /a/
+22/12/2022 08:10:40 : admin1 : PWD
+22/12/2022 08:10:40 : admin1 : PASV
+22/12/2022 08:10:40 : admin1 : LIST /a/
+22/12/2022 08:10:56 : admin1 : WRQ /a/Chap_4_anh.pptx (TFTP)
+22/12/2022 08:10:58 : admin1 : PASV
+22/12/2022 08:10:58 : admin1 : LIST /a/
+22/12/2022 08:11:18 : admin1 : WRQ /a/EndeavourOS_Artemis_nova_22_9.iso (TFTP)
+22/12/2022 08:11:41 : admin1 : QUIT
+22/12/2022 08:13:30 :  : LGIN admin1 ***
+22/12/2022 08:13:30 : admin1 : PASV
+22/12/2022 08:13:30 : admin1 : UINFO admin1
+22/12/2022 08:13:30 : admin1 : PWD
+22/12/2022 08:13:30 : admin1 : PASV
+22/12/2022 08:13:30 : admin1 : LIST /
+22/12/2022 08:13:32 : admin1 : CWD /a/
+22/12/2022 08:13:32 : admin1 : PWD
+22/12/2022 08:13:32 : admin1 : PASV
+22/12/2022 08:13:32 : admin1 : LIST /a/
+22/12/2022 08:13:39 : admin1 : QUIT
+22/12/2022 08:15:30 :  : LGIN admin1 ***
+22/12/2022 08:15:30 : admin1 : PASV
+22/12/2022 08:15:30 : admin1 : UINFO admin1
+22/12/2022 08:15:30 : admin1 : PWD
+22/12/2022 08:15:30 : admin1 : PASV
+22/12/2022 08:15:30 : admin1 : LIST /
+22/12/2022 08:15:31 : admin1 : CWD /a/
+22/12/2022 08:15:31 : admin1 : PWD
+22/12/2022 08:15:31 : admin1 : PASV
+22/12/2022 08:15:31 : admin1 : LIST /a/
+22/12/2022 08:15:57 : admin1 : PASV
+22/12/2022 08:15:57 : admin1 : STOR /a/on-tap-level-3.pdf
+22/12/2022 08:15:59 : admin1 : PASV
+22/12/2022 08:15:59 : admin1 : LIST /a/
+22/12/2022 08:16:04 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 08:16:04 : admin1 : PASV
+22/12/2022 08:16:04 : admin1 : LIST /a/
+22/12/2022 08:16:30 : admin1 : WRQ /a/Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf (TFTP)
+22/12/2022 08:16:32 : admin1 : PASV
+22/12/2022 08:16:32 : admin1 : LIST /a/
+22/12/2022 08:16:36 : admin1 : DELE /a/Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf
+22/12/2022 08:16:36 : admin1 : PASV
+22/12/2022 08:16:36 : admin1 : LIST /a/
+22/12/2022 08:16:58 : admin1 : WRQ /a/Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne.pdf (TFTP)
+22/12/2022 08:17:00 : admin1 : PASV
+22/12/2022 08:17:00 : admin1 : LIST /a/
+22/12/2022 08:20:02 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 08:20:04 : admin1 : PASV
+22/12/2022 08:20:04 : admin1 : LIST /a/
+22/12/2022 08:20:08 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 08:20:08 : admin1 : PASV
+22/12/2022 08:20:08 : admin1 : LIST /a/
+22/12/2022 08:20:20 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 08:20:22 : admin1 : PASV
+22/12/2022 08:20:22 : admin1 : LIST /a/
+22/12/2022 08:20:26 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 08:20:26 : admin1 : PASV
+22/12/2022 08:20:26 : admin1 : LIST /a/
+22/12/2022 08:20:40 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 08:20:43 : admin1 : PASV
+22/12/2022 08:20:43 : admin1 : LIST /a/
+22/12/2022 08:20:47 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 08:20:47 : admin1 : PASV
+22/12/2022 08:20:47 : admin1 : LIST /a/
+22/12/2022 08:21:54 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 08:26:33 :  : LGIN admin1 ***
+22/12/2022 08:26:33 : admin1 : PASV
+22/12/2022 08:26:33 : admin1 : UINFO admin1
+22/12/2022 08:26:33 : admin1 : PWD
+22/12/2022 08:26:33 : admin1 : PASV
+22/12/2022 08:26:33 : admin1 : LIST /
+22/12/2022 08:26:34 : admin1 : CWD /a/
+22/12/2022 08:26:34 : admin1 : PWD
+22/12/2022 08:26:34 : admin1 : PASV
+22/12/2022 08:26:34 : admin1 : LIST /a/
+22/12/2022 08:26:40 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:26:40 : admin1 : PASV
+22/12/2022 08:26:40 : admin1 : LIST /a/
+22/12/2022 08:26:48 : admin1 : PASV
+22/12/2022 08:26:48 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 08:26:53 : admin1 : CWD ..
+22/12/2022 08:26:53 : admin1 : PWD
+22/12/2022 08:26:53 : admin1 : PASV
+22/12/2022 08:26:53 : admin1 : LIST /
+22/12/2022 08:26:55 : admin1 : CWD /a/
+22/12/2022 08:26:55 : admin1 : PWD
+22/12/2022 08:26:55 : admin1 : PASV
+22/12/2022 08:26:55 : admin1 : LIST /a/
+22/12/2022 08:26:59 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:26:59 : admin1 : PASV
+22/12/2022 08:26:59 : admin1 : LIST /a/
+22/12/2022 08:27:07 : admin1 : QUIT
+22/12/2022 08:31:33 :  : LGIN admin1 ***
+22/12/2022 08:31:33 : admin1 : PASV
+22/12/2022 08:31:33 : admin1 : UINFO admin1
+22/12/2022 08:31:33 : admin1 : PWD
+22/12/2022 08:31:33 : admin1 : PASV
+22/12/2022 08:31:33 : admin1 : LIST /
+22/12/2022 08:31:37 : admin1 : CWD /a/
+22/12/2022 08:31:37 : admin1 : PWD
+22/12/2022 08:31:37 : admin1 : PASV
+22/12/2022 08:31:37 : admin1 : LIST /a/
+22/12/2022 08:31:49 : admin1 : PASV
+22/12/2022 08:31:49 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 08:32:05 : admin1 : QUIT
+22/12/2022 08:32:42 :  : LGIN admin1 ***
+22/12/2022 08:32:42 : admin1 : PASV
+22/12/2022 08:32:42 : admin1 : UINFO admin1
+22/12/2022 08:32:42 : admin1 : PWD
+22/12/2022 08:32:42 : admin1 : PASV
+22/12/2022 08:32:42 : admin1 : LIST /
+22/12/2022 08:32:45 : admin1 : CWD /a/
+22/12/2022 08:32:45 : admin1 : PWD
+22/12/2022 08:32:45 : admin1 : PASV
+22/12/2022 08:32:45 : admin1 : LIST /a/
+22/12/2022 08:33:03 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:33:03 : admin1 : PASV
+22/12/2022 08:33:03 : admin1 : LIST /a/
+22/12/2022 08:33:20 : admin1 : PASV
+22/12/2022 08:33:20 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 08:33:27 : admin1 : PASV
+22/12/2022 08:33:27 : admin1 : LIST /a/
+22/12/2022 08:33:41 :  : LGIN admin1 ***
+22/12/2022 08:33:41 : admin1 : PASV
+22/12/2022 08:33:41 : admin1 : UINFO admin1
+22/12/2022 08:33:41 : admin1 : PWD
+22/12/2022 08:33:41 : admin1 : PASV
+22/12/2022 08:33:41 : admin1 : LIST /
+22/12/2022 08:33:44 : admin1 : CWD /a/
+22/12/2022 08:33:44 : admin1 : PWD
+22/12/2022 08:33:44 : admin1 : PASV
+22/12/2022 08:33:44 : admin1 : LIST /a/
+22/12/2022 08:33:52 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:33:52 : admin1 : PASV
+22/12/2022 08:33:52 : admin1 : LIST /a/
+22/12/2022 08:33:59 : admin1 : PASV
+22/12/2022 08:33:59 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 08:34:33 : admin1 : PASV
+22/12/2022 08:34:33 : admin1 : LIST /a/
+22/12/2022 08:34:45 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:34:46 : admin1 : PASV
+22/12/2022 08:34:46 : admin1 : LIST /a/
+22/12/2022 08:35:02 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 08:35:35 : admin1 : PASV
+22/12/2022 08:35:35 : admin1 : LIST /a/
+22/12/2022 08:35:41 : admin1 : QUIT
+22/12/2022 08:35:52 :  : LGIN admin1 ***
+22/12/2022 08:35:52 : admin1 : PASV
+22/12/2022 08:35:52 : admin1 : UINFO admin1
+22/12/2022 08:35:52 : admin1 : PWD
+22/12/2022 08:35:52 : admin1 : PASV
+22/12/2022 08:35:52 : admin1 : LIST /
+22/12/2022 08:35:56 : admin1 : CWD /a/
+22/12/2022 08:35:56 : admin1 : PWD
+22/12/2022 08:35:56 : admin1 : PASV
+22/12/2022 08:35:56 : admin1 : LIST /a/
+22/12/2022 08:36:04 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:36:04 : admin1 : PASV
+22/12/2022 08:36:04 : admin1 : LIST /a/
+22/12/2022 08:36:12 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 08:36:21 : admin1 : CWD ..
+22/12/2022 08:36:21 : admin1 : PWD
+22/12/2022 08:36:21 : admin1 : PASV
+22/12/2022 08:36:21 : admin1 : LIST /
+22/12/2022 08:36:22 : admin1 : CWD /a/
+22/12/2022 08:36:22 : admin1 : PWD
+22/12/2022 08:36:22 : admin1 : PASV
+22/12/2022 08:36:22 : admin1 : LIST /a/
+22/12/2022 08:36:25 : admin1 : QUIT
+22/12/2022 08:44:40 :  : LGIN admin1 ***
+22/12/2022 08:44:40 : admin1 : PASV
+22/12/2022 08:44:40 : admin1 : UINFO admin1
+22/12/2022 08:44:40 : admin1 : PWD
+22/12/2022 08:44:40 : admin1 : PASV
+22/12/2022 08:44:40 : admin1 : LIST /
+22/12/2022 08:44:44 : admin1 : CWD /a/
+22/12/2022 08:44:44 : admin1 : PWD
+22/12/2022 08:44:44 : admin1 : PASV
+22/12/2022 08:44:44 : admin1 : LIST /a/
+22/12/2022 08:44:58 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 08:45:11 : admin1 : QUIT
+22/12/2022 08:48:22 :  : LGIN admin1 ***
+22/12/2022 08:48:22 : admin1 : PASV
+22/12/2022 08:48:22 : admin1 : UINFO admin1
+22/12/2022 08:48:23 : admin1 : PWD
+22/12/2022 08:48:23 : admin1 : PASV
+22/12/2022 08:48:23 : admin1 : LIST /
+22/12/2022 08:48:25 : admin1 : CWD /a/
+22/12/2022 08:48:25 : admin1 : PWD
+22/12/2022 08:48:25 : admin1 : PASV
+22/12/2022 08:48:25 : admin1 : LIST /a/
+22/12/2022 08:48:40 : admin1 : WRQ /a/Chap_2.pdf (TFTP)
+22/12/2022 08:48:45 : admin1 : QUIT
+22/12/2022 08:55:44 :  : LGIN admin1 ***
+22/12/2022 08:55:44 : admin1 : PASV
+22/12/2022 08:55:44 : admin1 : UINFO admin1
+22/12/2022 08:55:44 : admin1 : PWD
+22/12/2022 08:55:44 : admin1 : PASV
+22/12/2022 08:55:44 : admin1 : LIST /
+22/12/2022 08:55:47 : admin1 : CWD /a/
+22/12/2022 08:55:47 : admin1 : PWD
+22/12/2022 08:55:47 : admin1 : PASV
+22/12/2022 08:55:47 : admin1 : LIST /a/
+22/12/2022 08:55:55 : admin1 : PASV
+22/12/2022 08:55:55 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 08:56:02 : admin1 : CWD ..
+22/12/2022 08:56:02 : admin1 : PWD
+22/12/2022 08:56:02 : admin1 : PASV
+22/12/2022 08:56:02 : admin1 : LIST /
+22/12/2022 08:56:03 : admin1 : CWD /a/
+22/12/2022 08:56:03 : admin1 : PWD
+22/12/2022 08:56:03 : admin1 : PASV
+22/12/2022 08:56:03 : admin1 : LIST /a/
+22/12/2022 08:56:13 : admin1 : QUIT
+22/12/2022 08:57:33 :  : LGIN admin1 ***
+22/12/2022 08:57:33 : admin1 : PASV
+22/12/2022 08:57:33 : admin1 : UINFO admin1
+22/12/2022 08:57:33 : admin1 : PWD
+22/12/2022 08:57:33 : admin1 : PASV
+22/12/2022 08:57:33 : admin1 : LIST /
+22/12/2022 08:57:36 : admin1 : CWD /a/
+22/12/2022 08:57:36 : admin1 : PWD
+22/12/2022 08:57:36 : admin1 : PASV
+22/12/2022 08:57:36 : admin1 : LIST /a/
+22/12/2022 08:57:43 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 08:57:43 : admin1 : PASV
+22/12/2022 08:57:43 : admin1 : LIST /a/
+22/12/2022 08:57:53 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 08:58:00 : admin1 : QUIT
+22/12/2022 09:05:03 :  : LGIN admin1 ***
+22/12/2022 09:05:03 : admin1 : PASV
+22/12/2022 09:05:03 : admin1 : UINFO admin1
+22/12/2022 09:05:03 : admin1 : PWD
+22/12/2022 09:05:03 : admin1 : PASV
+22/12/2022 09:05:03 : admin1 : LIST /
+22/12/2022 09:05:07 : admin1 : CWD /a/
+22/12/2022 09:05:07 : admin1 : PWD
+22/12/2022 09:05:07 : admin1 : PASV
+22/12/2022 09:05:07 : admin1 : LIST /a/
+22/12/2022 09:05:27 : admin1 : WRQ /a/Dich2-1-AutoRecovered-1-1.pdf (TFTP)
+22/12/2022 09:10:06 :  : LGIN admin1 ***
+22/12/2022 09:10:06 : admin1 : PASV
+22/12/2022 09:10:06 : admin1 : UINFO admin1
+22/12/2022 09:10:06 : admin1 : PWD
+22/12/2022 09:10:06 : admin1 : PASV
+22/12/2022 09:10:06 : admin1 : LIST /
+22/12/2022 09:10:09 : admin1 : CWD /a/
+22/12/2022 09:10:09 : admin1 : PWD
+22/12/2022 09:10:09 : admin1 : PASV
+22/12/2022 09:10:09 : admin1 : LIST /a/
+22/12/2022 09:10:16 : admin1 : PASV
+22/12/2022 09:10:16 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 09:10:20 : admin1 : CWD ..
+22/12/2022 09:10:20 : admin1 : PWD
+22/12/2022 09:10:20 : admin1 : PASV
+22/12/2022 09:10:20 : admin1 : LIST /
+22/12/2022 09:10:22 : admin1 : CWD /a/
+22/12/2022 09:10:22 : admin1 : PWD
+22/12/2022 09:10:22 : admin1 : PASV
+22/12/2022 09:10:22 : admin1 : LIST /a/
+22/12/2022 09:10:25 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 09:10:26 : admin1 : PASV
+22/12/2022 09:10:26 : admin1 : LIST /a/
+22/12/2022 09:10:36 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:10:42 : admin1 : QUIT
+22/12/2022 09:11:43 :  : LGIN admin1 ***
+22/12/2022 09:11:43 : admin1 : PASV
+22/12/2022 09:11:43 : admin1 : UINFO admin1
+22/12/2022 09:11:43 : admin1 : PWD
+22/12/2022 09:11:43 : admin1 : PASV
+22/12/2022 09:11:43 : admin1 : LIST /
+22/12/2022 09:11:48 : admin1 : CWD /a/
+22/12/2022 09:11:48 : admin1 : PWD
+22/12/2022 09:11:48 : admin1 : PASV
+22/12/2022 09:11:48 : admin1 : LIST /a/
+22/12/2022 09:11:58 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:12:00 : admin1 : PASV
+22/12/2022 09:12:00 : admin1 : LIST /a/
+22/12/2022 09:12:05 : admin1 : QUIT
+22/12/2022 09:13:08 :  : LGIN admin1 ***
+22/12/2022 09:13:09 : admin1 : PASV
+22/12/2022 09:13:09 : admin1 : UINFO admin1
+22/12/2022 09:13:09 : admin1 : PWD
+22/12/2022 09:13:09 : admin1 : PASV
+22/12/2022 09:13:09 : admin1 : LIST /
+22/12/2022 09:13:11 : admin1 : CWD /a/
+22/12/2022 09:13:11 : admin1 : PWD
+22/12/2022 09:13:11 : admin1 : PASV
+22/12/2022 09:13:11 : admin1 : LIST /a/
+22/12/2022 09:13:29 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:13:51 : admin1 : QUIT
+22/12/2022 09:16:50 :  : LGIN admin1 ***
+22/12/2022 09:16:50 : admin1 : PASV
+22/12/2022 09:16:50 : admin1 : UINFO admin1
+22/12/2022 09:16:50 : admin1 : PWD
+22/12/2022 09:16:50 : admin1 : PASV
+22/12/2022 09:16:50 : admin1 : LIST /
+22/12/2022 09:16:53 : admin1 : CWD /a/
+22/12/2022 09:16:53 : admin1 : PWD
+22/12/2022 09:16:53 : admin1 : PASV
+22/12/2022 09:16:53 : admin1 : LIST /a/
+22/12/2022 09:16:59 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 09:16:59 : admin1 : PASV
+22/12/2022 09:16:59 : admin1 : LIST /a/
+22/12/2022 09:17:09 : admin1 : WRQ /a/BTL.pdf (TFTP)
+22/12/2022 09:17:11 : admin1 : PASV
+22/12/2022 09:17:11 : admin1 : LIST /a/
+22/12/2022 09:17:20 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:17:49 : admin1 : QUIT
+22/12/2022 09:20:18 :  : LGIN admin1 ***
+22/12/2022 09:20:18 : admin1 : PASV
+22/12/2022 09:20:18 : admin1 : UINFO admin1
+22/12/2022 09:20:18 : admin1 : PWD
+22/12/2022 09:20:18 : admin1 : PASV
+22/12/2022 09:20:18 : admin1 : LIST /
+22/12/2022 09:20:20 : admin1 : CWD /a/
+22/12/2022 09:20:20 : admin1 : PWD
+22/12/2022 09:20:20 : admin1 : PASV
+22/12/2022 09:20:20 : admin1 : LIST /a/
+22/12/2022 09:20:30 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:20:46 : admin1 : CWD ..
+22/12/2022 09:20:46 : admin1 : PWD
+22/12/2022 09:20:46 : admin1 : PASV
+22/12/2022 09:20:46 : admin1 : LIST /
+22/12/2022 09:20:47 : admin1 : CWD /a/
+22/12/2022 09:20:47 : admin1 : PWD
+22/12/2022 09:20:47 : admin1 : PASV
+22/12/2022 09:20:47 : admin1 : LIST /a/
+22/12/2022 09:20:50 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 09:20:50 : admin1 : PASV
+22/12/2022 09:20:50 : admin1 : LIST /a/
+22/12/2022 09:21:00 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 09:21:10 : admin1 : CWD ..
+22/12/2022 09:21:10 : admin1 : PWD
+22/12/2022 09:21:10 : admin1 : PASV
+22/12/2022 09:21:10 : admin1 : LIST /
+22/12/2022 09:21:11 : admin1 : CWD /a/
+22/12/2022 09:21:11 : admin1 : PWD
+22/12/2022 09:21:11 : admin1 : PASV
+22/12/2022 09:21:11 : admin1 : LIST /a/
+22/12/2022 09:21:15 : admin1 : QUIT
+22/12/2022 09:24:15 :  : LGIN admin1 ***
+22/12/2022 09:24:16 : admin1 : PASV
+22/12/2022 09:24:16 : admin1 : UINFO admin1
+22/12/2022 09:24:16 : admin1 : PWD
+22/12/2022 09:24:16 : admin1 : PASV
+22/12/2022 09:24:16 : admin1 : LIST /
+22/12/2022 09:24:18 : admin1 : CWD /a/
+22/12/2022 09:24:18 : admin1 : PWD
+22/12/2022 09:24:18 : admin1 : PASV
+22/12/2022 09:24:18 : admin1 : LIST /a/
+22/12/2022 09:24:27 : admin1 : WRQ /a/CK_CTD.docx (TFTP)
+22/12/2022 09:24:28 : admin1 : PASV
+22/12/2022 09:24:28 : admin1 : LIST /a/
+22/12/2022 09:24:31 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 09:24:31 : admin1 : PASV
+22/12/2022 09:24:31 : admin1 : LIST /a/
+22/12/2022 09:24:38 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 09:24:46 : admin1 : CWD ..
+22/12/2022 09:24:46 : admin1 : PWD
+22/12/2022 09:24:46 : admin1 : PASV
+22/12/2022 09:24:46 : admin1 : LIST /
+22/12/2022 09:24:47 : admin1 : CWD /a/
+22/12/2022 09:24:47 : admin1 : PWD
+22/12/2022 09:24:47 : admin1 : PASV
+22/12/2022 09:24:47 : admin1 : LIST /a/
+22/12/2022 09:24:51 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 09:24:51 : admin1 : PASV
+22/12/2022 09:24:51 : admin1 : LIST /a/
+22/12/2022 09:24:54 : admin1 : QUIT
+22/12/2022 09:25:53 :  : LGIN admin1 ***
+22/12/2022 09:25:53 : admin1 : PASV
+22/12/2022 09:25:53 : admin1 : UINFO admin1
+22/12/2022 09:25:53 : admin1 : PWD
+22/12/2022 09:25:53 : admin1 : PASV
+22/12/2022 09:25:53 : admin1 : LIST /
+22/12/2022 09:26:02 : admin1 : CWD /a/
+22/12/2022 09:26:02 : admin1 : PWD
+22/12/2022 09:26:02 : admin1 : PASV
+22/12/2022 09:26:02 : admin1 : LIST /a/
+22/12/2022 09:26:10 : admin1 : WRQ /a/sg2440-SGEUpd20190225.rar (TFTP)
+22/12/2022 09:26:12 : admin1 : PASV
+22/12/2022 09:26:12 : admin1 : LIST /a/
+22/12/2022 09:26:17 : admin1 : DELE /a/sg2440-SGEUpd20190225.rar
+22/12/2022 09:26:17 : admin1 : PASV
+22/12/2022 09:26:17 : admin1 : LIST /a/
+22/12/2022 09:26:25 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:26:33 : admin1 : CWD ..
+22/12/2022 09:26:33 : admin1 : PWD
+22/12/2022 09:26:33 : admin1 : PASV
+22/12/2022 09:26:33 : admin1 : LIST /
+22/12/2022 09:26:34 : admin1 : CWD /a/
+22/12/2022 09:26:34 : admin1 : PWD
+22/12/2022 09:26:34 : admin1 : PASV
+22/12/2022 09:26:34 : admin1 : LIST /a/
+22/12/2022 09:26:40 : admin1 : QUIT
+22/12/2022 09:29:11 :  : LGIN admin1 ***
+22/12/2022 09:29:11 : admin1 : PASV
+22/12/2022 09:29:11 : admin1 : UINFO admin1
+22/12/2022 09:29:11 : admin1 : PWD
+22/12/2022 09:29:11 : admin1 : PASV
+22/12/2022 09:29:11 : admin1 : LIST /
+22/12/2022 09:29:16 : admin1 : CWD /a/
+22/12/2022 09:29:16 : admin1 : PWD
+22/12/2022 09:29:16 : admin1 : PASV
+22/12/2022 09:29:16 : admin1 : LIST /a/
+22/12/2022 09:29:26 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:29:31 : admin1 : CWD ..
+22/12/2022 09:29:31 : admin1 : PWD
+22/12/2022 09:29:31 : admin1 : PASV
+22/12/2022 09:29:31 : admin1 : LIST /
+22/12/2022 09:29:41 : admin1 : CWD /a/
+22/12/2022 09:29:41 : admin1 : PWD
+22/12/2022 09:29:41 : admin1 : PASV
+22/12/2022 09:29:41 : admin1 : LIST /a/
+22/12/2022 09:30:18 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:30:22 : admin1 : PASV
+22/12/2022 09:30:22 : admin1 : LIST /a/
+22/12/2022 09:30:34 : admin1 : QUIT
+22/12/2022 09:31:36 :  : LGIN admin1 ***
+22/12/2022 09:31:36 : admin1 : PASV
+22/12/2022 09:31:36 : admin1 : UINFO admin1
+22/12/2022 09:31:36 : admin1 : PWD
+22/12/2022 09:31:36 : admin1 : PASV
+22/12/2022 09:31:36 : admin1 : LIST /
+22/12/2022 09:31:38 : admin1 : CWD /a/
+22/12/2022 09:31:38 : admin1 : PWD
+22/12/2022 09:31:38 : admin1 : PASV
+22/12/2022 09:31:38 : admin1 : LIST /a/
+22/12/2022 09:31:42 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 09:31:42 : admin1 : PASV
+22/12/2022 09:31:42 : admin1 : LIST /a/
+22/12/2022 09:31:52 : admin1 : PASV
+22/12/2022 09:31:52 : admin1 : STOR /a/TLFILE.TLDAT
+22/12/2022 09:31:57 : admin1 : CWD ..
+22/12/2022 09:31:57 : admin1 : PWD
+22/12/2022 09:31:57 : admin1 : PASV
+22/12/2022 09:31:57 : admin1 : LIST /
+22/12/2022 09:31:58 : admin1 : CWD /a/
+22/12/2022 09:31:58 : admin1 : PWD
+22/12/2022 09:31:58 : admin1 : PASV
+22/12/2022 09:31:58 : admin1 : LIST /a/
+22/12/2022 09:32:09 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 09:32:11 : admin1 : PASV
+22/12/2022 09:32:11 : admin1 : LIST /a/
+22/12/2022 09:32:19 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:32:41 : admin1 : QUIT
+22/12/2022 09:56:44 :  : LGIN admin1 ***
+22/12/2022 09:56:44 : admin1 : PASV
+22/12/2022 09:56:44 : admin1 : UINFO admin1
+22/12/2022 09:56:44 : admin1 : PWD
+22/12/2022 09:56:44 : admin1 : PASV
+22/12/2022 09:56:44 : admin1 : LIST /
+22/12/2022 09:56:50 : admin1 : CWD /a/
+22/12/2022 09:56:50 : admin1 : PWD
+22/12/2022 09:56:50 : admin1 : PASV
+22/12/2022 09:56:50 : admin1 : LIST /a/
+22/12/2022 09:57:30 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:57:38 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:57:49 : admin1 : PASV
+22/12/2022 09:57:49 : admin1 : LIST /a/
+22/12/2022 09:57:55 : admin1 : CWD ..
+22/12/2022 09:57:55 : admin1 : PWD
+22/12/2022 09:57:55 : admin1 : PASV
+22/12/2022 09:57:55 : admin1 : LIST /
+22/12/2022 09:57:55 : admin1 : CWD /a/
+22/12/2022 09:57:55 : admin1 : PWD
+22/12/2022 09:57:55 : admin1 : PASV
+22/12/2022 09:57:55 : admin1 : LIST /a/
+22/12/2022 09:58:17 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 09:58:21 : admin1 : PASV
+22/12/2022 09:58:21 : admin1 : LIST /a/
+22/12/2022 09:58:24 : admin1 : QUIT
+22/12/2022 10:00:19 :  : LGIN admin1 ***
+22/12/2022 10:00:19 : admin1 : PASV
+22/12/2022 10:00:19 : admin1 : UINFO admin1
+22/12/2022 10:00:19 : admin1 : PWD
+22/12/2022 10:00:19 : admin1 : PASV
+22/12/2022 10:00:19 : admin1 : LIST /
+22/12/2022 10:00:21 : admin1 : CWD /a/
+22/12/2022 10:00:21 : admin1 : PWD
+22/12/2022 10:00:21 : admin1 : PASV
+22/12/2022 10:00:21 : admin1 : LIST /a/
+22/12/2022 10:00:35 : admin1 : RRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:00:53 : admin1 : RRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:00:57 : admin1 : PASV
+22/12/2022 10:00:57 : admin1 : LIST /a/
+22/12/2022 10:02:25 :  : LGIN admin1 ***
+22/12/2022 10:02:25 : admin1 : PASV
+22/12/2022 10:02:25 : admin1 : UINFO admin1
+22/12/2022 10:02:25 : admin1 : PWD
+22/12/2022 10:02:25 : admin1 : PASV
+22/12/2022 10:02:25 : admin1 : LIST /
+22/12/2022 10:02:31 : admin1 : CWD /a/
+22/12/2022 10:02:31 : admin1 : PWD
+22/12/2022 10:02:31 : admin1 : PASV
+22/12/2022 10:02:31 : admin1 : LIST /a/
+22/12/2022 10:02:51 : admin1 : RRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:02:55 : admin1 : PASV
+22/12/2022 10:02:55 : admin1 : LIST /a/
+22/12/2022 10:03:08 : admin1 : RRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:04:44 :  : LGIN admin1 ***
+22/12/2022 10:04:44 : admin1 : PASV
+22/12/2022 10:04:44 : admin1 : UINFO admin1
+22/12/2022 10:04:44 : admin1 : PWD
+22/12/2022 10:04:44 : admin1 : PASV
+22/12/2022 10:04:44 : admin1 : LIST /
+22/12/2022 10:07:16 :  : LGIN admin1 ***
+22/12/2022 10:07:16 : admin1 : PASV
+22/12/2022 10:07:16 : admin1 : UINFO admin1
+22/12/2022 10:07:16 : admin1 : PWD
+22/12/2022 10:07:16 : admin1 : PASV
+22/12/2022 10:07:16 : admin1 : LIST /
+22/12/2022 10:07:20 : admin1 : CWD /a/
+22/12/2022 10:07:20 : admin1 : PWD
+22/12/2022 10:07:20 : admin1 : PASV
+22/12/2022 10:07:20 : admin1 : LIST /a/
+22/12/2022 10:07:31 : admin1 : PASV
+22/12/2022 10:07:31 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:08:10 : admin1 : QUIT
+22/12/2022 10:09:32 :  : LGIN admin1 ***
+22/12/2022 10:09:32 : admin1 : PASV
+22/12/2022 10:09:32 : admin1 : UINFO admin1
+22/12/2022 10:09:32 : admin1 : PWD
+22/12/2022 10:09:32 : admin1 : PASV
+22/12/2022 10:09:32 : admin1 : LIST /
+22/12/2022 10:09:35 : admin1 : CWD /a/
+22/12/2022 10:09:35 : admin1 : PWD
+22/12/2022 10:09:35 : admin1 : PASV
+22/12/2022 10:09:35 : admin1 : LIST /a/
+22/12/2022 10:09:43 : admin1 : PASV
+22/12/2022 10:09:43 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:09:46 : admin1 : PASV
+22/12/2022 10:09:46 : admin1 : LIST /a/
+22/12/2022 10:10:00 : admin1 : PASV
+22/12/2022 10:10:00 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:11:05 : admin1 : QUIT
+22/12/2022 10:12:20 :  : LGIN admin1 ***
+22/12/2022 10:12:20 : admin1 : PASV
+22/12/2022 10:12:20 : admin1 : UINFO admin1
+22/12/2022 10:12:20 : admin1 : PWD
+22/12/2022 10:12:20 : admin1 : PASV
+22/12/2022 10:12:20 : admin1 : LIST /
+22/12/2022 10:12:22 : admin1 : CWD /a/
+22/12/2022 10:12:22 : admin1 : PWD
+22/12/2022 10:12:22 : admin1 : PASV
+22/12/2022 10:12:22 : admin1 : LIST /a/
+22/12/2022 10:12:29 : admin1 : PASV
+22/12/2022 10:12:29 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:12:31 : admin1 : PASV
+22/12/2022 10:12:31 : admin1 : LIST /a/
+22/12/2022 10:12:46 : admin1 : PASV
+22/12/2022 10:12:46 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:14:51 :  : LGIN admin1 ***
+22/12/2022 10:14:51 : admin1 : PASV
+22/12/2022 10:14:51 : admin1 : UINFO admin1
+22/12/2022 10:14:51 : admin1 : PWD
+22/12/2022 10:14:51 : admin1 : PASV
+22/12/2022 10:14:51 : admin1 : LIST /
+22/12/2022 10:14:54 : admin1 : CWD /a/
+22/12/2022 10:14:54 : admin1 : PWD
+22/12/2022 10:14:54 : admin1 : PASV
+22/12/2022 10:14:54 : admin1 : LIST /a/
+22/12/2022 10:15:00 : admin1 : PASV
+22/12/2022 10:15:00 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:15:02 : admin1 : PASV
+22/12/2022 10:15:02 : admin1 : LIST /a/
+22/12/2022 10:15:15 : admin1 : PASV
+22/12/2022 10:15:15 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:15:30 : admin1 : QUIT
+22/12/2022 10:17:59 :  : LGIN admin1 ***
+22/12/2022 10:17:59 : admin1 : PASV
+22/12/2022 10:17:59 : admin1 : UINFO admin1
+22/12/2022 10:17:59 : admin1 : PWD
+22/12/2022 10:17:59 : admin1 : PASV
+22/12/2022 10:17:59 : admin1 : LIST /
+22/12/2022 10:18:02 : admin1 : CWD /a/
+22/12/2022 10:18:02 : admin1 : PWD
+22/12/2022 10:18:02 : admin1 : PASV
+22/12/2022 10:18:02 : admin1 : LIST /a/
+22/12/2022 10:18:12 : admin1 : PASV
+22/12/2022 10:18:12 : admin1 : RETR /a/TLFILE.TLDAT
+22/12/2022 10:18:16 : admin1 : QUIT
+22/12/2022 10:20:25 :  : LGIN admin1 ***
+22/12/2022 10:20:25 : admin1 : PASV
+22/12/2022 10:20:25 : admin1 : UINFO admin1
+22/12/2022 10:20:25 : admin1 : PWD
+22/12/2022 10:20:25 : admin1 : PASV
+22/12/2022 10:20:25 : admin1 : LIST /
+22/12/2022 10:20:29 : admin1 : CWD /a/
+22/12/2022 10:20:29 : admin1 : PWD
+22/12/2022 10:20:29 : admin1 : PASV
+22/12/2022 10:20:29 : admin1 : LIST /a/
+22/12/2022 10:20:34 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 10:20:34 : admin1 : PASV
+22/12/2022 10:20:34 : admin1 : LIST /a/
+22/12/2022 10:20:42 : admin1 : PASV
+22/12/2022 10:20:42 : admin1 : STOR /a/ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 10:21:04 : admin1 : CWD ..
+22/12/2022 10:21:04 : admin1 : PWD
+22/12/2022 10:21:04 : admin1 : PASV
+22/12/2022 10:21:04 : admin1 : LIST /
+22/12/2022 10:21:07 : admin1 : CWD /a/
+22/12/2022 10:21:07 : admin1 : PWD
+22/12/2022 10:21:07 : admin1 : PASV
+22/12/2022 10:21:07 : admin1 : LIST /a/
+22/12/2022 10:21:19 : admin1 : PASV
+22/12/2022 10:21:19 : admin1 : STOR /a/ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 10:21:44 : admin1 : CWD ..
+22/12/2022 10:21:44 : admin1 : PWD
+22/12/2022 10:21:44 : admin1 : PASV
+22/12/2022 10:21:44 : admin1 : LIST /
+22/12/2022 10:21:46 : admin1 : CWD /a/
+22/12/2022 10:21:46 : admin1 : PWD
+22/12/2022 10:21:46 : admin1 : PASV
+22/12/2022 10:21:46 : admin1 : LIST /a/
+22/12/2022 10:21:50 : admin1 : DELE /a/ubuntu-22.04.1-desktop-amd64.iso
+22/12/2022 10:21:50 : admin1 : PASV
+22/12/2022 10:21:50 : admin1 : LIST /a/
+22/12/2022 10:22:00 : admin1 : PASV
+22/12/2022 10:22:00 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:22:08 : admin1 : CWD ..
+22/12/2022 10:25:53 :  : LGIN admin1 ***
+22/12/2022 10:25:53 : admin1 : PASV
+22/12/2022 10:25:53 : admin1 : UINFO admin1
+22/12/2022 10:25:53 : admin1 : PWD
+22/12/2022 10:25:53 : admin1 : PASV
+22/12/2022 10:25:53 : admin1 : LIST /
+22/12/2022 10:25:56 : admin1 : CWD /a/
+22/12/2022 10:25:56 : admin1 : PWD
+22/12/2022 10:25:56 : admin1 : PASV
+22/12/2022 10:25:56 : admin1 : LIST /a/
+22/12/2022 10:26:00 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:26:00 : admin1 : PASV
+22/12/2022 10:26:00 : admin1 : LIST /a/
+22/12/2022 10:26:06 : admin1 : PASV
+22/12/2022 10:26:06 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:26:09 : admin1 : CWD ..
+22/12/2022 10:26:11 : admin1 : PWD
+22/12/2022 10:26:11 : admin1 : PASV
+22/12/2022 10:27:20 :  : LGIN admin1 ***
+22/12/2022 10:27:20 : admin1 : PASV
+22/12/2022 10:27:20 : admin1 : UINFO admin1
+22/12/2022 10:27:20 : admin1 : PWD
+22/12/2022 10:27:20 : admin1 : PASV
+22/12/2022 10:27:20 : admin1 : LIST /
+22/12/2022 10:27:23 : admin1 : CWD /a/
+22/12/2022 10:27:23 : admin1 : PWD
+22/12/2022 10:27:23 : admin1 : PASV
+22/12/2022 10:27:23 : admin1 : LIST /a/
+22/12/2022 10:27:30 : admin1 : PASV
+22/12/2022 10:27:30 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:27:33 : admin1 : CWD ..
+22/12/2022 10:27:33 : admin1 : PWD
+22/12/2022 10:27:33 : admin1 : PASV
+22/12/2022 10:31:15 :  : LGIN admin1 ***
+22/12/2022 10:31:16 : admin1 : PASV
+22/12/2022 10:31:16 : admin1 : UINFO admin1
+22/12/2022 10:31:16 : admin1 : PWD
+22/12/2022 10:31:16 : admin1 : PASV
+22/12/2022 10:31:16 : admin1 : LIST /
+22/12/2022 10:31:18 : admin1 : CWD /a/
+22/12/2022 10:31:18 : admin1 : PWD
+22/12/2022 10:31:18 : admin1 : PASV
+22/12/2022 10:31:18 : admin1 : LIST /a/
+22/12/2022 10:31:24 : admin1 : PASV
+22/12/2022 10:31:24 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:31:27 : admin1 : CWD ..
+22/12/2022 10:31:27 : admin1 : PWD
+22/12/2022 10:31:27 : admin1 : PASV
+22/12/2022 10:31:27 : admin1 : LIST /
+22/12/2022 10:31:29 : admin1 : CWD /a/
+22/12/2022 10:31:29 : admin1 : PWD
+22/12/2022 10:31:29 : admin1 : PASV
+22/12/2022 10:31:29 : admin1 : LIST /a/
+22/12/2022 10:31:38 : admin1 : PASV
+22/12/2022 10:31:38 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:31:46 : admin1 : PASV
+22/12/2022 10:31:46 : admin1 : LIST /a/
+22/12/2022 10:31:55 : admin1 : PORT (192.168.1.9|21147)
+22/12/2022 10:31:55 : admin1 : RETR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:32:04 : admin1 : PORT (192.168.1.9|20594)
+22/12/2022 10:32:04 : admin1 : RETR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:32:15 : admin1 : PORT (192.168.1.9|21920)
+22/12/2022 10:32:15 : admin1 : LIST /a/
+22/12/2022 10:32:31 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:32:31 : admin1 : PORT (192.168.1.9|20082)
+22/12/2022 10:32:31 : admin1 : LIST /a/
+22/12/2022 10:32:52 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:33:26 :  : LGIN admin1 ***
+22/12/2022 10:33:26 : admin1 : PASV
+22/12/2022 10:33:26 : admin1 : UINFO admin1
+22/12/2022 10:33:26 : admin1 : PWD
+22/12/2022 10:33:26 : admin1 : PASV
+22/12/2022 10:33:26 : admin1 : LIST /
+22/12/2022 10:33:33 : admin1 : CWD /a/
+22/12/2022 10:33:33 : admin1 : PWD
+22/12/2022 10:33:33 : admin1 : PASV
+22/12/2022 10:33:33 : admin1 : LIST /a/
+22/12/2022 10:33:37 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 10:33:37 : admin1 : PASV
+22/12/2022 10:33:37 : admin1 : LIST /a/
+22/12/2022 10:33:46 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:34:01 : admin1 : PASV
+22/12/2022 10:34:01 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:34:10 : admin1 : PASV
+22/12/2022 10:34:10 : admin1 : LIST /a/
+22/12/2022 10:34:34 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:35:32 :  : LGIN admin1 ***
+22/12/2022 10:35:32 : admin1 : PASV
+22/12/2022 10:35:32 : admin1 : UINFO admin1
+22/12/2022 10:35:32 : admin1 : PWD
+22/12/2022 10:35:32 : admin1 : PASV
+22/12/2022 10:35:32 : admin1 : LIST /
+22/12/2022 10:35:36 : admin1 : CWD /a/
+22/12/2022 10:35:36 : admin1 : PWD
+22/12/2022 10:35:36 : admin1 : PASV
+22/12/2022 10:35:36 : admin1 : LIST /a/
+22/12/2022 10:35:40 : admin1 : DELE /a/TLFILE.TLDAT
+22/12/2022 10:35:40 : admin1 : PASV
+22/12/2022 10:35:40 : admin1 : LIST /a/
+22/12/2022 10:35:43 : admin1 : DELE /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:35:43 : admin1 : PASV
+22/12/2022 10:35:43 : admin1 : LIST /a/
+22/12/2022 10:35:50 : admin1 : PASV
+22/12/2022 10:35:50 : admin1 : STOR /a/EndeavourOS_Artemis_nova_22_9.iso
+22/12/2022 10:35:56 : admin1 : PASV
+22/12/2022 10:35:56 : admin1 : LIST /a/
+22/12/2022 10:36:06 : admin1 : WRQ /a/TLFILE.TLDAT (TFTP)
+22/12/2022 10:36:11 : admin1 : QUIT
