@@ -85,6 +85,7 @@ public class DataConnectionHandler extends Thread{
 	            	break;
 				case "LIST": {
 					oos = new ObjectOutputStream(clientSoc.getOutputStream());
+					//params = params.replaceAll("/", "\\\\");
 					int parentID = new UploadBLL().parentID(baseDir + params);
 					ArrayList<FileDto> result;
 					if(producer.role.equals("user"))

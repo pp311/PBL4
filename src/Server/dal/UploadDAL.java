@@ -25,12 +25,12 @@ public class UploadDAL {
 	{
 		String path = files.getPath();
 		path = path.substring(0, path.lastIndexOf(File.separator));
-		String sql1 = "select FID from Files where Path = " + "'" + path + "'";
+		String sql1 = "select FID from Files where Path = ?";
 	
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql1);
-			//ps.setString(1, files.getPath());
+			ps.setString(1, path);
 			//ps.setString(2, files.getName());
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
