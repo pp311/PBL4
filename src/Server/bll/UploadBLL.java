@@ -1,5 +1,7 @@
 package Server.bll;
 
+import java.util.List;
+
 import Server.dal.UploadDAL;
 import Server.dto.FileDto;
 import Server.models.*;
@@ -50,5 +52,36 @@ public class UploadBLL {
 		file.setPath(fDto.getPath());
 		file.setType(fDto.getType());
 		return uploadDAL.delFile(file);
+	}
+
+	public List<String> getAllOwner(FileDto fileDto) {
+		Files file = new Files();
+		file.setFID(fileDto.getFID());
+		// TODO Auto-generated method stub
+		return uploadDAL.getAllOwner(file);
+	}
+	public int findFID(FileDto fDto)
+	{
+		Files file = new Files();
+		//file.setName(fDto.getName());
+		file.setPath(fDto.getPath());
+		return uploadDAL.findFID(file);
+	}
+	public List<String> getAllShared(FileDto fileDto) {
+		Files file = new Files();
+		file.setFID(fileDto.getFID());
+		// TODO Auto-generated method stub
+		return uploadDAL.getAllShared(file);
+	}
+	public List<Integer> getAllFID(FileDto fileDto)
+	{
+		Files file = new Files();
+		file.setFID(fileDto.getFID());
+		// TODO Auto-generated method stub
+		return uploadDAL.getAllFID(file);
+	}
+	public List<String> getAllSharedByFID (int fid)
+	{
+		return uploadDAL.getAllSharedByFID(fid);
 	}
 }

@@ -4,6 +4,8 @@ import Server.models.*;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Date;
@@ -175,16 +177,60 @@ public class UploadDAL {
 		}
 		return true;
 	}
+	public List<String> getAllOwner (Files files){
+		List<String>list = new ArrayList<String>();
+		String sql = "with recursive cte (FID, ParentID, Path, Owner) as ( select FID, ParentID, Path, Owner from Files where FID = ? union all select p.FID, p.ParentID, p.Path, p.Owner from Files p inner join cte on p.FID = cte.ParentID ) select Owner from cte";		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			int fid = files.getFID();
+			ps.setInt(1, fid);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				list.add(rs.getString("Owner"));
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return list;
+		}
+		
+	}
+//	public int findFID(Files files)
+//	{
+//		String sql1 = "select FID from Files where Name = ? and Path = ? ";		
+//		try {
+//			Connection db = DBConnection.getInstance().getConection();
+//			ps = db.prepareStatement(sql1);
+//			String path = files.getPath();
+//			path = path.substring(0, path.lastIndexOf(File.separator));
+//			//path = path.substring(0, path.indexOf("\\"));
+//			ps.setString(1, files.getName());
+//			ps.setString(2, files.getPath());
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next())
+//			{
+//				return rs.getInt("FID");
+//			}
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return 0;
+//		}
+//		return 0;
+//	}
 	public int findFID(Files files)
 	{
-		String sql1 = "select FID from Files where Name = ? and Path = ? ";		
+		String sql1 = "select FID from Files where Path = ? ";		
 		try {
 			Connection db = DBConnection.getInstance().getConection();
 			ps = db.prepareStatement(sql1);
 			String path = files.getPath();
-			path = path.substring(0, path.indexOf("\\"));
-			ps.setString(1, files.getName());
-			ps.setString(2, files.getPath());
+			ps.setString(1, files.getPath());
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{
@@ -213,6 +259,71 @@ public class UploadDAL {
 			return false;
 		}
 		return true;
+	}
+	public List<String> getAllShared (Files files){
+		List<String>list = new ArrayList<String>();
+		String sql = "SELECT * FROM Share INNER JOIN User ON Share.UID=User.UID WHERE Permission = 2 AND FID = ?";		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			int fid = files.getFID();
+			ps.setInt(1, fid);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				list.add(rs.getString("Username"));
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return list;
+		}
+		
+	}
+	public List<Integer> getAllFID (Files files){
+		List<Integer>list = new ArrayList<Integer>();
+		String sql = "with recursive cte (FID, ParentID, Path, Owner) as ( select FID, ParentID, Path, Owner from Files where FID = ? union all select p.FID, p.ParentID, p.Path, p.Owner from Files p inner join cte on p.FID = cte.ParentID ) select FID from cte";		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			int fid = files.getFID();
+			ps.setInt(1, fid);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				list.add(rs.getInt("FID"));
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return list;
+		}
+		
+	}
+	public List<String> getAllSharedByFID (int fid){
+		List<String>list = new ArrayList<String>();
+		String sql = "SELECT * FROM Share INNER JOIN User ON Share.UID=User.UID WHERE Permission = 2 AND FID = ?";		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql);
+			ps.setInt(1, fid);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				list.add(rs.getString("Username"));
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return list;
+		}
+		
 	}
 	
 }

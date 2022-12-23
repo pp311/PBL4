@@ -9,7 +9,7 @@ public class DBConnection {
 	private String pass = "";
 	private String hostName = "localhost";
 	private String dbName = "FTP";
-	private String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
+	private String connectionURL = "jdbc:mysql://" + hostName + ":3307/" + dbName;
 	
 	private Connection conn;
 	private static DBConnection instance;

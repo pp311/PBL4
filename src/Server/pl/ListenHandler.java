@@ -13,7 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
@@ -141,28 +143,52 @@ public void run(){
 				dos.writeUTF(response);
 				break;
 			case "DELE":
-				File deleteDir = new File(baseDir + msg);
-				FileDto fileDto = new FileDto();
-				Path pa = Paths.get(deleteDir.getAbsolutePath());
-				BasicFileAttributes attri = Files.readAttributes(pa, BasicFileAttributes.class);
-				fileDto.setPath(pa.toString());
-				fileDto.setName(deleteDir.getName());
-				fileDto.setType(attri.isDirectory() ? "Dir" : "File");
-//				if (fileDto.getType().compareTo("Dir")==0)
-//				{
-//					
-//				}
-//				else {
-//					
-//				}
-				if (new UploadBLL().delFile(fileDto)) {
-					deleteDirectory(deleteDir);
-					dos.writeUTF("250 Delete operation successful");
+				
+					File deleteDir = new File(baseDir + msg);
+					FileDto fileDto = new FileDto();
+					Path pa = Paths.get(deleteDir.getAbsolutePath());
+					BasicFileAttributes attri = Files.readAttributes(pa, BasicFileAttributes.class);
+					fileDto.setPath(pa.toString());
+					fileDto.setName(deleteDir.getName());
+					fileDto.setType(attri.isDirectory() ? "Dir" : "File");
+					fileDto.setFID(new UploadBLL().findFID(fileDto));
+	//				if (fileDto.getType().compareTo("Dir")==0)
+	//				{
+	//					
+	//				}
+	//				else {
+	//					
+	//				}
+				if (role.equals("admin"))
+				{
+					if (new UploadBLL().delFile(fileDto)) {
+						deleteDirectory(deleteDir);
+						dos.writeUTF("250 Delete operation successful");
+					}
+					else {
+						dos.writeUTF("502 Command not implemented");
+					}	
 				}
 				else {
-					dos.writeUTF("502 Command not implemented");
+					List<String> list = new UploadBLL().getAllOwner(fileDto);
+					int dem=0;
+					for (int i=0;i<list.size();i++)
+					{
+						if(list.get(i).equals(userName)) dem++;
+					}
+					if (dem>0){
+						if (new UploadBLL().delFile(fileDto)) {
+							deleteDirectory(deleteDir);
+							dos.writeUTF("250 Delete operation successful");
+						}
+						else {
+							dos.writeUTF("502 Command not implemented");
+						}
+					}
+					else {
+					dos.writeUTF("601 Permission denied");
+					}
 				}
-				
 				break;
 			case "CWD":
 				if(!msg.equals(".."))
@@ -175,38 +201,110 @@ public void run(){
 				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			case "MKD":
-				File newDir = new File(baseDir + File.separator + msg);
-                boolean success = newDir.mkdir();
-                FileDto fDto = new FileDto();
-                Path p = Paths.get(newDir.getAbsolutePath());
-				BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-				fDto.setName(newDir.getName());
-				fDto.setType("Dir");
-				fDto.setPath(p.toString());
-				fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-				if (new UploadBLL().checkFileExists(fDto)==false )
+
+				if (role.equals("admin"))
 				{
-					fDto.setOwner(userName);
+					File newDir = new File(baseDir + File.separator + msg);
+	                boolean success = newDir.mkdir();
+	                FileDto fDto = new FileDto();
+	                Path p = Paths.get(newDir.getAbsolutePath());
+					BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+					fDto.setName(newDir.getName());
+					fDto.setType("Dir");
+					fDto.setPath(p.toString());
+					fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+					if (new UploadBLL().checkFileExists(fDto)==false )
+					{
+						fDto.setOwner(userName);
+					}
+					else {
+						fDto.setOwner("");
+					}	
+					fDto.setLastEditedBy(userName);
+					fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+					fDto.setSize(attr.size());
+					int x= new UploadBLL().parentID(fDto);
+				    if (x!=0)
+				    {
+				    	fDto.setParentID(x);
+				    }
+				    else {
+						fDto.setParentID(0);
+					}
+					if (new UploadBLL().uploadFile(fDto) && success) {
+						dos.writeUTF("257 \"/" + msg + "\" created");
+					}
+					else {
+						dos.writeUTF("502 Command not implemented");
+					}
 				}
 				else {
-					fDto.setOwner("");
-				}	
-				fDto.setLastEditedBy(userName);
-				fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
-				fDto.setSize(attr.size());
-				int x= new UploadBLL().parentID(fDto);
-			    if (x!=0)
-			    {
-			    	fDto.setParentID(x);
-			    }
-			    else {
-					fDto.setParentID(0);
-				}
-				if (new UploadBLL().uploadFile(fDto) && success) {
-					dos.writeUTF("257 \"/" + msg + "\" created");
-				}
-				else {
-					dos.writeUTF("502 Command not implemented");
+					File newDir = new File(baseDir + File.separator + msg);
+	                boolean success = newDir.mkdir();
+	                FileDto fDto = new FileDto();
+	                
+	                Path p = Paths.get(newDir.getAbsolutePath());
+					BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+					fDto.setName(newDir.getName());
+					fDto.setType("Dir");
+					fDto.setPath(p.toString());
+					fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+					FileDto base = new FileDto();
+					
+	                base.setPath(fDto.getPath().substring(0, fDto.getPath().lastIndexOf(File.separator)));
+	                base.setFID(new UploadBLL().findFID(base));
+	                
+					List<String> list = new UploadBLL().getAllOwner(base);
+			        List<Integer> listFID = new UploadBLL().getAllFID(base);   
+			        int dem=0;
+			        for (int i=0;i<listFID.size();i++)
+			        {
+			        	List<String> listSh = new ArrayList<String>();
+			        	listSh=new UploadBLL().getAllSharedByFID(listFID.get(i));
+			        	for(int j=0;j<listSh.size();j++)
+			        	{
+			        		if (listSh.get(j).equals(userName)) dem++;
+			        	}
+			        }
+					List<String> listShared = new UploadBLL().getAllShared(base);
+					
+					for (int i=0;i<list.size();i++)
+					{
+						if(list.get(i).equals(userName)) dem++;
+					}
+					for (int i=0;i<listShared.size();i++)
+					{
+						if(listShared.get(i).equals(userName)) dem++;
+					}
+					if (dem>0){
+						if (new UploadBLL().checkFileExists(fDto)==false )
+						{
+							fDto.setOwner(userName);
+						}
+						else {
+							fDto.setOwner("");
+						}	
+						fDto.setLastEditedBy(userName);
+						fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+						fDto.setSize(attr.size());
+						int x= new UploadBLL().parentID(fDto);
+					    if (x!=0)
+					    {
+					    	fDto.setParentID(x);
+					    }
+					    else {
+							fDto.setParentID(0);
+						}
+						if (new UploadBLL().uploadFile(fDto) && success) {
+							dos.writeUTF("257 \"/" + msg + "\" created");
+						}
+						else {
+							dos.writeUTF("502 Command not implemented");
+						}
+					}
+					else {
+						dos.writeUTF("601 Permission denied");
+					}
 				}
 //                if (success) {
 //                	JOptionPane.showMessageDialog(null, "Successfully created directory: " + name);

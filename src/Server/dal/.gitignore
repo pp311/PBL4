@@ -1,3 +1,5 @@
 /DBConnection.class
 /UploadDAL.class
 /UserDAL.class
+/FileDAL.class
+/ShareDAL.class
