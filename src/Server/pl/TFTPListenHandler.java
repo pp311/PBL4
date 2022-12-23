@@ -224,39 +224,7 @@ public class TFTPListenHandler extends Thread{
 						byte[] data = dataPacket.getData();
 						try {
 							output.write(data, 4, dataPacket.getLength()-4);
-							FileDto fDto = new FileDto();
-							Path p = Paths.get(file.getAbsolutePath());
-							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-							fDto.setName(file.getName());
-							fDto.setType(attr.isDirectory() ? "Dir" : "File");
-							fDto.setPath(p.toString());
-							//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-							if (new UploadBLL().checkFileExists(fDto)==false )
-							{
-								fDto.setOwner(username);
-								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
-							}
-							else {
-								fDto.setOwner("");
-							}	
-							fDto.setLastEditedBy(username);
-							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
-							fDto.setSize(attr.size());
-							int x= new UploadBLL().parentID(fDto);
-						    if (x!=0)
-						    {
-						    	fDto.setParentID(x);
-						    }
-						    else {
-								fDto.setParentID(0);
-							}
-							if (new UploadBLL().uploadFile(fDto)) {
-								System.out.println("226 Transfer completed");
-							}
-							else {
-								System.out.println("502 Command not implemented");
-							}
+							
 							
 							//System.out.println(dataPacket.getLength());
 						} catch (IOException e) {
@@ -274,6 +242,39 @@ public class TFTPListenHandler extends Thread{
 							}
 							System.out.println("All done writing file.");
 							try {
+								FileDto fDto = new FileDto();
+								Path p = Paths.get(file.getAbsolutePath());
+								BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+								fDto.setName(file.getName());
+								fDto.setType(attr.isDirectory() ? "Dir" : "File");
+								fDto.setPath(p.toString());
+								//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+								fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+								if (new UploadBLL().checkFileExists(fDto)==false )
+								{
+									fDto.setOwner(username);
+									//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+								}
+								else {
+									fDto.setOwner("");
+								}	
+								fDto.setLastEditedBy(username);
+								fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setSize(attr.size());
+								int x= new UploadBLL().parentID(fDto);
+							    if (x!=0)
+							    {
+							    	fDto.setParentID(x);
+							    }
+							    else {
+									fDto.setParentID(0);
+								}
+								if (new UploadBLL().uploadFile(fDto)) {
+									System.out.println("226 Transfer completed");
+								}
+								else {
+									System.out.println("502 Command not implemented");
+								}
 								output.close();
 							} catch (IOException e) {
 								System.err.println("Could not close file.");
@@ -301,7 +302,7 @@ public class TFTPListenHandler extends Thread{
             try {
             	System.out.println("sending ack for block: " + block);
             	clientSoc.send(sendAck);
-            	clientSoc.setSoTimeout(3000);
+            	clientSoc.setSoTimeout(1000);
             	clientSoc.receive(receiver);
                 
                 short blockNum = getData(receiver);
@@ -317,6 +318,7 @@ public class TFTPListenHandler extends Thread{
                 }
             } catch (SocketTimeoutException e) {
                 System.out.println("Timeout.");
+                retryCount++;
 //                try {
 //                	clientSoc.send(sendAck);
 //				} catch (IOException e1) {
@@ -324,6 +326,7 @@ public class TFTPListenHandler extends Thread{
 //				}
             } catch (IOException e) {
 				System.err.println("IO Error.");
+				retryCount++;
 			} finally {
                 try {
                 	clientSoc.setSoTimeout(0);
@@ -347,7 +350,7 @@ public class TFTPListenHandler extends Thread{
 	        try {
 	        	clientSoc.send(sender);
 	            System.out.println("Sent.");
-	            clientSoc.setSoTimeout(3000);
+	            clientSoc.setSoTimeout(1000);
 	            clientSoc.receive(receiver);
 	            
 	            /* _______________ Dissect Datagram and Test _______________ */
@@ -367,8 +370,10 @@ public class TFTPListenHandler extends Thread{
 	            
 	        } catch (SocketTimeoutException e) {
 	            System.out.println("Timeout. Resending.");
+	            retryCount++;
 	        } catch (IOException e) {
 				System.err.println("IO Error. Resending.");
+				retryCount++;
 			} finally {
 	            try {
 	            	clientSoc.setSoTimeout(0);

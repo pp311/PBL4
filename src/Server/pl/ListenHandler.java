@@ -40,6 +40,7 @@ class ListenHandler extends Thread {
 	private String password = "";
 	public String role = "";
 	private String workingDir = "/";
+	public volatile boolean isConneted = false;
 //	public String baseDir = "D:\\Tai xuong\\ftp";
 	public String baseDir = "/home/shared";
 	static final int MAX = 7;
@@ -59,12 +60,12 @@ public void run(){
 	String ch = "";
 	String cmd = "";
 	String msg = "";
-	while(true) {
-		try {
+	try {
+	while(true) {	
 			ch= dis.readUTF();
 			
 			//những lệnh như PWD ko chứa dấu " " nên gọi substring sẽ lỗi
-			if(ch.startsWith("PWD") || ch.startsWith("PASV")) cmd = ch;
+			if(ch.startsWith("PWD") || ch.startsWith("PASV") || ch.startsWith("QUIT")) cmd = ch;
 			else {
 				cmd=ch.substring(0, ch.indexOf(" "));
 				msg=ch.substring(ch.indexOf(" ")+1);
@@ -88,6 +89,7 @@ public void run(){
 					UserDto u = new UserBLL().getCurrentUserInfo(userName);
 					role = u.getRole();
 					UID = u.getUID();
+					isConneted = true;
 					this.dos.writeUTF("230 User logged in, proceed.");
 				}
 				else {
@@ -351,21 +353,24 @@ public void run(){
 				response = dataConnection.getResponseMessage();
 				dos.writeUTF(response);
 				break;
+			case "QUIT":
+				isConneted = false;
+				putMessage("TERM");
+				//dos.writeUTF("111 Logged out");
+			break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + cmd );
 			}
-		} catch (EOFException e) {
-			//EOFExcep xảy ra khi client thoát, server chạy lệnh dos.readUTF() -> lỗi
-			try {
-				soc.close();
-				System.out.println(userName + " da ngat ket noi");
-				break;
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		}
+	} catch (Exception e) {
+		//EOFExcep xảy ra khi client thoát, server chạy lệnh dos.readUTF() -> lỗi
+		try {
+			isConneted = false;
+			putMessage("TERM");
+			soc.close();
+			System.out.println(userName + " da ngat ket noi");
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 	}
 }
@@ -404,4 +409,18 @@ private synchronized void putMessage(String cmd)
         messages.removeElement(message);
         return message;
     }
+    
+    public synchronized String peakMessage()
+            throws InterruptedException
+        {
+    	String message = "";
+    		try {
+    			message = (String)messages.firstElement();
+			} catch (Exception e) {
+				message = "";
+			}    
+            // extracts the message from the queue
+            return message;
+        }
+    
 }

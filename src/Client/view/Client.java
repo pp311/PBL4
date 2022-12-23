@@ -24,7 +24,6 @@ import javax.swing.*;
 import Server.dto.FileDto;
 import Server.dto.UserDto;
 
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,11 +36,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-public class Client extends JFrame implements ActionListener, Runnable, PropertyChangeListener {
+public class Client extends JFrame implements ActionListener, Runnable, PropertyChangeListener, WindowListener {
 	public static final int MAX_BUFFER = 8192;
 	private JPanel contentPane;
 	private Socket soc;
@@ -67,11 +68,15 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private JButton btnNewFolder;
 	private JButton btnShare;
 	private JButton btnSettings;
+	public JButton btnStop;
 	private ArrayList<FileDto> files;
 	private UserDto userInfo;
 	public String defaultMode = "PASV";
 	public String defaultMethod = "FTP";
 	public String username = "";
+	private UploadTask uploadTask;
+	private DownloadTask downTask;
+	private TFTPTransfer tftpTask;
 	
 	//ExecutorService threadPool = Executors.newFixedThreadPool(1);
 
@@ -336,10 +341,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				try {
 					progressBar.setValue(0);
 				    progressBar.setVisible(true);
+				    btnStop.setVisible(true);
+				    lblPercent.setVisible(true);
 				    if(!defaultMethod.equals("TFTP")) {
-				    	UploadTask task = new UploadTask(localFile, uploadDir, this, defaultMode);
-						task.addPropertyChangeListener(this);
-						task.execute();
+				    	uploadTask = new UploadTask(localFile, uploadDir, this, defaultMode);
+				    	uploadTask.addPropertyChangeListener(this);
+				    	uploadTask.execute();
 						isFileTransfering = true;
 				    }
 				    else {
@@ -356,11 +363,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				    	fileInfo.setSize(attr.size());
 				    	if(attr.size() > 32500*32500) {
 				    		JOptionPane.showMessageDialog(null, "TFTP chỉ hỗ trợ upload file dưới 1GB");
+				    		return;
 				    	}
 				    	
-				    	TFTPTransfer task = new TFTPTransfer("Upload", this, fileInfo, server, localFile.getAbsolutePath());
-				    	task.addPropertyChangeListener(this);
-						task.execute();
+				    	tftpTask = new TFTPTransfer("Upload", this, fileInfo, server, localFile.getAbsolutePath());
+				    	tftpTask.addPropertyChangeListener(this);
+				    	tftpTask.execute();
 						isFileTransfering = true;
 				    }
 					
@@ -411,13 +419,13 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 				      //boolean success = true;
 				      progressBar.setValue(0);
 				      progressBar.setVisible(true);
-				      
+				      btnStop.setVisible(true);
+				      lblPercent.setVisible(true);
 				      if(!defaultMethod.equals("TFTP")) {
-				    	  DownloadTask task;
 					      //nếu X là file thì gọi downloadSingleFile, nếu là folder thì gọi downloadDirectory
 						      if(!getFileInfo(filename).getType().equals("Dir")) {
 						    		 // success = downloadSingleFile(downloadPath, saveDir);
-						    	  	task = new DownloadTask(downloadPath, saveDir, this, false, defaultMode);
+						    	  downTask = new DownloadTask(downloadPath, saveDir, this, false, defaultMode);
 								}
 						      else {
 						    	  File newDir = new File(saveDir);
@@ -425,11 +433,11 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 					                if (created) {
 					                    System.out.println("CREATED the directory: " + saveDir);
 					                }
-					                task = new DownloadTask(downloadPath, saveDir, this, true, defaultMode);
+					                downTask = new DownloadTask(downloadPath, saveDir, this, true, defaultMode);
 						    	  //success = downloadDirectory(downloadPath, saveDir);
 						      }
-						      task.addPropertyChangeListener(this);
-						      task.execute();
+						      downTask.addPropertyChangeListener(this);
+						      downTask.execute();
 						      isFileTransfering = true;
 				      }
 				      else {
@@ -443,9 +451,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 					    		return;
 					    	}
 				    	  fileInfo.setPath(workingDir + filename);
-				    	  TFTPTransfer task = new TFTPTransfer("Download", this, fileInfo, server, saveDir);
-				    	  task.addPropertyChangeListener(this);
-					      task.execute();
+				    	  tftpTask = new TFTPTransfer("Download", this, fileInfo, server, saveDir);
+				    	  tftpTask.addPropertyChangeListener(this);
+				    	  tftpTask.execute();
 					      isFileTransfering = true;
 				      }
 				      
@@ -456,6 +464,18 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			} catch (Exception e1) {
 				// TODO: handle exception
 			}
+		}
+		if (e.getSource() == btnStop) {
+			if(downTask != null) {
+				downTask.cancel(true);
+			} 
+			if (uploadTask != null) {
+				uploadTask.cancel(true);
+			} 
+			if (tftpTask != null) {
+				tftpTask.cancel(true);
+			}
+			isFileTransfering = false;
 		}
 		if(e.getSource() == btnDelete) {
 			if(isFileTransfering) {
@@ -495,7 +515,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 						        JOptionPane.showMessageDialog(null, "\"" + filename + "\"" + " was deleted successfully.");
 								//}
 						    } else {
-						    	JOptionPane.showMessageDialog(null, "Could not delete the file.");
+						    	JOptionPane.showMessageDialog(null, "Permission denied.");
 						    }			        			    			      				    
 					} catch (Exception ex) {
 					    System.out.println("Oh no, there was an error: " + ex.getMessage());
@@ -510,13 +530,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private boolean deleteFile(String deletePath) {
 		try {
 			dos.writeUTF("DELE " + deletePath);	
-			showServerResponse();
+			return showServerResponse1();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 //	public boolean deleteDirectory(String deletePath) throws IOException {
@@ -692,8 +711,9 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			e.printStackTrace();
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 400, 900, 480);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(400, 400, 900, 520);
 
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -805,6 +825,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnSettings = new JButton("Settings");
 		btnSettings.setBounds(680, 126, 105, 25);
 		contentPane.add(btnSettings);
+		
+		btnStop = new JButton("Stop");
+		btnStop.setBounds(323, 472, 117, 25);
+		btnStop.setVisible(false);
+		contentPane.add(btnStop);
+		btnStop.addActionListener(this);
 		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);
 		btnDownload.addActionListener(this);
@@ -812,6 +838,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnDelete.addActionListener(this);
 		btnNewFolder.addActionListener(this);
 		btnSettings.addActionListener(this);
+		this.addWindowListener(this);
 		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại
 		
@@ -830,6 +857,59 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
             lblPercent.setText("" + progress + "%");
 		}
 	}
-	
-	
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		int i=JOptionPane.showOptionDialog(null, "Bạn có thật sự muốn thoát?", "Message",JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        if(i==JOptionPane.YES_OPTION) {
+        	try {
+				dos.writeUTF("QUIT");
+				Thread.sleep(100);
+				//showServerResponse();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	System.exit(0);
+        } else {
+        	return;
+        }
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -74,7 +74,8 @@ public class DataConnectionHandler extends Thread{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	            	ois.close();	
+	            	ois.close();
+	            	response = "226 User list send OK";
 	            	break;
 	            case "LSSHARE":
 	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
@@ -132,55 +133,59 @@ public class DataConnectionHandler extends Thread{
 					
 					buffer = new byte[MAX_BUFFER];
 					read = 0;
+					long size = dis.readLong();
 					while((read = dis.read(buffer)) != -1) {
 						dos.write(buffer, 0, read);
 						dos.flush();
 						buffer = new byte[MAX_BUFFER];
 					}
-					
-					File file = new File (baseDir+params);
-					FileDto fDto = new FileDto();
-					Path p = Paths.get(file.getAbsolutePath());
-					BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-					fDto.setName(file.getName());
-					fDto.setType(attr.isDirectory() ? "Dir" : "File");
-					fDto.setPath(p.toString());
-					//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-					fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-					if (new UploadBLL().checkFileExists(fDto)==false )
-					{
-						fDto.setOwner(producer.userName);
-						//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
-					}
-					else {
-						fDto.setOwner("");
-					}	
-					fDto.setLastEditedBy(producer.userName);
-					fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
-					fDto.setSize(attr.size());
-					int x= new UploadBLL().parentID(fDto);
-				    if (x!=0)
-				    {
-				    	fDto.setParentID(x);
-				    }
-				    else {
-						fDto.setParentID(0);
-					}
-					if (new UploadBLL().uploadFile(fDto)) {
-						response = "226 Transfer completed";
-					}
-					else {
-						response = "502 Command not implemented";
-					}
-					
+						File file = new File (baseDir+params);
+						if(file.length() == size) {
+							FileDto fDto = new FileDto();
+							Path p = Paths.get(file.getAbsolutePath());
+							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+							fDto.setName(file.getName());
+							fDto.setType(attr.isDirectory() ? "Dir" : "File");
+							fDto.setPath(p.toString());
+							//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+							if (new UploadBLL().checkFileExists(fDto)==false )
+							{
+								fDto.setOwner(producer.userName);
+								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+							}
+							else {
+								fDto.setOwner("");
+							}	
+							fDto.setLastEditedBy(producer.userName);
+							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+							fDto.setSize(attr.size());
+							int x= new UploadBLL().parentID(fDto);
+						    if (x!=0)
+						    {
+						    	fDto.setParentID(x);
+						    }
+						    else {
+								fDto.setParentID(0);
+							}
+							if (new UploadBLL().uploadFile(fDto)) {
+								response = "226 Transfer completed";
+							}
+							else {
+								response = "502 Command not implemented";
+							}
+						} else {
+							file.delete();
+							response = "503 Transfer stopped";
+						}
 					dis.close();
 					dos.close();
 					
 					break;
 				case "RETR":
+					
 					DataInputStream dis = new DataInputStream(new FileInputStream(baseDir+params));
 					DataOutputStream dos = new DataOutputStream(clientSoc.getOutputStream());
-					
 					buffer = new byte[MAX_BUFFER];
 					read = 0;
 					while((read = dis.read(buffer)) != -1) {

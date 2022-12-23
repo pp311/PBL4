@@ -30,8 +30,12 @@ public class DownloadTask extends SwingWorker<String, String>{
 	boolean isDirectory;
 	String filename;
 	String mode;
+	private boolean isServerDisconnect = false;
 	private static final int PORT_RANGE_START = 20000;
 	private static final int PORT_RANGE_END = 22000;
+	DataInputStream datadis;
+	DataOutputStream datados;
+	
 	public DownloadTask(String downloadPath, String saveDir, Client client, boolean isDirectory, String mode) {
 		this.downloadPath = downloadPath;
 		this.saveDir = saveDir;
@@ -60,13 +64,12 @@ public class DownloadTask extends SwingWorker<String, String>{
 	
 	private boolean downloadSingleFile(String downloadPath, String saveDir) {
 		try {
-			FileDto fileInfo = client.listFiles(downloadPath).get(0);
+			FileDto fileInfo = client.getFileInfo(downloadPath.substring(downloadPath.lastIndexOf("/")+1));
+			//FileDto fileInfo = client.listFiles(downloadPath).get(0);
 			long size = fileInfo.getSize();
 			long downloaded = 0;
 			int percentCompleted = 0;
 			publish("Downloading " + downloadPath);
-			DataInputStream datadis;
-			DataOutputStream datados;
 			ServerSocket dataServer = null;
 			Socket datasoc = null;
 			Random generator = new Random();
@@ -114,7 +117,6 @@ public class DownloadTask extends SwingWorker<String, String>{
 			client.dos.writeUTF("RETR " + downloadPath);
 			datadis = new DataInputStream(datasoc.getInputStream());
 			datados = new DataOutputStream(new FileOutputStream(saveDir));
-			
 			byte buffer[] = new byte[Client.MAX_BUFFER];
 			int read = 0;
 			while((read = datadis.read(buffer)) != -1) {
@@ -124,6 +126,12 @@ public class DownloadTask extends SwingWorker<String, String>{
 				percentCompleted = (int) (downloaded * 100 / size);
 				setProgress(percentCompleted);
 				buffer = new byte[Client.MAX_BUFFER];
+			}
+			if(downloaded != size) {
+				new File(saveDir).delete();
+				JOptionPane.showMessageDialog(null, "Có lỗi xảy ra phía máy chủ, vui lòng sử dụng vào lúc khác!");
+				isServerDisconnect = true;
+				this.cancel(true);
 			}
 			//publish("Closing connection...");
 			datadis.close();
@@ -193,8 +201,35 @@ public class DownloadTask extends SwingWorker<String, String>{
 		            	client.progressBar.setVisible(false);
 		            	client.lblPercent.setText("");
 		            	client.lblTask.setText("");
+		            	client.btnStop.setVisible(false);
 		            }
 		            client.loadTable();
+		        }
+		        else if(isCancelled() && isServerDisconnect){
+		        	int ok = JOptionPane.showOptionDialog(null,
+		            		"Can not download \"" + filename + "\"" + ", an error has occurred!", "Message",
+		            		JOptionPane.OK_CANCEL_OPTION,
+		                    JOptionPane.INFORMATION_MESSAGE, null, null, null);
+		            if(ok == JOptionPane.OK_OPTION || ok == JOptionPane.CANCEL_OPTION) {
+		            	client.progressBar.setVisible(false);
+		            	client.lblPercent.setText("");
+		            	client.lblPercent.setVisible(false);
+		            	client.lblTask.setText("");
+		            	client.btnStop.setVisible(false);
+		            }
+		        } else {
+		        	client.progressBar.setVisible(false);
+	            	client.lblPercent.setText("");
+	            	client.lblPercent.setVisible(false);
+	            	client.lblTask.setText("");
+	            	client.btnStop.setVisible(false);
+	            	try {
+						if(datadis != null) datadis.close();
+						if(datados != null) datados.close();
+						new File(saveDir).delete();
+					} catch (Exception e) {
+						System.err.println(e);
+					}
 		        }
 		        client.isFileTransfering = false;
 		    }  
