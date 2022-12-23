@@ -70,6 +70,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private JButton btnSettings;
 	public JButton btnStop;
 	private JButton btnAccountManage;
+	private JButton btnChangePassword;
 	private ArrayList<FileDto> files;
 	private UserDto userInfo;
 	public String defaultMode = "PASV";
@@ -275,6 +276,10 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		}
 		if(e.getSource() == btnAccountManage) {
 			AccountManage frame = new AccountManage(this);
+			frame.setVisible(true);
+		}
+		if(e.getSource() == btnChangePassword) {
+			ChangePassword frame = new ChangePassword(this);
 			frame.setVisible(true);
 		}
 		
@@ -695,6 +700,32 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		}
 		return userList;
 	}
+	public boolean checkPassword(String pass) {
+		try {
+			dos.writeUTF("LGIN " + username + " " + pass);
+			String s = dis.readUTF();
+			String code=s.substring(0, s.indexOf(" "));
+			String msg=s.substring(s.indexOf(" ")+1);
+			if(code.equals("230")) { 
+				return true;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+	public boolean changePassword(String pass) {
+		try {
+			dos.writeUTF("CHGPASS " + pass);
+			return showServerResponse1();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 	public String getLocalIP() {
 		String ipAddr = "";
@@ -875,8 +906,14 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnAccountManage.setBounds(800, 126, 163, 25);
 		contentPane.add(btnAccountManage);
 		
+		btnChangePassword = new JButton("Change Password");
+		btnChangePassword.setBounds(800, 126, 163, 25);
+		contentPane.add(btnChangePassword);
+		
 		if(!userInfo.getRole().equals("admin")) {
 			btnAccountManage.setVisible(false);
+		} else {
+			btnChangePassword.setVisible(false);
 		}
 		
 		btnStop.addActionListener(this);
@@ -888,6 +925,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnNewFolder.addActionListener(this);
 		btnSettings.addActionListener(this);
 		btnAccountManage.addActionListener(this);
+		btnChangePassword.addActionListener(this);
 		this.addWindowListener(this);
 		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại

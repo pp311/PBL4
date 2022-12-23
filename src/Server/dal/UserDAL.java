@@ -126,4 +126,20 @@ public class UserDAL {
 		}
 		return true;
 	}
+	public boolean changePassword(String username, String pass) {
+		String sql1 = "update User set Password = ? where UserName = ?";	
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			ps.setString(1, pass);
+			ps.setString(2, username);
+			ps.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

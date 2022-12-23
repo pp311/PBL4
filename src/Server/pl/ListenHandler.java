@@ -359,6 +359,14 @@ public void run(){
 				response = dataConnection.getResponseMessage();
 				dos.writeUTF(response);
 			break;
+			case "CHGPASS":
+				boolean res = new UserBLL().changePassword(userName, msg);
+				if(res) {
+					dos.writeUTF("334 Change password successfully");
+				} else {
+					dos.writeUTF("605 Change password failed");
+				}
+			break;
 			case "QUIT":
 				isConneted = false;
 				putMessage("TERM");

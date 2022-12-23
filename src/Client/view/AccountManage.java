@@ -63,7 +63,7 @@ public class AccountManage extends JFrame implements ActionListener {
 		if(e.getSource() == btnCreate) {
 			String username = tf_username.getText();
 			String fullname = tf_fullname.getText();
-			String password = pf_password.getPassword().toString();
+			String password = String.valueOf(pf_password.getPassword());
 			String phone = tf_phone.getText();
 			String email = tf_email.getText();
 			if(username.equals("") || username == null ||

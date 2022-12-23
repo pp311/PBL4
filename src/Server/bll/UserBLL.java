@@ -27,5 +27,7 @@ public class UserBLL {
 	public boolean createAccount(UserDto u) {
 		return new UserDAL().createNewAccount(u);
 	}
-	
+	public boolean changePassword(String uname, String pass) {
+		return new UserDAL().changePassword(uname, pass);
+	}
 }
