@@ -103,4 +103,27 @@ public class UserDAL {
 		}
 		return list;
 	}
+	public boolean createNewAccount(UserDto u) {
+		String sql1 = "insert into User(UserName, FullName, Email, Phone, Password, Role) values(?,?,?,?,?,?) ";
+		ArrayList<UserDto> list = new ArrayList<UserDto>();		
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			ps.setString(1, u.getUserName());
+			ps.setString(2, u.getFullName());
+			ps.setString(3, u.getEmail());
+			ps.setString(4, u.getPhone());
+			ps.setString(5, u.getPassword());
+			ps.setString(6, u.getRole());
+			
+			ps.execute();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

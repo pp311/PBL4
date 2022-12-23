@@ -69,6 +69,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 	private JButton btnShare;
 	private JButton btnSettings;
 	public JButton btnStop;
+	private JButton btnAccountManage;
 	private ArrayList<FileDto> files;
 	private UserDto userInfo;
 	public String defaultMode = "PASV";
@@ -270,6 +271,10 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		
 		if(e.getSource() == btnSettings) {
 			Settings frame = new Settings(defaultMethod, defaultMode, this);
+			frame.setVisible(true);
+		}
+		if(e.getSource() == btnAccountManage) {
+			AccountManage frame = new AccountManage(this);
 			frame.setVisible(true);
 		}
 		
@@ -572,6 +577,23 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 //            return removed;
 //        
 //    }
+	public UserDto getUserInfo(String username) {
+		UserDto userDto = null;
+		Socket datasoc = null;
+		try {
+			datasoc = connectToDataConnection();
+			dos.writeUTF("UINFO " + username);
+			ObjectInputStream ois = new ObjectInputStream(datasoc.getInputStream());
+			userDto = (UserDto)ois.readObject();
+			ois.close();
+			datasoc.close();
+			showServerResponse();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userDto;
+	}
 	
 	
 	private void printCurrentDir() {
@@ -605,6 +627,22 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 			e.printStackTrace();
 		}
 		return userList;
+	}
+	public boolean createAccount(UserDto u) {
+		Socket datasoc = null;
+		try {
+			datasoc = connectToDataConnection();
+			dos.writeUTF("ADDUSER " + 1);
+			ObjectOutputStream oos = new ObjectOutputStream(datasoc.getOutputStream());
+			oos.writeObject(u);
+			oos.close();
+			datasoc.close();
+			return showServerResponse1();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public void setShare(ArrayList<Integer> uidList, int fid) {
@@ -713,7 +751,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(400, 400, 900, 520);
+		setBounds(400, 400, 1000, 650);
 
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -751,7 +789,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		table = new JTable(dtm);
 		table.setShowGrid(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setBounds(12, 36, 700, 500);
+		table.setBounds(12, 36, 800, 650);
 		table.addMouseListener(new MouseAdapter() {
 	         public void mouseClicked(MouseEvent me) {
 	            if (me.getClickCount() == 2) {     // to detect doble click events
@@ -773,11 +811,12 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		getContentPane().add(table);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 163, 834, 236);
+		scrollPane.setBounds(26, 163, 937, 314);
 		getContentPane().add(scrollPane);
 		
 		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(26, 99, 463, 15);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel.setBounds(26, 85, 640, 29);
 		getContentPane().add(lblNewLabel);
 		
 		btnBack = new JButton("Back");
@@ -801,17 +840,17 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		getContentPane().add(btnNewFolder);
 		
 		progressBar = new JProgressBar();
-		progressBar.setBounds(59, 435, 648, 25);
+		progressBar.setBounds(36, 544, 824, 25);
 		getContentPane().add(progressBar);
 		progressBar.setVisible(false);
 		lblPercent = new JLabel("");
-		lblPercent.setBounds(712, 435, 70, 25);
+		lblPercent.setBounds(864, 544, 70, 25);
 		getContentPane().add(lblPercent);
 		
 		JLabel lblngDngTruyn = new JLabel("ỨNG DỤNG TRUYỀN TẢI FILE");
 		lblngDngTruyn.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblngDngTruyn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblngDngTruyn.setBounds(12, 27, 749, 46);
+		lblngDngTruyn.setBounds(12, 27, 951, 46);
 		contentPane.add(lblngDngTruyn);
 		
 		btnShare = new JButton("Share");
@@ -819,7 +858,8 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		contentPane.add(btnShare);
 		
 		lblTask = new JLabel("");
-		lblTask.setBounds(59, 411, 648, 15);
+		lblTask.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblTask.setBounds(36, 503, 825, 29);
 		contentPane.add(lblTask);
 		
 		btnSettings = new JButton("Settings");
@@ -827,9 +867,18 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		contentPane.add(btnSettings);
 		
 		btnStop = new JButton("Stop");
-		btnStop.setBounds(323, 472, 117, 25);
+		btnStop.setBounds(420, 581, 117, 25);
 		btnStop.setVisible(false);
 		contentPane.add(btnStop);
+		
+		btnAccountManage = new JButton("Account Manage");
+		btnAccountManage.setBounds(800, 126, 163, 25);
+		contentPane.add(btnAccountManage);
+		
+		if(!userInfo.getRole().equals("admin")) {
+			btnAccountManage.setVisible(false);
+		}
+		
 		btnStop.addActionListener(this);
 		btnShare.addActionListener(this);
 		btnBack.addActionListener(this);
@@ -838,6 +887,7 @@ public class Client extends JFrame implements ActionListener, Runnable, Property
 		btnDelete.addActionListener(this);
 		btnNewFolder.addActionListener(this);
 		btnSettings.addActionListener(this);
+		btnAccountManage.addActionListener(this);
 		this.addWindowListener(this);
 		//progressBar.addPropertyChangeListener(this);
 		//sau khi load sẽ set đường dẫn hiện tại

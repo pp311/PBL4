@@ -353,6 +353,12 @@ public void run(){
 				response = dataConnection.getResponseMessage();
 				dos.writeUTF(response);
 				break;
+			case "ADDUSER":
+				putMessage("ADDUSER " + msg);
+				dataConnection.join();
+				response = dataConnection.getResponseMessage();
+				dos.writeUTF(response);
+			break;
 			case "QUIT":
 				isConneted = false;
 				putMessage("TERM");

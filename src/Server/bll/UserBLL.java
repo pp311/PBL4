@@ -24,5 +24,8 @@ public class UserBLL {
 	public ArrayList<UserDto> getAllUser() {
 		return new UserDAL().getAllUser();
 	}
+	public boolean createAccount(UserDto u) {
+		return new UserDAL().createNewAccount(u);
+	}
 	
 }

@@ -38,6 +38,7 @@ public class DataConnectionHandler extends Thread{
 	private int read;
 	private volatile String response = "";
 	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
 	public DataConnectionHandler(Socket clientSoc, ListenHandler producer) {
 		this.clientSoc = clientSoc;
 		this.producer = producer;
@@ -58,6 +59,17 @@ public class DataConnectionHandler extends Thread{
 					oos.close();
 					response = "226 User info send OK";
 				break;
+	            case "ADDUSER":
+	            	ois = new ObjectInputStream(clientSoc.getInputStream());
+	            	UserDto u = (UserDto)ois.readObject();
+	            	boolean res = new UserBLL().createAccount(u);
+	            	if(res) {
+	            		response = "333 Create account successfully";
+	            	}
+	            	else {
+	            		response = "603 Create account failed";
+	            	}
+	            break;
 	            case "LSUSER":
 	            	oos = new ObjectOutputStream(clientSoc.getOutputStream());
 					ArrayList<UserDto> userlist = new UserBLL().getAllUser();
@@ -207,6 +219,9 @@ public class DataConnectionHandler extends Thread{
 		} catch (IOException | InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();	
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	public String getResponseMessage() {

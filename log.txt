@@ -82,3 +82,298 @@
 22/12/2022 02:35:17 :  : LGIN admin1 ***
 22/12/2022 02:35:23 :  : LGIN admin1 ***
 22/12/2022 02:37:14 :  : LGIN admin1 ***
+23/12/2022 11:29:38 :  : LGIN user2 ***
+23/12/2022 11:29:39 : user2 : PASV
+23/12/2022 11:29:39 : user2 : UINFO user2
+23/12/2022 11:29:39 : user2 : PWD
+23/12/2022 11:29:39 : user2 : PASV
+23/12/2022 11:29:39 : user2 : LIST /
+23/12/2022 11:29:43 : user2 : CWD /b/
+23/12/2022 11:29:43 : user2 : PWD
+23/12/2022 11:29:43 : user2 : PASV
+23/12/2022 11:29:43 : user2 : LIST /b/
+23/12/2022 11:29:49 : user2 : MKD /b/ba
+23/12/2022 11:29:50 : user2 : PWD
+23/12/2022 11:29:50 : user2 : PASV
+23/12/2022 11:29:50 : user2 : LIST /b/
+23/12/2022 11:29:53 : user2 : CWD /b/NguyenAmHuanLuyen-16k/
+23/12/2022 11:29:53 : user2 : PWD
+23/12/2022 11:29:53 : user2 : PASV
+23/12/2022 11:29:53 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 11:29:59 : user2 : MKD /b/NguyenAmHuanLuyen-16k/ba
+23/12/2022 11:29:59 : user2 : PWD
+23/12/2022 11:29:59 : user2 : PASV
+23/12/2022 11:29:59 : user2 : LIST /b/NguyenAmHuanLuyen-16k/
+23/12/2022 11:30:01 : user2 : CWD ..
+23/12/2022 11:30:01 : user2 : PWD
+23/12/2022 11:30:01 : user2 : PASV
+23/12/2022 11:30:01 : user2 : LIST /b/
+23/12/2022 11:30:02 : user2 : CWD ..
+23/12/2022 11:30:02 : user2 : PWD
+23/12/2022 11:30:02 : user2 : PASV
+23/12/2022 11:30:02 : user2 : LIST /
+23/12/2022 11:30:04 : user2 : CWD /a/
+23/12/2022 11:30:04 : user2 : PWD
+23/12/2022 11:30:04 : user2 : PASV
+23/12/2022 11:30:04 : user2 : LIST /a/
+23/12/2022 11:30:08 : user2 : MKD /a/ca
+23/12/2022 11:30:08 : user2 : PWD
+23/12/2022 11:30:08 : user2 : PASV
+23/12/2022 11:30:08 : user2 : LIST /a/
+23/12/2022 11:30:11 : user2 : QUIT
+23/12/2022 11:40:19 :  : LGIN admin1 ***
+23/12/2022 11:40:19 : admin1 : PASV
+23/12/2022 11:40:19 : admin1 : UINFO admin1
+23/12/2022 11:40:19 : admin1 : PWD
+23/12/2022 11:40:19 : admin1 : PASV
+23/12/2022 11:40:19 : admin1 : LIST /
+23/12/2022 11:40:25 : admin1 : QUIT
+23/12/2022 11:42:59 :  : LGIN admin1 ***
+23/12/2022 11:42:59 : admin1 : PASV
+23/12/2022 11:42:59 : admin1 : UINFO admin1
+23/12/2022 11:42:59 : admin1 : PWD
+23/12/2022 11:42:59 : admin1 : PASV
+23/12/2022 11:42:59 : admin1 : LIST /
+23/12/2022 11:43:17 : admin1 : QUIT
+23/12/2022 11:43:53 :  : LGIN admin1 ***
+23/12/2022 11:43:53 : admin1 : PASV
+23/12/2022 11:43:53 : admin1 : UINFO admin1
+23/12/2022 11:43:53 : admin1 : PWD
+23/12/2022 11:43:53 : admin1 : PASV
+23/12/2022 11:43:53 : admin1 : LIST /
+23/12/2022 11:43:59 : admin1 : QUIT
+23/12/2022 11:44:22 :  : LGIN admin1 ***
+23/12/2022 11:44:22 : admin1 : PASV
+23/12/2022 11:44:22 : admin1 : UINFO admin1
+23/12/2022 11:44:22 : admin1 : PWD
+23/12/2022 11:44:22 : admin1 : PASV
+23/12/2022 11:44:22 : admin1 : LIST /
+23/12/2022 11:44:31 : admin1 : QUIT
+23/12/2022 11:45:54 :  : LGIN admin1 ***
+23/12/2022 11:45:54 : admin1 : PASV
+23/12/2022 11:45:54 : admin1 : UINFO admin1
+23/12/2022 11:45:54 : admin1 : PWD
+23/12/2022 11:45:54 : admin1 : PASV
+23/12/2022 11:45:54 : admin1 : LIST /
+23/12/2022 11:46:06 : admin1 : CWD /a/
+23/12/2022 11:46:06 : admin1 : PWD
+23/12/2022 11:46:06 : admin1 : PASV
+23/12/2022 11:46:06 : admin1 : LIST /a/
+23/12/2022 11:46:09 : admin1 : CWD ..
+23/12/2022 11:46:09 : admin1 : PWD
+23/12/2022 11:46:09 : admin1 : PASV
+23/12/2022 11:46:09 : admin1 : LIST /
+23/12/2022 11:46:14 : admin1 : CWD /a/
+23/12/2022 11:46:14 : admin1 : PWD
+23/12/2022 11:46:14 : admin1 : PASV
+23/12/2022 11:46:14 : admin1 : LIST /a/
+23/12/2022 11:46:19 : admin1 : PASV
+23/12/2022 11:46:19 : admin1 : STOR /a/VMWARE15.priv
+23/12/2022 11:46:26 : admin1 : PASV
+23/12/2022 11:46:26 : admin1 : LIST /a/
+23/12/2022 11:46:27 : admin1 : QUIT
+23/12/2022 11:47:13 :  : LGIN admin1 ***
+23/12/2022 11:47:13 : admin1 : PASV
+23/12/2022 11:47:13 : admin1 : UINFO admin1
+23/12/2022 11:47:14 : admin1 : PWD
+23/12/2022 11:47:14 : admin1 : PASV
+23/12/2022 11:47:14 : admin1 : LIST /
+23/12/2022 11:47:15 : admin1 : CWD /a/
+23/12/2022 11:47:15 : admin1 : PWD
+23/12/2022 11:47:15 : admin1 : PASV
+23/12/2022 11:47:15 : admin1 : LIST /a/
+23/12/2022 11:47:20 : admin1 : CWD /a/ca/
+23/12/2022 11:47:20 : admin1 : PWD
+23/12/2022 11:47:20 : admin1 : PASV
+23/12/2022 11:47:20 : admin1 : LIST /a/ca/
+23/12/2022 11:47:21 : admin1 : CWD ..
+23/12/2022 11:47:21 : admin1 : PWD
+23/12/2022 11:47:21 : admin1 : PASV
+23/12/2022 11:47:21 : admin1 : LIST /a/
+23/12/2022 11:47:21 : admin1 : CWD ..
+23/12/2022 11:47:21 : admin1 : PWD
+23/12/2022 11:47:21 : admin1 : PASV
+23/12/2022 11:47:21 : admin1 : LIST /
+23/12/2022 11:47:22 : admin1 : CWD /a/
+23/12/2022 11:47:22 : admin1 : PWD
+23/12/2022 11:47:22 : admin1 : PASV
+23/12/2022 11:47:22 : admin1 : LIST /a/
+23/12/2022 11:47:22 : admin1 : CWD /a/BaiTap/
+23/12/2022 11:47:22 : admin1 : PWD
+23/12/2022 11:47:22 : admin1 : PASV
+23/12/2022 11:47:22 : admin1 : LIST /a/BaiTap/
+23/12/2022 11:47:24 : admin1 : CWD /a/BaiTap/Tài liệu/
+23/12/2022 11:47:24 : admin1 : PWD
+23/12/2022 11:47:24 : admin1 : PASV
+23/12/2022 11:47:24 : admin1 : LIST /a/BaiTap/Tài liệu/
+23/12/2022 11:47:25 : admin1 : CWD /a/BaiTap/Tài liệu/Bài1/
+23/12/2022 11:47:25 : admin1 : PWD
+23/12/2022 11:47:25 : admin1 : PASV
+23/12/2022 11:47:25 : admin1 : LIST /a/BaiTap/Tài liệu/Bài1/
+23/12/2022 11:47:31 : admin1 : QUIT
+23/12/2022 12:17:56 :  : LGIN admin1 ***
+23/12/2022 12:17:56 : admin1 : PASV
+23/12/2022 12:17:56 : admin1 : UINFO admin1
+23/12/2022 12:17:56 : admin1 : PWD
+23/12/2022 12:17:56 : admin1 : PASV
+23/12/2022 12:17:56 : admin1 : LIST /
+23/12/2022 12:18:05 : admin1 : CWD /b/
+23/12/2022 12:18:05 : admin1 : PWD
+23/12/2022 12:18:05 : admin1 : PASV
+23/12/2022 12:18:05 : admin1 : LIST /b/
+23/12/2022 12:18:09 : admin1 : MKD /b/b
+23/12/2022 12:18:09 : admin1 : PWD
+23/12/2022 12:18:09 : admin1 : PASV
+23/12/2022 12:18:09 : admin1 : LIST /b/
+23/12/2022 12:18:14 : admin1 : CWD ..
+23/12/2022 12:18:14 : admin1 : PWD
+23/12/2022 12:18:14 : admin1 : PASV
+23/12/2022 12:18:14 : admin1 : LIST /
+23/12/2022 12:18:17 : admin1 : CWD /b/
+23/12/2022 12:18:17 : admin1 : PWD
+23/12/2022 12:18:17 : admin1 : PASV
+23/12/2022 12:18:17 : admin1 : LIST /b/
+23/12/2022 12:18:20 : admin1 : CWD ..
+23/12/2022 12:18:20 : admin1 : PWD
+23/12/2022 12:18:20 : admin1 : PASV
+23/12/2022 12:18:20 : admin1 : LIST /
+23/12/2022 12:20:56 : admin1 : MKD /b
+23/12/2022 12:20:56 : admin1 : PWD
+23/12/2022 12:20:56 : admin1 : PASV
+23/12/2022 12:20:56 : admin1 : LIST /
+23/12/2022 12:21:04 : admin1 : CWD /b/
+23/12/2022 12:21:04 : admin1 : PWD
+23/12/2022 12:21:04 : admin1 : PASV
+23/12/2022 12:21:04 : admin1 : LIST /b/
+23/12/2022 12:21:06 : admin1 : CWD ..
+23/12/2022 12:21:06 : admin1 : PWD
+23/12/2022 12:21:06 : admin1 : PASV
+23/12/2022 12:21:06 : admin1 : LIST /
+23/12/2022 12:21:11 : admin1 : MKD /a
+23/12/2022 12:21:11 : admin1 : PWD
+23/12/2022 12:21:11 : admin1 : PASV
+23/12/2022 12:21:11 : admin1 : LIST /
+23/12/2022 12:21:13 : admin1 : CWD /a/
+23/12/2022 12:21:13 : admin1 : PWD
+23/12/2022 12:21:13 : admin1 : PASV
+23/12/2022 12:21:13 : admin1 : LIST /a/
+23/12/2022 12:21:14 : admin1 : CWD ..
+23/12/2022 12:21:14 : admin1 : PWD
+23/12/2022 12:21:14 : admin1 : PASV
+23/12/2022 12:21:14 : admin1 : LIST /
+23/12/2022 12:21:19 : admin1 : MKD /b
+23/12/2022 12:21:19 : admin1 : PWD
+23/12/2022 12:21:19 : admin1 : PASV
+23/12/2022 12:21:19 : admin1 : LIST /
+23/12/2022 12:21:24 : admin1 : MKD /b
+23/12/2022 12:21:24 : admin1 : PWD
+23/12/2022 12:21:24 : admin1 : PASV
+23/12/2022 12:21:24 : admin1 : LIST /
+23/12/2022 12:21:39 : admin1 : QUIT
+23/12/2022 12:28:47 :  : LGIN admin1 ***
+23/12/2022 12:28:47 : admin1 : PASV
+23/12/2022 12:28:47 : admin1 : UINFO admin1
+23/12/2022 12:28:47 : admin1 : PWD
+23/12/2022 12:28:47 : admin1 : PASV
+23/12/2022 12:28:47 : admin1 : LIST /
+23/12/2022 12:29:00 : admin1 : QUIT
+23/12/2022 01:12:46 :  : LGIN admin1 ***
+23/12/2022 01:12:46 : admin1 : PASV
+23/12/2022 01:12:46 : admin1 : UINFO admin1
+23/12/2022 01:12:46 : admin1 : PWD
+23/12/2022 01:12:46 : admin1 : PASV
+23/12/2022 01:12:46 : admin1 : LIST /
+23/12/2022 01:13:01 : admin1 : QUIT
+23/12/2022 01:13:28 :  : LGIN admin1 ***
+23/12/2022 01:13:28 : admin1 : PASV
+23/12/2022 01:13:28 : admin1 : UINFO admin1
+23/12/2022 01:13:28 : admin1 : PWD
+23/12/2022 01:13:28 : admin1 : PASV
+23/12/2022 01:13:28 : admin1 : LIST /
+23/12/2022 01:13:29 : admin1 : PASV
+23/12/2022 01:13:29 : admin1 : LSUSER all
+23/12/2022 01:13:39 : admin1 : QUIT
+23/12/2022 01:25:13 :  : LGIN admin1 ***
+23/12/2022 01:25:13 : admin1 : PASV
+23/12/2022 01:25:13 : admin1 : UINFO admin1
+23/12/2022 01:25:13 : admin1 : PWD
+23/12/2022 01:25:13 : admin1 : PASV
+23/12/2022 01:25:13 : admin1 : LIST /
+23/12/2022 01:25:14 : admin1 : PASV
+23/12/2022 01:25:14 : admin1 : LSUSER all
+23/12/2022 01:25:16 : admin1 : PASV
+23/12/2022 01:25:16 : admin1 : UINFO user1
+23/12/2022 01:25:20 : admin1 : PASV
+23/12/2022 01:25:20 : admin1 : UINFO user2
+23/12/2022 01:25:21 : admin1 : PASV
+23/12/2022 01:25:21 : admin1 : UINFO user1
+23/12/2022 01:25:22 : admin1 : PASV
+23/12/2022 01:25:22 : admin1 : UINFO user2
+23/12/2022 01:25:23 : admin1 : PASV
+23/12/2022 01:25:23 : admin1 : UINFO user1
+23/12/2022 01:25:24 : admin1 : PASV
+23/12/2022 01:25:24 : admin1 : UINFO user2
+23/12/2022 01:25:26 : admin1 : PASV
+23/12/2022 01:25:26 : admin1 : UINFO user1
+23/12/2022 01:25:26 : admin1 : PASV
+23/12/2022 01:25:26 : admin1 : UINFO user2
+23/12/2022 01:25:27 : admin1 : PASV
+23/12/2022 01:25:27 : admin1 : UINFO user1
+23/12/2022 01:25:28 : admin1 : PASV
+23/12/2022 01:25:28 : admin1 : UINFO user2
+23/12/2022 01:25:33 : admin1 : PASV
+23/12/2022 01:25:33 : admin1 : UINFO user1
+23/12/2022 01:25:33 : admin1 : PASV
+23/12/2022 01:25:33 : admin1 : UINFO user2
+23/12/2022 01:25:37 : admin1 : QUIT
+23/12/2022 01:36:27 :  : LGIN admin1 ***
+23/12/2022 01:36:27 : admin1 : PASV
+23/12/2022 01:36:27 : admin1 : UINFO admin1
+23/12/2022 01:36:27 : admin1 : PWD
+23/12/2022 01:36:27 : admin1 : PASV
+23/12/2022 01:36:27 : admin1 : LIST /
+23/12/2022 01:36:30 : admin1 : PASV
+23/12/2022 01:36:30 : admin1 : LSUSER all
+23/12/2022 01:36:31 : admin1 : PASV
+23/12/2022 01:36:31 : admin1 : UINFO user1
+23/12/2022 01:36:32 : admin1 : PASV
+23/12/2022 01:36:32 : admin1 : UINFO user2
+23/12/2022 01:36:33 : admin1 : PASV
+23/12/2022 01:36:33 : admin1 : UINFO user1
+23/12/2022 01:36:34 : admin1 : PASV
+23/12/2022 01:36:34 : admin1 : UINFO user2
+23/12/2022 01:36:38 : admin1 : QUIT
+23/12/2022 02:01:55 :  : LGIN admin1 ***
+23/12/2022 02:01:56 : admin1 : PASV
+23/12/2022 02:01:56 : admin1 : UINFO admin1
+23/12/2022 02:01:56 : admin1 : PWD
+23/12/2022 02:01:56 : admin1 : PASV
+23/12/2022 02:01:56 : admin1 : LIST /
+23/12/2022 02:01:57 : admin1 : PASV
+23/12/2022 02:01:57 : admin1 : LSUSER all
+23/12/2022 02:02:18 : admin1 : PASV
+23/12/2022 02:02:18 : admin1 : ADDUSER 1
+23/12/2022 02:03:42 : admin1 : QUIT
+23/12/2022 02:04:02 :  : LGIN admin1 ***
+23/12/2022 02:04:02 : admin1 : PASV
+23/12/2022 02:04:02 : admin1 : UINFO admin1
+23/12/2022 02:04:02 : admin1 : PWD
+23/12/2022 02:04:02 : admin1 : PASV
+23/12/2022 02:04:02 : admin1 : LIST /
+23/12/2022 02:04:05 : admin1 : PASV
+23/12/2022 02:04:05 : admin1 : LSUSER all
+23/12/2022 02:04:24 : admin1 : PASV
+23/12/2022 02:04:24 : admin1 : ADDUSER 1
+23/12/2022 02:04:26 : admin1 : PASV
+23/12/2022 02:04:26 : admin1 : LSUSER all
+23/12/2022 02:04:27 : admin1 : PASV
+23/12/2022 02:04:27 : admin1 : UINFO user3
+23/12/2022 02:04:28 : admin1 : PASV
+23/12/2022 02:04:28 : admin1 : UINFO user2
+23/12/2022 02:04:29 : admin1 : PASV
+23/12/2022 02:04:29 : admin1 : UINFO user1
+23/12/2022 02:04:29 : admin1 : PASV
+23/12/2022 02:04:29 : admin1 : UINFO user2
+23/12/2022 02:04:30 : admin1 : PASV
+23/12/2022 02:04:30 : admin1 : UINFO user3
+23/12/2022 02:04:37 : admin1 : QUIT
