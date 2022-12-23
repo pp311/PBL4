@@ -218,27 +218,29 @@ public void run(){
 					if (new UploadBLL().checkFileExists(fDto)==false )
 					{
 						fDto.setOwner(userName);
+						fDto.setLastEditedBy(userName);
+						fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+						fDto.setSize(attr.size());
+						int x= new UploadBLL().parentID(fDto);
+					    if (x!=0)
+					    {
+					    	fDto.setParentID(x);
+					    }
+					    else {
+							fDto.setParentID(0);
+						}
+						if (new UploadBLL().uploadFile(fDto) && success) {
+							dos.writeUTF("257 \"/" + msg + "\" created");
+						}
+						else {
+							dos.writeUTF("502 Command not implemented");
+						}
 					}
 					else {
-						fDto.setOwner("");
+//						fDto.setOwner("");
+						dos.writeUTF("602 Directory Existed");
 					}	
-					fDto.setLastEditedBy(userName);
-					fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
-					fDto.setSize(attr.size());
-					int x= new UploadBLL().parentID(fDto);
-				    if (x!=0)
-				    {
-				    	fDto.setParentID(x);
-				    }
-				    else {
-						fDto.setParentID(0);
-					}
-					if (new UploadBLL().uploadFile(fDto) && success) {
-						dos.writeUTF("257 \"/" + msg + "\" created");
-					}
-					else {
-						dos.writeUTF("502 Command not implemented");
-					}
+					
 				}
 				else {
 					File newDir = new File(baseDir + File.separator + msg);
@@ -282,27 +284,29 @@ public void run(){
 						if (new UploadBLL().checkFileExists(fDto)==false )
 						{
 							fDto.setOwner(userName);
+							fDto.setLastEditedBy(userName);
+							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+							fDto.setSize(attr.size());
+							int x= new UploadBLL().parentID(fDto);
+						    if (x!=0)
+						    {
+						    	fDto.setParentID(x);
+						    }
+						    else {
+								fDto.setParentID(0);
+							}
+							if (new UploadBLL().uploadFile(fDto) && success) {
+								dos.writeUTF("257 \"/" + msg + "\" created");
+							}
+							else {
+								dos.writeUTF("502 Command not implemented");
+							}
 						}
 						else {
-							fDto.setOwner("");
+//							fDto.setOwner("");
+							dos.writeUTF("602 Directory Existed");
 						}	
-						fDto.setLastEditedBy(userName);
-						fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
-						fDto.setSize(attr.size());
-						int x= new UploadBLL().parentID(fDto);
-					    if (x!=0)
-					    {
-					    	fDto.setParentID(x);
-					    }
-					    else {
-							fDto.setParentID(0);
-						}
-						if (new UploadBLL().uploadFile(fDto) && success) {
-							dos.writeUTF("257 \"/" + msg + "\" created");
-						}
-						else {
-							dos.writeUTF("502 Command not implemented");
-						}
+						
 					}
 					else {
 						dos.writeUTF("601 Permission denied");

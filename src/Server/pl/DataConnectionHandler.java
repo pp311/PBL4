@@ -153,22 +153,20 @@ public class DataConnectionHandler extends Thread{
 					}
 						File file = new File (baseDir+params);
 						if(file.length() == size) {
-							FileDto fDto = new FileDto();
-							Path p = Paths.get(file.getAbsolutePath());
-							BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-							fDto.setName(file.getName());
-							fDto.setType(attr.isDirectory() ? "Dir" : "File");
-							fDto.setPath(p.toString());
-							//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-							fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
-							if (new UploadBLL().checkFileExists(fDto)==false )
-							{
-								fDto.setOwner(producer.userName);
-								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
-							}
-							else {
-								fDto.setOwner("");
-							}	
+							if (producer.userName.equals("admin1")) {
+						//File file = new File (baseDir+params);
+						FileDto fDto = new FileDto();
+						Path p = Paths.get(file.getAbsolutePath());
+						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+						fDto.setName(file.getName());
+						fDto.setType(attr.isDirectory() ? "Dir" : "File");
+						fDto.setPath(p.toString());
+						//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+						if (new UploadBLL().checkFileExists(fDto)==false )
+						{
+							fDto.setOwner(producer.userName);
+							//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
 							fDto.setLastEditedBy(producer.userName);
 							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
 							fDto.setSize(attr.size());
@@ -186,6 +184,135 @@ public class DataConnectionHandler extends Thread{
 							else {
 								response = "502 Command not implemented";
 							}
+						}
+						else {
+							//fDto.setOwner("");
+							dos.writeUTF("602 Directory Existed");
+							
+							//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+							fDto.setLastEditedBy(producer.userName);
+							fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+							fDto.setSize(attr.size());
+							int x= new UploadBLL().parentID(fDto);
+						    if (x!=0)
+						    {
+						    	fDto.setParentID(x);
+						    }
+						    else {
+								fDto.setParentID(0);
+							}
+							if (new UploadBLL().uploadFile(fDto)) {
+								response = "226 Transfer completed";
+							}
+							else {
+								response = "502 Command not implemented";
+							}
+						}	
+					}
+					else {
+						//File file = new File (baseDir+params);
+						FileDto fDto = new FileDto();
+						Path p = Paths.get(file.getAbsolutePath());
+						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+						fDto.setName(file.getName());
+						fDto.setType(attr.isDirectory() ? "Dir" : "File");
+						fDto.setPath(p.toString());
+						//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+						FileDto base = new FileDto();
+						FileDto base1 = new FileDto();
+		                base.setPath(fDto.getPath());
+		                base1.setPath(fDto.getPath().substring(0, fDto.getPath().lastIndexOf(File.separator)));
+		                base.setFID(new UploadBLL().findFID(base));
+		                base1.setFID(new UploadBLL().findFID(base1));
+		                
+						List<String> list = new UploadBLL().getAllOwner(base);
+				        List<Integer> listFID = new UploadBLL().getAllFID(base);  
+				        List<String> list1 = new UploadBLL().getAllOwner(base1);
+				        List<Integer> listFID1 = new UploadBLL().getAllFID(base1);  
+				        int dem=0;
+				        for (int i=0;i<listFID.size();i++)
+				        {
+				        	List<String> listSh = new ArrayList<String>();
+				        	listSh=new UploadBLL().getAllSharedByFID(listFID.get(i));
+				        	for(int j=0;j<listSh.size();j++)
+				        	{
+				        		if (listSh.get(j).equals(producer.userName)) dem++;
+				        	}
+				        }
+						List<String> listShared = new UploadBLL().getAllShared(base);
+						
+						for (int i=0;i<list.size();i++)
+						{
+							if(list.get(i).equals(producer.userName)) dem++;
+						}
+						for (int i=0;i<listShared.size();i++)
+						{
+							if(listShared.get(i).equals(producer.userName)) dem++;
+						}
+						
+						for (int i=0;i<listFID1.size();i++)
+				        {
+				        	List<String> listSh = new ArrayList<String>();
+				        	listSh=new UploadBLL().getAllSharedByFID(listFID1.get(i));
+				        	for(int j=0;j<listSh.size();j++)
+				        	{
+				        		if (listSh.get(j).equals(producer.userName)) dem++;
+				        	}
+				        }
+						if (dem>0) {
+							
+							if (new UploadBLL().checkFileExists(fDto)==false )
+							{
+								fDto.setOwner(producer.userName);
+								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setLastEditedBy(producer.userName);
+								fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setSize(attr.size());
+								int x= new UploadBLL().parentID(fDto);
+							    if (x!=0)
+							    {
+							    	fDto.setParentID(x);
+							    }
+							    else {
+									fDto.setParentID(0);
+								}
+								if (new UploadBLL().uploadFile(fDto)) {
+									response = "226 Transfer completed";
+								}
+								else {
+									response = "502 Command not implemented";
+								}
+							}
+							else {
+								//fDto.setOwner("");
+								dos.writeUTF("602 Directory Existed");
+								System.out.println("602");
+								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setLastEditedBy(producer.userName);
+								fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setSize(attr.size());
+								int x= new UploadBLL().parentID(fDto);
+							    if (x!=0)
+							    {
+							    	fDto.setParentID(x);
+							    }
+							    else {
+									fDto.setParentID(0);
+								}
+								if (new UploadBLL().uploadFile(fDto)) {
+									response = "226 Transfer completed";
+								}
+								else {
+									response = "502 Command not implemented";
+								}
+							}
+						}
+						else {
+							dos.writeUTF("601 Permission denied");
+							System.out.println("601");
+						}
+					}
 						} else {
 							file.delete();
 							response = "503 Transfer stopped";
