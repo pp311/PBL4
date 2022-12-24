@@ -271,7 +271,7 @@ public class UploadDAL {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
-				list.add(rs.getString("Username"));
+				list.add(rs.getString("UserName"));
 			}
 			return list;
 		}
@@ -314,7 +314,7 @@ public class UploadDAL {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
-				list.add(rs.getString("Username"));
+				list.add(rs.getString("UserName"));
 			}
 			return list;
 		}

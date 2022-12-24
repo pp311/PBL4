@@ -28,6 +28,7 @@ public class UploadTask extends SwingWorker<String, String>{
 	private File localFile;
 	private String uploadDir;
 	private Client client;
+	private boolean isError = false;
 	String mode;
 	private static final int PORT_RANGE_START = 20000;
 	private static final int PORT_RANGE_END = 22000;
@@ -127,7 +128,9 @@ public class UploadTask extends SwingWorker<String, String>{
 			datados.close();
 			datasoc.close();
 			if(dataServer != null) dataServer.close();
-			client.showServerResponse();
+			isError = !client.showServerResponse1();
+			if(isError) 
+				JOptionPane.showMessageDialog(null, "Upload failed");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,7 +178,7 @@ public class UploadTask extends SwingWorker<String, String>{
 	
 	@Override
     protected void done() {
-        if (!isCancelled()) {
+        if (!isCancelled() && !isError) {
         	int ok = JOptionPane.showOptionDialog(null,
             		"\"" + localFile.getName() + "\"" + " has been uploaded successfully!", "Message",
             		JOptionPane.OK_CANCEL_OPTION,
@@ -197,7 +200,8 @@ public class UploadTask extends SwingWorker<String, String>{
         	try {
 				if(datadis != null) datadis.close();
 				if(datados != null) datados.close();
-				client.showServerResponse();
+				if(!isError)
+					client.showServerResponse();
 			} catch (Exception e) {
 				System.err.println(e);
 			}
