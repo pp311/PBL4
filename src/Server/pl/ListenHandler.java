@@ -203,8 +203,11 @@ public void run(){
 				this.dos.writeUTF("PWD " + workingDir);
 				break;
 			case "MKD":
-
-				if (role.equals("admin"))
+				FileDto fi = new FileDto();
+				String temp = baseDir + msg;
+				fi.setPath(temp.substring(0,temp.lastIndexOf("/")));
+				int permission = new UploadBLL().getPermission(fi);
+				if (role.equals("admin") || permission == 2)
 				{
 					File newDir = new File(baseDir + File.separator + msg);
 	                boolean success = newDir.mkdir();
@@ -235,6 +238,17 @@ public void run(){
 						else {
 							dos.writeUTF("502 Command not implemented");
 						}
+						List<Integer> listFID = new UploadBLL().getAllFID(fDto);
+						for (int i=1;i<listFID.size();i++)
+				        {
+				        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(fDto.getLastEditedDate().getTime()), userName,listFID.get(i)))
+				        	{
+				        		System.out.println("success");
+				        	}
+				        	else {
+				        		System.out.println("fail");
+				        	}	
+				        }
 					}
 					else {
 //						fDto.setOwner("");
@@ -301,6 +315,17 @@ public void run(){
 							else {
 								dos.writeUTF("502 Command not implemented");
 							}
+							List<Integer> listFID2 = new UploadBLL().getAllFID(fDto);
+							for (int i=1;i<listFID2.size();i++)
+					        {
+					        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(fDto.getLastEditedDate().getTime()), userName,listFID2.get(i)))
+					        	{
+					        		System.out.println("success");
+					        	}
+					        	else {
+					        		System.out.println("fail");
+					        	}	
+					        }
 						}
 						else {
 //							fDto.setOwner("");

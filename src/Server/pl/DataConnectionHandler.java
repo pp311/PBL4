@@ -142,7 +142,12 @@ public class DataConnectionHandler extends Thread{
 				case "STOR":
 					dis = new DataInputStream(clientSoc.getInputStream());
 					dos = new DataOutputStream(new FileOutputStream(baseDir+params));
+					FileDto fi = new FileDto();
+					String tam = baseDir + params;
+					fi.setPath(tam.substring(0,tam.lastIndexOf("/")));
+					int permission = new UploadBLL().getPermission(fi);
 					
+					if (producer.role.equals("admin")||permission == 2) {
 					buffer = new byte[MAX_BUFFER];
 					read = 0;
 					long size = dis.readLong();
@@ -153,7 +158,7 @@ public class DataConnectionHandler extends Thread{
 					}
 						File file = new File (baseDir+params);
 						if(file.length() == size) {
-							if (producer.role.equals("admin")) {
+//							if (producer.role.equals("admin")) {
 								//File file = new File (baseDir+params);
 								FileDto fDto = new FileDto();
 								Path p = Paths.get(file.getAbsolutePath());
@@ -190,8 +195,11 @@ public class DataConnectionHandler extends Thread{
 									//dos.writeUTF("602 Directory Existed");
 									
 									//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+									fDto.setFID( new UploadBLL().findFID(fDto));
+									fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 									fDto.setLastEditedBy(producer.userName);
 									fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
+									
 									fDto.setSize(attr.size());
 									int x= new UploadBLL().parentID(fDto);
 								    if (x!=0)
@@ -207,22 +215,41 @@ public class DataConnectionHandler extends Thread{
 									else {
 										response = "502 Command not implemented";
 									}
-								}	
-							}
+								}
+								List<Integer> listFID = new UploadBLL().getAllFID(fDto);
+								for (int i=1;i<listFID.size();i++)
+						        {
+						        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(fDto.getLastEditedDate().getTime()), producer.userName,listFID.get(i)))
+						        	{
+						        		System.out.println("success");
+						        	}
+						        	else {
+						        		System.out.println("fail");
+						        	}	
+						        }
+						}
+								else {
+									file.delete();
+									response = "503 Transfer stopped";
+								}
+					}
 					else {
 						//File file = new File (baseDir+params);
-						FileDto fDto = new FileDto();
-						Path p = Paths.get(file.getAbsolutePath());
-						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-						fDto.setName(file.getName());
-						fDto.setType(attr.isDirectory() ? "Dir" : "File");
-						fDto.setPath(p.toString());
-						//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
-						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
+//						FileDto fDto = new FileDto();
+//						Path p = Paths.get(file.getAbsolutePath());
+//						BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+//						fDto.setName(file.getName());
+//						fDto.setType(attr.isDirectory() ? "Dir" : "File");
+//						fDto.setPath(p.toString());
+//						//DateFormat df=new SimpleDateFormat("DD/MM/YYYY");
+//						fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 						FileDto base = new FileDto();
 						FileDto base1 = new FileDto();
-		                base.setPath(fDto.getPath());
-		                base1.setPath(fDto.getPath().substring(0, fDto.getPath().lastIndexOf(File.separator)));
+//		                base.setPath(fDto.getPath());
+						String temp = baseDir + params;
+						base.setPath(temp);
+//		                base1.setPath(fDto.getPath().substring(0, fDto.getPath().lastIndexOf(File.separator)));
+						base1.setPath(base.getPath().substring(0, base.getPath().lastIndexOf("/")));
 		                base.setFID(new UploadBLL().findFID(base));
 		                base1.setFID(new UploadBLL().findFID(base1));
 		                
@@ -261,6 +288,22 @@ public class DataConnectionHandler extends Thread{
 				        	}
 				        }
 						if (dem>0) {
+							buffer = new byte[MAX_BUFFER];
+							read = 0;
+							long size = dis.readLong();
+							while((read = dis.read(buffer)) != -1) {
+								dos.write(buffer, 0, read);
+								dos.flush();
+								buffer = new byte[MAX_BUFFER];
+							}
+							File file = new File (baseDir+params);
+						  if(file.length() == size) {
+							  FileDto fDto = new FileDto();
+							  Path p = Paths.get(file.getAbsolutePath());
+							  BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+							  fDto.setName(file.getName());
+							  fDto.setType(attr.isDirectory() ? "Dir" : "File");
+							  fDto.setPath(p.toString());
 							
 							if (new UploadBLL().checkFileExists(fDto)==false )
 							{
@@ -288,7 +331,7 @@ public class DataConnectionHandler extends Thread{
 								//fDto.setOwner("");
 								//dos.writeUTF("602 Directory Existed");
 								//System.out.println("602");
-								//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
+								fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
 								fDto.setLastEditedBy(producer.userName);
 								fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
 								fDto.setSize(attr.size());
@@ -307,16 +350,29 @@ public class DataConnectionHandler extends Thread{
 									response = "502 Command not implemented";
 								}
 							}
+							List<Integer> listFID2 = new UploadBLL().getAllFID(fDto);
+							for (int i=1;i<listFID2.size();i++)
+					        {
+					        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(fDto.getLastEditedDate().getTime()), producer.userName,listFID2.get(i)))
+					        	{
+					        		System.out.println("success");
+					        	}
+					        	else {
+					        		System.out.println("fail");
+					        	}	
+					        }
 						}
+						  else {
+								file.delete();
+								response = "503 Transfer stopped";
+							}
+					}
 						else {
 							dos.writeUTF("601 Permission denied");
 							System.out.println("601");
 						}
 					}
-					} else {
-						file.delete();
-						response = "503 Transfer stopped";
-					}
+					
 					dis.close();
 					dos.close();
 					

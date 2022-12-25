@@ -2,6 +2,7 @@ package Server.dal;
 import Server.models.*;
 
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -325,5 +326,52 @@ public class UploadDAL {
 		}
 		
 	}
+	public int getPermission(Files file) {
+		// TODO Auto-generated method stub
+		String path = file.getPath();
+		String sql1 = "select Permission from Files where Path = ?";
 	
+		try {
+			Connection db = DBConnection.getInstance().getConection();
+			ps = db.prepareStatement(sql1);
+			ps.setString(1, path);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				int i = rs.getInt("Permission");
+				return i;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+		return 0;
+	}
+	public boolean uploadFolder (java.sql.Timestamp day,String editBy,int FID)
+	{
+		//DateFormat df=new SimpleDateFormat("DD/MM/YYYY hh:mm:ss");
+		
+		try {	
+		    Connection db = DBConnection.getInstance().getConection();
+		    
+				String sql = "update Files set LastEditedDate = ?, LastEditedBy = ? where FID = ? ";	
+				ps = db.prepareStatement(sql);
+				
+				
+				
+				ps.setTimestamp(1, day);
+				
+				
+				ps.setString(2, editBy);
+				ps.setInt(3, FID);
+			ps.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

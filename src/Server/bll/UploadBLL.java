@@ -1,5 +1,6 @@
 package Server.bll;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import Server.dal.UploadDAL;
@@ -83,5 +84,15 @@ public class UploadBLL {
 	public List<String> getAllSharedByFID (int fid)
 	{
 		return uploadDAL.getAllSharedByFID(fid);
+	}
+
+	public int getPermission(FileDto fi) {
+		Files file = new Files();
+		file.setPath(fi.getPath());
+		return uploadDAL.getPermission(file);
+	}
+	public boolean uploadFolder (java.sql.Timestamp day,String editBy,int FID)
+	{
+		return uploadDAL.uploadFolder(day, editBy, FID);
 	}
 }
