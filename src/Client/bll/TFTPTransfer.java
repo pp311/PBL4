@@ -31,10 +31,11 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 	public static final short ERR_FNF = 1;
 	public static final short ERR_ACCESS = 2;
 	public static final short ERR_EXISTS = 6;
+	public static final short ERR_PERMISSION = 8;
 	public static final String[] errorCodes = {"Not defined", "File not found.", "Access violation.", 
 			"Disk full or allocation exceeded.", "Illegal TFTP operation.", 
 			"Unknown transfer ID.", "File already exists.", 
-			"No such user."};
+			"No such user.", "Permission denied."};
 	private String serverIP;
 	public static String mode;
 	private String requestType;
@@ -102,7 +103,8 @@ public class TFTPTransfer extends SwingWorker<String, String> {
         		new File(saveDir).delete();
         	} else {
         		try {
-        			fis.close();
+        			if(fis != null)
+        				fis.close();
         		} catch (IOException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
@@ -394,8 +396,10 @@ public class TFTPTransfer extends SwingWorker<String, String> {
 		for (int i = 4; i < buf.length; i++) {
 			if (buf[i] == 0) {
 				String msg = new String(buf, 4, i - 4);
-				if (errCode > 7) errCode = 0;
+				if (errCode > 9) errCode = 0;
 				System.err.println(errorCodes[errCode] + ": " + msg);
+				JOptionPane.showInternalMessageDialog(null, msg);
+				this.cancel(true);
 				break;
 			}
 		}

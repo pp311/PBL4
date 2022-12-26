@@ -1349,3 +1349,234 @@
 27/12/2022 12:37:10 : user2 : PASV
 27/12/2022 12:37:10 : user2 : LIST /ca2/
 27/12/2022 12:37:17 : user2 : QUIT
+27/12/2022 01:02:58 :  : LGIN admin1 ***
+27/12/2022 01:02:58 : admin1 : PASV
+27/12/2022 01:02:58 : admin1 : UINFO admin1
+27/12/2022 01:02:58 : admin1 : PWD
+27/12/2022 01:02:58 : admin1 : PASV
+27/12/2022 01:02:58 : admin1 : LIST /
+27/12/2022 01:03:06 : admin1 : CWD /ca/
+27/12/2022 01:03:06 : admin1 : PWD
+27/12/2022 01:03:06 : admin1 : PASV
+27/12/2022 01:03:06 : admin1 : LIST /ca/
+27/12/2022 01:03:12 : admin1 : WRQ /ca/MOK.der (TFTP)
+27/12/2022 01:03:15 : admin1 : PASV
+27/12/2022 01:03:15 : admin1 : LIST /ca/
+27/12/2022 01:03:19 : admin1 : CWD ..
+27/12/2022 01:03:19 : admin1 : PWD
+27/12/2022 01:03:19 : admin1 : PASV
+27/12/2022 01:03:19 : admin1 : LIST /
+27/12/2022 01:03:28 : admin1 : CWD /ca/
+27/12/2022 01:03:28 : admin1 : PWD
+27/12/2022 01:03:28 : admin1 : PASV
+27/12/2022 01:03:28 : admin1 : LIST /ca/
+27/12/2022 01:03:32 : admin1 : WRQ /ca/VMWARE15.priv (TFTP)
+27/12/2022 01:03:34 : admin1 : PASV
+27/12/2022 01:03:34 : admin1 : LIST /ca/
+27/12/2022 01:03:39 : admin1 : QUIT
+27/12/2022 01:04:24 :  : LGIN admin1 ***
+27/12/2022 01:04:24 : admin1 : PASV
+27/12/2022 01:04:24 : admin1 : UINFO admin1
+27/12/2022 01:04:24 : admin1 : PWD
+27/12/2022 01:04:24 : admin1 : PASV
+27/12/2022 01:04:24 : admin1 : LIST /
+27/12/2022 01:04:34 : admin1 : CWD /ca/
+27/12/2022 01:04:34 : admin1 : PWD
+27/12/2022 01:04:34 : admin1 : PASV
+27/12/2022 01:04:34 : admin1 : LIST /ca/
+27/12/2022 01:04:36 : admin1 : WRQ /ca/nohup.out (TFTP)
+27/12/2022 01:04:38 : admin1 : PASV
+27/12/2022 01:04:38 : admin1 : LIST /ca/
+27/12/2022 01:04:47 : admin1 : QUIT
+27/12/2022 01:04:57 :  : LGIN admin1 ***
+27/12/2022 01:04:57 : admin1 : PASV
+27/12/2022 01:04:57 : admin1 : UINFO admin1
+27/12/2022 01:04:57 : admin1 : PWD
+27/12/2022 01:04:57 : admin1 : PASV
+27/12/2022 01:04:57 : admin1 : LIST /
+27/12/2022 01:05:02 : admin1 : CWD /ca/
+27/12/2022 01:05:02 : admin1 : PWD
+27/12/2022 01:05:02 : admin1 : PASV
+27/12/2022 01:05:02 : admin1 : LIST /ca/
+27/12/2022 01:05:07 : admin1 : WRQ /ca/script.txt (TFTP)
+27/12/2022 01:05:10 : admin1 : PASV
+27/12/2022 01:05:10 : admin1 : LIST /ca/
+27/12/2022 01:05:18 : admin1 : QUIT
+27/12/2022 01:07:20 :  : LGIN admin1 ***
+27/12/2022 01:07:21 : admin1 : PASV
+27/12/2022 01:07:21 : admin1 : UINFO admin1
+27/12/2022 01:07:21 : admin1 : PWD
+27/12/2022 01:07:21 : admin1 : PASV
+27/12/2022 01:07:21 : admin1 : LIST /
+27/12/2022 01:07:24 : admin1 : CWD /ca/
+27/12/2022 01:07:24 : admin1 : PWD
+27/12/2022 01:07:24 : admin1 : PASV
+27/12/2022 01:07:24 : admin1 : LIST /ca/
+27/12/2022 01:07:47 : admin1 : PASV
+27/12/2022 01:07:47 : admin1 : STOR /ca/java.log.6220
+27/12/2022 01:07:48 : admin1 : PASV
+27/12/2022 01:07:48 : admin1 : LIST /ca/
+27/12/2022 01:07:49 : admin1 : CWD ..
+27/12/2022 01:07:49 : admin1 : PWD
+27/12/2022 01:07:49 : admin1 : PASV
+27/12/2022 01:07:49 : admin1 : LIST /
+27/12/2022 01:08:05 : admin1 : QUIT
+27/12/2022 01:11:24 :  : LGIN admin1 ***
+27/12/2022 01:11:25 : admin1 : PASV
+27/12/2022 01:11:25 : admin1 : UINFO admin1
+27/12/2022 01:11:25 : admin1 : PWD
+27/12/2022 01:11:25 : admin1 : PASV
+27/12/2022 01:11:25 : admin1 : LIST /
+27/12/2022 01:11:29 : admin1 : CWD /ca/
+27/12/2022 01:11:29 : admin1 : PWD
+27/12/2022 01:11:29 : admin1 : PASV
+27/12/2022 01:11:29 : admin1 : LIST /ca/
+27/12/2022 01:11:32 : admin1 : PASV
+27/12/2022 01:11:32 : admin1 : STOR /ca/script.txt
+27/12/2022 01:11:34 : admin1 : PASV
+27/12/2022 01:11:34 : admin1 : LIST /ca/
+27/12/2022 01:11:37 : admin1 : CWD ..
+27/12/2022 01:11:37 : admin1 : PWD
+27/12/2022 01:11:37 : admin1 : PASV
+27/12/2022 01:11:37 : admin1 : LIST /
+27/12/2022 01:11:43 : admin1 : CWD /ca/
+27/12/2022 01:11:43 : admin1 : PWD
+27/12/2022 01:11:43 : admin1 : PASV
+27/12/2022 01:11:43 : admin1 : LIST /ca/
+27/12/2022 01:12:07 : admin1 : PASV
+27/12/2022 01:12:07 : admin1 : STOR /ca/VMWARE15.der
+27/12/2022 01:12:08 : admin1 : PASV
+27/12/2022 01:12:08 : admin1 : LIST /ca/
+27/12/2022 01:12:16 : admin1 : CWD ..
+27/12/2022 01:12:16 : admin1 : PWD
+27/12/2022 01:12:16 : admin1 : PASV
+27/12/2022 01:12:16 : admin1 : LIST /
+27/12/2022 01:12:18 : admin1 : CWD /ca/
+27/12/2022 01:12:18 : admin1 : PWD
+27/12/2022 01:12:18 : admin1 : PASV
+27/12/2022 01:12:18 : admin1 : LIST /ca/
+27/12/2022 01:13:04 : admin1 : WRQ /ca/script.txt (TFTP)
+27/12/2022 01:13:06 : admin1 : PASV
+27/12/2022 01:13:06 : admin1 : LIST /ca/
+27/12/2022 01:13:11 : admin1 : CWD ..
+27/12/2022 01:13:11 : admin1 : PWD
+27/12/2022 01:13:11 : admin1 : PASV
+27/12/2022 01:13:11 : admin1 : LIST /
+27/12/2022 01:13:16 : admin1 : QUIT
+27/12/2022 01:13:24 :  : LGIN user1 ***
+27/12/2022 01:13:24 : user1 : PASV
+27/12/2022 01:13:24 : user1 : UINFO user1
+27/12/2022 01:13:24 : user1 : PWD
+27/12/2022 01:13:24 : user1 : PASV
+27/12/2022 01:13:24 : user1 : LIST /
+27/12/2022 01:13:35 : user1 : CWD /n/
+27/12/2022 01:13:35 : user1 : PWD
+27/12/2022 01:13:35 : user1 : PASV
+27/12/2022 01:13:35 : user1 : LIST /n/
+27/12/2022 01:13:47 : user1 : PASV
+27/12/2022 01:13:47 : user1 : STOR /n/102190077_NguyenDucNghia.pdf
+27/12/2022 01:13:51 : user1 : PASV
+27/12/2022 01:13:51 : user1 : LIST /n/
+27/12/2022 01:13:56 : user1 : CWD ..
+27/12/2022 01:13:56 : user1 : PWD
+27/12/2022 01:13:56 : user1 : PASV
+27/12/2022 01:13:56 : user1 : LIST /
+27/12/2022 01:14:04 : user1 : CWD /ca/
+27/12/2022 01:14:04 : user1 : PWD
+27/12/2022 01:14:04 : user1 : PASV
+27/12/2022 01:14:04 : user1 : LIST /ca/
+27/12/2022 01:14:10 : user1 : PASV
+27/12/2022 01:14:10 : user1 : STOR /ca/abc.docx
+27/12/2022 01:14:16 : user1 : PASV
+27/12/2022 01:18:15 :  : LGIN user1 ***
+27/12/2022 01:18:15 : user1 : PASV
+27/12/2022 01:18:15 : user1 : UINFO user1
+27/12/2022 01:18:15 : user1 : PWD
+27/12/2022 01:18:15 : user1 : PASV
+27/12/2022 01:18:15 : user1 : LIST /
+27/12/2022 01:18:19 : user1 : CWD /ca/
+27/12/2022 01:18:19 : user1 : PWD
+27/12/2022 01:18:19 : user1 : PASV
+27/12/2022 01:18:19 : user1 : LIST /ca/
+27/12/2022 01:18:24 : user1 : WRQ /ca/MOK.der (TFTP)
+27/12/2022 01:18:26 : user1 : PASV
+27/12/2022 01:18:26 : user1 : LIST /ca/
+27/12/2022 01:18:34 : user1 : QUIT
+27/12/2022 01:19:57 :  : LGIN user1 ***
+27/12/2022 01:19:57 : user1 : PASV
+27/12/2022 01:19:57 : user1 : UINFO user1
+27/12/2022 01:19:57 : user1 : PWD
+27/12/2022 01:19:57 : user1 : PASV
+27/12/2022 01:19:57 : user1 : LIST /
+27/12/2022 01:20:00 : user1 : CWD /ca/
+27/12/2022 01:20:00 : user1 : PWD
+27/12/2022 01:20:00 : user1 : PASV
+27/12/2022 01:20:00 : user1 : LIST /ca/
+27/12/2022 01:20:03 : user1 : PASV
+27/12/2022 01:20:03 : user1 : STOR /ca/java.log.2283
+27/12/2022 01:20:14 : user1 : WRQ /ca/nohup.out (TFTP)
+27/12/2022 01:20:17 : user1 : PASV
+27/12/2022 01:20:17 : user1 : LIST /ca/
+27/12/2022 01:20:21 : user1 : QUIT
+27/12/2022 01:20:57 :  : LGIN user1 ***
+27/12/2022 01:20:57 : user1 : PASV
+27/12/2022 01:20:57 : user1 : UINFO user1
+27/12/2022 01:20:57 : user1 : PWD
+27/12/2022 01:20:57 : user1 : PASV
+27/12/2022 01:20:57 : user1 : LIST /
+27/12/2022 01:21:00 : user1 : CWD /ca/
+27/12/2022 01:21:00 : user1 : PWD
+27/12/2022 01:21:00 : user1 : PASV
+27/12/2022 01:21:00 : user1 : LIST /ca/
+27/12/2022 01:21:06 : user1 : WRQ /ca/nohup.out (TFTP)
+27/12/2022 01:21:19 : user1 : QUIT
+27/12/2022 01:22:58 :  : LGIN user1 ***
+27/12/2022 01:22:58 : user1 : PASV
+27/12/2022 01:22:58 : user1 : UINFO user1
+27/12/2022 01:22:58 : user1 : PWD
+27/12/2022 01:22:58 : user1 : PASV
+27/12/2022 01:22:58 : user1 : LIST /
+27/12/2022 01:23:02 : user1 : CWD /ca/
+27/12/2022 01:23:02 : user1 : PWD
+27/12/2022 01:23:02 : user1 : PASV
+27/12/2022 01:23:02 : user1 : LIST /ca/
+27/12/2022 01:23:09 : user1 : WRQ /ca/VMWARE16.der (TFTP)
+27/12/2022 01:23:17 : user1 : QUIT
+27/12/2022 01:24:07 :  : LGIN user1 ***
+27/12/2022 01:24:07 : user1 : PASV
+27/12/2022 01:24:07 : user1 : UINFO user1
+27/12/2022 01:24:07 : user1 : PWD
+27/12/2022 01:24:07 : user1 : PASV
+27/12/2022 01:24:07 : user1 : LIST /
+27/12/2022 01:24:10 : user1 : CWD /ca/
+27/12/2022 01:24:10 : user1 : PWD
+27/12/2022 01:24:10 : user1 : PASV
+27/12/2022 01:24:10 : user1 : LIST /ca/
+27/12/2022 01:24:16 : user1 : WRQ /ca/VMWARE15.der (TFTP)
+27/12/2022 01:24:18 : user1 : CWD ..
+27/12/2022 01:24:18 : user1 : PWD
+27/12/2022 01:24:18 : user1 : PASV
+27/12/2022 01:24:18 : user1 : LIST /
+27/12/2022 01:24:29 : user1 : CWD /n/
+27/12/2022 01:24:29 : user1 : PWD
+27/12/2022 01:24:29 : user1 : PASV
+27/12/2022 01:24:29 : user1 : LIST /n/
+27/12/2022 01:24:40 : user1 : WRQ /n/1.-NTXLY-Review-of-cloud-service-models-Case-study-1.pdf (TFTP)
+27/12/2022 01:24:42 : user1 : PASV
+27/12/2022 01:24:42 : user1 : LIST /n/
+27/12/2022 01:24:46 : user1 : CWD ..
+27/12/2022 01:24:46 : user1 : PWD
+27/12/2022 01:24:46 : user1 : PASV
+27/12/2022 01:24:46 : user1 : LIST /
+27/12/2022 01:24:47 : user1 : CWD /ca2/
+27/12/2022 01:24:47 : user1 : PWD
+27/12/2022 01:24:47 : user1 : PASV
+27/12/2022 01:24:47 : user1 : LIST /ca2/
+27/12/2022 01:24:58 : user1 : WRQ /ca2/Backend-.NET-Developer-Roadmap-2022.xmind (TFTP)
+27/12/2022 01:24:59 : user1 : PASV
+27/12/2022 01:24:59 : user1 : LIST /ca2/
+27/12/2022 01:25:06 : user1 : CWD ..
+27/12/2022 01:25:06 : user1 : PWD
+27/12/2022 01:25:06 : user1 : PASV
+27/12/2022 01:25:06 : user1 : LIST /
+27/12/2022 01:25:14 : user1 : QUIT
