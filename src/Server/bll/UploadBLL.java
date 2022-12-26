@@ -16,7 +16,7 @@ public class UploadBLL {
 	public boolean uploadFile (FileDto fDto)
 	{
 		Files file = new Files();
-		file.setPermission(2);
+		file.setPermission(1);
 		file.setName(fDto.getName());
 		file.setType(fDto.getType());
 		file.setPath(fDto.getPath());

@@ -165,6 +165,18 @@ public void run(){
 				{
 					if (new UploadBLL().delFile(fileDto)) {
 						deleteDirectory(deleteDir);
+						fileDto.setFID( new UploadBLL().findFID(fileDto));
+						List<Integer> listFID = new UploadBLL().getAllFID(fileDto);
+						for (int i=1;i<listFID.size();i++)
+				        {
+				        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(new Date().getTime()), userName,listFID.get(i)))
+				        	{
+				        		System.out.println("success");
+				        	}
+				        	else {
+				        		System.out.println("fail");
+				        	}	
+				        }
 						dos.writeUTF("250 Delete operation successful");
 					}
 					else {
@@ -174,6 +186,8 @@ public void run(){
 				else {
 					List<String> list = new UploadBLL().getAllOwner(fileDto);
 					int dem=0;
+					fileDto.setFID( new UploadBLL().findFID(fileDto));
+					List<Integer> listFID = new UploadBLL().getAllFID(fileDto);
 					for (int i=0;i<list.size();i++)
 					{
 						if(list.get(i).equals(userName)) dem++;
@@ -181,6 +195,16 @@ public void run(){
 					if (dem>0){
 						if (new UploadBLL().delFile(fileDto)) {
 							deleteDirectory(deleteDir);
+							for (int i=1;i<listFID.size();i++)
+					        {
+					        	if (new UploadBLL().uploadFolder(new java.sql.Timestamp(new Date().getTime()), userName,listFID.get(i)))
+					        	{
+					        		System.out.println("success");
+					        	}
+					        	else {
+					        		System.out.println("fail");
+					        	}	
+					        }
 							dos.writeUTF("250 Delete operation successful");
 						}
 						else {
@@ -238,6 +262,7 @@ public void run(){
 						else {
 							dos.writeUTF("502 Command not implemented");
 						}
+						fDto.setFID( new UploadBLL().findFID(fDto));
 						List<Integer> listFID = new UploadBLL().getAllFID(fDto);
 						for (int i=1;i<listFID.size();i++)
 				        {
@@ -315,6 +340,7 @@ public void run(){
 							else {
 								dos.writeUTF("502 Command not implemented");
 							}
+							fDto.setFID( new UploadBLL().findFID(fDto));
 							List<Integer> listFID2 = new UploadBLL().getAllFID(fDto);
 							for (int i=1;i<listFID2.size();i++)
 					        {

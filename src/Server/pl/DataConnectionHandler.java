@@ -147,7 +147,7 @@ public class DataConnectionHandler extends Thread{
 					fi.setPath(tam.substring(0,tam.lastIndexOf("/")));
 					int permission = new UploadBLL().getPermission(fi);
 					
-					if (producer.role.equals("admin")||permission == 2) {
+					if (producer.role.equals("admin") || permission == 2 ) {
 					buffer = new byte[MAX_BUFFER];
 					read = 0;
 					long size = dis.readLong();
@@ -170,7 +170,6 @@ public class DataConnectionHandler extends Thread{
 								if (new UploadBLL().checkFileExists(fDto)==false )
 								{
 									fDto.setOwner(producer.userName);
-									//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
 									fDto.setLastEditedBy(producer.userName);
 									fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 									fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
@@ -195,7 +194,7 @@ public class DataConnectionHandler extends Thread{
 									//dos.writeUTF("602 Directory Existed");
 									
 									//fDto.setCreatedDate(new Date(attr.lastModifiedTime().toMillis()));
-									fDto.setFID( new UploadBLL().findFID(fDto));
+									
 									fDto.setCreatedDate(new Date(attr.creationTime().toMillis()));
 									fDto.setLastEditedBy(producer.userName);
 									fDto.setLastEditedDate(new Date(attr.lastModifiedTime().toMillis()));
@@ -216,6 +215,7 @@ public class DataConnectionHandler extends Thread{
 										response = "502 Command not implemented";
 									}
 								}
+								fDto.setFID( new UploadBLL().findFID(fDto));
 								List<Integer> listFID = new UploadBLL().getAllFID(fDto);
 								for (int i=1;i<listFID.size();i++)
 						        {
@@ -227,7 +227,7 @@ public class DataConnectionHandler extends Thread{
 						        		System.out.println("fail");
 						        	}	
 						        }
-						}
+							}
 								else {
 									file.delete();
 									response = "503 Transfer stopped";
@@ -350,6 +350,7 @@ public class DataConnectionHandler extends Thread{
 									response = "502 Command not implemented";
 								}
 							}
+							fDto.setFID( new UploadBLL().findFID(fDto));
 							List<Integer> listFID2 = new UploadBLL().getAllFID(fDto);
 							for (int i=1;i<listFID2.size();i++)
 					        {
