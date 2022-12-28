@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import Client.view.Client;
-import Server.dto.FileDto;
+import Common.dto.FileDto;
 
 public class TFTPTransfer extends SwingWorker<String, String> {
 	public static final int TFTPPORT = 6900;

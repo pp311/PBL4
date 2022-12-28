@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import Server.dto.UserDto;
+import Common.dto.UserDto;
 
 import javax.swing.JLabel;
 import java.awt.Font;

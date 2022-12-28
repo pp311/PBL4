@@ -24,7 +24,8 @@ import Server.bll.FileBLL;
 import Server.bll.ShareBLL;
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
-import Server.dto.*;
+import Server.dto.LoginDto;
+import Common.dto.*;
 
 
 public class DataConnectionHandler extends Thread{

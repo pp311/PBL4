@@ -24,8 +24,8 @@ import java.util.List;
 
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
-import Server.dto.FileDto;
-import Server.dto.UserDto;
+import Common.dto.FileDto;
+import Common.dto.UserDto;
 
 public class TFTPListenHandler extends Thread{
 	public static final int TFTPPORT = 6900;

@@ -3,7 +3,7 @@ package Server.bll;
 import java.util.ArrayList;
 
 import Server.dal.ShareDAL;
-import Server.dto.UserDto;
+import Common.dto.UserDto;
 
 public class ShareBLL {
 	public boolean setShare(ArrayList<Integer> userList, int fid) {

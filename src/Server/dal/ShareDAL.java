@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Server.dto.FileDto;
-import Server.dto.UserDto;
+import Common.dto.FileDto;
+import Common.dto.UserDto;
 
 public class ShareDAL {
 	PreparedStatement ps;

@@ -21,8 +21,8 @@ import java.util.concurrent.Executors;
 
 import javax.swing.*;
 
-import Server.dto.FileDto;
-import Server.dto.UserDto;
+import Common.dto.FileDto;
+import Common.dto.UserDto;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;

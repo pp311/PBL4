@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
-
-import Server.dto.*;
+import Server.dto.LoginDto;
+import Common.dto.*;
 import Server.models.User;
 
 

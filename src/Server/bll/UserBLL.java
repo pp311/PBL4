@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Server.dal.UserDAL;
 import Server.dto.LoginDto;
-import Server.dto.UserDto;
+import Common.dto.UserDto;
 import Server.models.User;
 
 public class UserBLL {

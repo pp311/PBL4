@@ -22,8 +22,8 @@ import java.util.Vector;
 import Server.bll.FileBLL;
 import Server.bll.UploadBLL;
 import Server.bll.UserBLL;
-import Server.dto.FileDto;
-import Server.dto.UserDto;
+import Common.dto.UserDto;
+import Common.dto.FileDto;
 
 class ListenHandler extends Thread {
 	private static final int PASV_PORT_START = 25000;

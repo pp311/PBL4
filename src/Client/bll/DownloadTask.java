@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import Client.view.Client;
-import Server.dto.FileDto;
+import Common.dto.FileDto;
 import Server.pl.DataConnectionHandler;
 
 public class DownloadTask extends SwingWorker<String, String>{

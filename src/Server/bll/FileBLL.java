@@ -3,7 +3,7 @@ package Server.bll;
 import java.util.ArrayList;
 
 import Server.dal.FileDAL;
-import Server.dto.FileDto;
+import Common.dto.FileDto;
 import Server.models.Files;
 
 public class FileBLL {

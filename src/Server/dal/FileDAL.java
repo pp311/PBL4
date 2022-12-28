@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Server.dto.FileDto;
+import Common.dto.FileDto;
 import Server.models.Files;
 
 public class FileDAL {

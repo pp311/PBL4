@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
 
-import Server.dto.*;
+import Common.dto.*;
 
 public class UploadDAL {
 	PreparedStatement ps;

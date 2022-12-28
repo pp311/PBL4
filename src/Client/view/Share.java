@@ -11,8 +11,8 @@ import javax.swing.event.DocumentListener;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
-import Server.dto.FileDto;
-import Server.dto.UserDto;
+import Common.dto.FileDto;
+import Common.dto.UserDto;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;

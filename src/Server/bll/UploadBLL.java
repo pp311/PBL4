@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import Server.dal.UploadDAL;
-import Server.dto.FileDto;
+import Common.dto.FileDto;
 import Server.models.*;
 
 public class UploadBLL {
