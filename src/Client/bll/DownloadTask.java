@@ -64,7 +64,13 @@ public class DownloadTask extends SwingWorker<String, String>{
 	
 	private boolean downloadSingleFile(String downloadPath, String saveDir) {
 		try {
-			FileDto fileInfo = client.getFileInfo(downloadPath.substring(downloadPath.lastIndexOf("/")+1));
+			String filename1 = downloadPath.substring(downloadPath.lastIndexOf("/") + 1);
+			ArrayList<FileDto> files = client.listFiles(downloadPath.substring(0, downloadPath.lastIndexOf("/") + 1));
+			FileDto fileInfo = null;
+			for(FileDto file : files) {
+				if(file.getName().equals(filename1)) fileInfo = file;
+			}
+			//fileInfo = client.getFileInfo(downloadPath.substring(downloadPath.lastIndexOf("/")+1));
 			//FileDto fileInfo = client.listFiles(downloadPath).get(0);
 			long size = fileInfo.getSize();
 			long downloaded = 0;
@@ -154,7 +160,7 @@ public class DownloadTask extends SwingWorker<String, String>{
 			public boolean downloadDirectory( String remoteDirPath, String saveDirPath) throws IOException {
 			    String dirToList = remoteDirPath;
 			    try {
-			    	ArrayList<FileDto> subFiles = client.listFiles(dirToList);
+			    	ArrayList<FileDto> subFiles = client.listFiles(dirToList + "/");
 					 
 				    if (subFiles != null && subFiles.size() > 0) {
 				        for (FileDto aFile : subFiles) {
